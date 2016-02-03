@@ -1,0 +1,10 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+bin/*
+include/*
+lib/*
+pip-selfcheck.json
+
