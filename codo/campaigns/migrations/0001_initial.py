@@ -45,6 +45,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='campaign',
             name='organizer',
-            field=models.ForeignKey(to='main.Organizer'),
+            field=models.ForeignKey(to='campaigns.Organizer'),
         ),
     ]
