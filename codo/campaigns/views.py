@@ -8,14 +8,14 @@ from .models import Campaign
 
 
 def home(request):
-    return render(request, "main/index.html")
+    return render(request, "campaigns/index.html")
 
 def campaigns(request):
     campaigns = serializers.serialize("json", Campaign.objects.all())
     return HttpResponse(campaigns)
 
 def all_projects(request):
-    return render(request, "main/all-projects.html")
+    return render(request, "campaigns/all-projects.html")
 
 @login_required(login_url='/login')
 def create_campaign(request):
@@ -33,7 +33,7 @@ def create_campaign(request):
             description=campaign_description, video_url=campaign_video_url, 
             picture_url=campaign_picture_url)
         return redirect('/')
-    return render(request, 'main/create-campaign.html')
+    return render(request, 'campaigns/create-campaign.html')
 
 # Login, Logout, Signup
 def login_view(request):
@@ -58,7 +58,7 @@ def login_view(request):
         else:
             # TODO: Proper error message for invalid login
             return HttpResponse("Invalid login")
-    return render(request, 'main/login.html')
+    return render(request, 'campaigns/login.html')
 
 
 def logout_view(request):
@@ -84,4 +84,4 @@ def signup(request):
         # TODO: Error Checking in case the user existed already
         return redirect("/login")
     else:
-        return render(request, 'main/signup.html')
+        return render(request, 'campaigns/signup.html')
