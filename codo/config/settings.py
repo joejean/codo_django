@@ -22,8 +22,6 @@ SECRET_KEY = '==4iht@8*v@x=z1@ge$z-5fdgu=1t$nwvjo5j&@#qq4i+*30%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -38,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'campaigns',
     'bootstrap3',
+    'formtools',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,8 +105,10 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
+
 # Templates 
 
+TEMPLATE_DEBUG = True
 
 TEMPLATES = [
     {
@@ -129,3 +130,10 @@ TEMPLATES = [
         },
     },
 ]
+
+# Django-crispy-forms Settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Uploaded Files (Media)
+MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media/")
+MEDIA_URL = "/uploads/"

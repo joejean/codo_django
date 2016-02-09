@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 
@@ -13,14 +14,34 @@ class Organizer(models.Model):
 
 class Campaign(models.Model):
     organizer = models.ForeignKey(Organizer)
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    blurb = models.CharField(max_length=300)
+    category = models.CharField(max_length=100)
     description = models.TextField()
     video_url = models.CharField(max_length=100)
-    picture_url = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to='/campaign_pics')
+    goal_amount = models.DecimalField(max_digits=19, decimal_places=10)
+    end_date = models.DateField(default=timezone.now)
+    rewards_enabled = models.BooleanField(default=False)
+    conditionals_enabled = models.BooleanField(default=False)
+    friends_participation_cond = models.BooleanField(default=False)
+    friends_participation_amount_cond = models.BooleanField(default=False)
+    community_participation_cond = models.BooleanField(default=False)
+    community_participation_amount_cond = models.BooleanField(default=False)
+    milestone_cond = models.BooleanField(default=False)
+    matching_donation_cond = models.BooleanField(default=False)
 
     def __str__(self):
-        return "<Campaign: {}>".format(self.name)
+        return "<Campaign: {}>".format(self.title)
 
+class Reward(models.Model):
+    campaign = models.ForeignKey(Campaign)
+    title = models.CharField(max_length="100")
+    pledge_amount = models.DecimalField(max_digits=19, decimal_places=10)
+    number_funders = models.IntegerField()
+    description = models.TextField()
+    def __str__(self):
+        return "<Reward: {}>".format(self.title)
 
 class BankAccount(models.Model):
 

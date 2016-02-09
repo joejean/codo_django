@@ -1,10 +1,27 @@
 from django.core import serializers 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from formtools.preview import FormPreview
+from formtools.wizard.views import SessionWizardView
 from .models import Campaign
+
+
+class CampaignWizard(SessionWizardView):
+    def done(self, form_list, **kwargs):
+        for form in form_list:
+            print(form.cleaned_data)
+        return redirect('/')
+
+class CampaignFormPreview(FormPreview):
+
+    def done(self, request, cleaned_data):
+        # Do something with the cleaned_data, then redirect
+        # to a "success" page.
+        return redirect('/')
+
 
 
 def home(request):
@@ -15,7 +32,7 @@ def campaigns(request):
     return HttpResponse(campaigns)
 
 def all_projects(request):
-    return render(request, "campaigns/all-projects.html")
+    return render(request, "campaigns/all_projects.html")
 
 @login_required(login_url='/login')
 def create_campaign(request):
@@ -33,7 +50,7 @@ def create_campaign(request):
             description=campaign_description, video_url=campaign_video_url, 
             picture_url=campaign_picture_url)
         return redirect('/')
-    return render(request, 'campaigns/create-campaign.html')
+    return render(request, 'campaigns/create_campaign.html')
 
 # Login, Logout, Signup
 def login_view(request):
