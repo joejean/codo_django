@@ -1,15 +1,22 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Organizer(models.Model):
-    user = models.OneToOneField(User)
-    dob = models.DateField()
-    stripe_account_id = models.CharField(max_length=150)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    # country =
+    # phone_number =
+    # short_bio = 
+    # profile_picture =
+    # facebook_url = 
+    # twitter_url =
+    # website_url = 
+    # dob = models.DateField()
+    # stripe_account_id = models.CharField(max_length=150)
     
-    def __str__(self):
-        return "<Organizer: {}>".format(self.user.first_name)
+    # def __str__(self):
+    #     return "<Organizer: {}>".format(self.user.first_name)
 
 
 class Campaign(models.Model):
@@ -51,7 +58,7 @@ class BankAccount(models.Model):
     :param : currency:Three-letter ISO currency code representing the currency\
                      paid out to the bank account.
     """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     country = models.CharField(max_length=5)
     currency = models.CharField(max_length=10)
     account_number = models.CharField(max_length=150)

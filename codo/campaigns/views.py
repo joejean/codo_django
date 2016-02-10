@@ -1,15 +1,22 @@
+import os
+from django.conf import settings
 from django.core import serializers 
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from formtools.preview import FormPreview
 from formtools.wizard.views import SessionWizardView
 from .models import Campaign
+from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm 
 
+User = get_user_model()
 
 class CampaignWizard(SessionWizardView):
+    template_name = "campaigns/wizard_form.html"
+    form_list = [CampaignInfoForm, UserConditionalsForm,RewardForm]
+    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     def done(self, form_list, **kwargs):
         for form in form_list:
             print(form.cleaned_data)
@@ -53,22 +60,23 @@ def create_campaign(request):
     return render(request, 'campaigns/create_campaign.html')
 
 # Login, Logout, Signup
+
 def login_view(request):
     next = ''
     if request.GET:
         next = request.GET['next']
 
     if request.method == 'POST':
-        if 'username' in request.POST:
-            username = request.POST['username']
+        if 'email' in request.POST:
+            email = request.POST['email']
         if 'password' in request.POST:
             password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
                 # TODO: redirect to a success page
-                return redirect(next) if next else HttpResponse("You are now logged in %s" % user.username)
+                return redirect(next) if next else HttpResponse("You are now logged in %s" % user.name)
             else:
                 # TODO: Proper error message for inactive account
                 return HttpResponse("This account is disabled")
@@ -85,19 +93,14 @@ def logout_view(request):
 
 def signup(request):
     if request.method == 'POST':
-        if 'first_name' in request.POST:
-            first_name = request.POST['first_name']
-        if 'last_name' in request.POST:
-            last_name = request.POST['last_name']
-        if 'username' in request.POST:
-            username = request.POST['username']
+        if 'name' in request.POST:
+            name = request.POST['name']
         if 'email' in request.POST:
             email = request.POST['email']
         if 'password' in request.POST:
             password = request.POST['password']
-        User.objects.create_user(username=username, email=email,
-                                 password=password, first_name=first_name,
-                                 last_name=last_name)
+        User.objects.create_user(name=name, email=email,
+                                 password=password)
         # TODO: Error Checking in case the user existed already
         return redirect("/login")
     else:

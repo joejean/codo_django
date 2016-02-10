@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 
+{% load socialaccount %} 
+
 {% block content %}
 
     <div class="container">
@@ -11,6 +13,7 @@
             {% csrf_token %} 
             <h2>Log In</h2>
 
+            <a href="{% provider_login_url "facebook" method="oauth2" %}">Login With Facebook</a>
             <div class="form-group">
               <div class="col-sm-10">
                 <input name="email" type="email" class="form-control" id="inputEmail3" placeholder="Email" required autofocus>
