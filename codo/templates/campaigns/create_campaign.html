@@ -138,7 +138,7 @@
                       <label>
                         <input type="checkbox" name="direct-donation" value="direct-donation">
                         <div class="jumbotron">
-                          <h4><strong>Enable Rewards</strong></h4>
+                          <h4><strong>Enable Conditionals</strong></h4>
                           <p>I will donate $100</p>
                         </div>
                       </label>
@@ -361,4 +361,9 @@
       </div>
     </div>
 
+{% endblock %}
+
+{% block javascript %}
+{{block.super}}
+<script src="{% static 'bootstrap/js/create_campaign.js' %}"></script>
 {% endblock %}

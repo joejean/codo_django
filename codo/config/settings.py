@@ -22,8 +22,6 @@ SECRET_KEY = '==4iht@8*v@x=z1@ge$z-5fdgu=1t$nwvjo5j&@#qq4i+*30%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -36,8 +34,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'formtools',
     'campaigns',
     'bootstrap3',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,8 +110,10 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
+
 # Templates 
 
+TEMPLATE_DEBUG = True
 
 TEMPLATES = [
     {
@@ -124,8 +130,65 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
 ]
+
+
+
+# OAUTH
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = "/"
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'LOCALE_FUNC': lambda request: 'en_US',
+        'EXCHANGE_TOKEN': True,
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4'}}
+
+
+
+
+# Django-crispy-forms Settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Uploaded Files (Media)
+MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media/")
+MEDIA_URL = "/uploads/"
+
+# Customized User Model (with authtools)
+# AUTH_USER_MODEL = 'authtools.User'
+
+SITE_ID = 1
+SOCIALACCOUNT_QUERY_EMAIL = True
