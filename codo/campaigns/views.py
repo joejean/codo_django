@@ -13,9 +13,19 @@ from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm
 
 User = get_user_model()
 
-class CampaignWizard(SessionWizardView):
-    template_name = "campaigns/wizard_form.html"
-    form_list = [CampaignInfoForm, UserConditionalsForm,RewardForm]
+
+FORMS = [("campaign_info", CampaignInfoForm),
+         ("user_conditionals", UserConditionalsForm),
+         ("rewards", RewardForm)]
+
+TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
+             "user_conditionals": "campaigns/campaign_info.html",
+             "rewards": "campaigns/campaign_info.html"}
+
+class CreateCampaign(SessionWizardView):
+    def get_template_names(self):
+        return TEMPLATES[self.steps.current]
+    form_list = [CampaignInfoForm, UserConditionalsForm, RewardForm]
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     def done(self, form_list, **kwargs):
         for form in form_list:
@@ -41,7 +51,7 @@ def campaigns(request):
 def all_projects(request):
     return render(request, "campaigns/all_projects.html")
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def create_campaign(request):
     if request.method == 'POST':
         if 'campaign_name' in request.POST:
@@ -59,49 +69,3 @@ def create_campaign(request):
         return redirect('/')
     return render(request, 'campaigns/create_campaign.html')
 
-# Login, Logout, Signup
-
-def login_view(request):
-    next = ''
-    if request.GET:
-        next = request.GET['next']
-
-    if request.method == 'POST':
-        if 'email' in request.POST:
-            email = request.POST['email']
-        if 'password' in request.POST:
-            password = request.POST['password']
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                # TODO: redirect to a success page
-                return redirect(next) if next else HttpResponse("You are now logged in %s" % user.name)
-            else:
-                # TODO: Proper error message for inactive account
-                return HttpResponse("This account is disabled")
-        else:
-            # TODO: Proper error message for invalid login
-            return HttpResponse("Invalid login")
-    return render(request, 'campaigns/login.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect("/")
-
-
-def signup(request):
-    if request.method == 'POST':
-        if 'name' in request.POST:
-            name = request.POST['name']
-        if 'email' in request.POST:
-            email = request.POST['email']
-        if 'password' in request.POST:
-            password = request.POST['password']
-        User.objects.create_user(name=name, email=email,
-                                 password=password)
-        # TODO: Error Checking in case the user existed already
-        return redirect("/login")
-    else:
-        return render(request, 'campaigns/signup.html')

@@ -11,7 +11,9 @@ class CampaignInfoForm(forms.ModelForm):
         model = Campaign
         fields = ['title', 'blurb', 'category', 'description', 'video_url',
          'picture', 'goal_amount', 'end_date', 'rewards_enabled','conditionals_enabled']
-
+        widgets = {
+            'category': forms.widgets.Select(choices=[('art','Art'),('test','Test')])
+        }
 class UserConditionalsForm(forms.ModelForm):
     class Meta:
         model = Campaign

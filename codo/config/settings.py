@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,9 +142,11 @@ TEMPLATES = [
 
 
 
-# OAUTH
-
+# OAUTH with allauth
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 LOGIN_REDIRECT_URL = "/"
 AUTHENTICATION_BACKENDS = (
