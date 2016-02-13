@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from formtools.preview import FormPreview
-from formtools.wizard.views import SessionWizardView
+from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from .models import Campaign
 from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm,\
                     AccountInfoForm
@@ -25,15 +25,20 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "rewards": "campaigns/rewards.html",
              "account_info": "campaigns/account_info.html"}
 
-class CreateCampaign(SessionWizardView):
+class CreateCampaign(NamedUrlSessionWizardView):
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
-    #template_name = "campaigns/wizard_form.html"
-    form_list = [CampaignInfoForm]#, UserConditionalsForm, RewardForm]
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
-    def done(self, form_list, **kwargs):
-        for form in form_list:
-            print(form.cleaned_data)
+    def done(self,form_list, form_dict,**kwargs):
+        account_info = form_dict['account_info']
+        new_organizer = account_info.save(commit=False)
+        new_organizer.user = self.request.user
+        new_organizer = new_organizer.save()
+        print(new_organizer)
+        rewards = form_dict['rewards']
+        user_conditionals = form_dict['user_conditionals']
+        campaign_info = form_dict['campaign_info']
+        print(account_info.cleaned_data)
         return redirect('/')
 
 class CampaignFormPreview(FormPreview):

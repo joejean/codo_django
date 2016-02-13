@@ -4,6 +4,8 @@ from django.conf import settings
 from datetime import date
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from model_utils import Choices
+
 
 
 class Organizer(models.Model):
@@ -11,7 +13,7 @@ class Organizer(models.Model):
     country = CountryField(blank_label='(select country)')
     phone_number = PhoneNumberField()
     short_bio = models.TextField()
-    profile_picture = models.ImageField(upload_to='/profile_pics')
+    profile_picture = models.ImageField(upload_to='profile_pics')
     facebook_url = models.URLField(max_length=100)
     twitter_url = models.URLField(max_length=100)
     website_url = models.URLField(max_length=100)
@@ -21,14 +23,14 @@ class Organizer(models.Model):
         return "<Organizer: {}>".format(self.user.name)
 
 
-class Campaign(models.Model):
+class Campaign(models.Model): 
     organizer = models.ForeignKey(Organizer)
     title = models.CharField(max_length=100)
     blurb = models.CharField(max_length=300)
     category = models.CharField(max_length=200)
     description = models.TextField()
     video_url = models.URLField(max_length=100)
-    picture = models.ImageField(upload_to='/campaign_pics')
+    picture = models.ImageField(upload_to='campaign_pics')
     goal_amount = models.DecimalField(max_digits=19, decimal_places=10)
     end_date = models.DateField(default=date.today)
     rewards_enabled = models.BooleanField(default=False)
@@ -39,6 +41,8 @@ class Campaign(models.Model):
     community_participation_amount_cond = models.BooleanField(default=False)
     milestone_cond = models.BooleanField(default=False)
     matching_donation_cond = models.BooleanField(default=False)
+    STATUS = Choices('unapproved','inreview', 'accepted','rejected')
+    status = models.CharField(choices=STATUS, default=STATUS.unapproved, max_length=20)
 
     def __str__(self):
         return "<Campaign: {}>".format(self.title)
