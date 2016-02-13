@@ -1,22 +1,24 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from datetime import date
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Organizer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    # country =
-    # phone_number =
-    # short_bio = 
-    # profile_picture =
-    # facebook_url = 
-    # twitter_url =
-    # website_url = 
-    # dob = models.DateField()
-    # stripe_account_id = models.CharField(max_length=150)
-    
-    # def __str__(self):
-    #     return "<Organizer: {}>".format(self.user.first_name)
+    country = CountryField(blank_label='(select country)')
+    phone_number = PhoneNumberField()
+    short_bio = models.TextField()
+    profile_picture = models.ImageField(upload_to='/profile_pics')
+    facebook_url = models.URLField(max_length=100)
+    twitter_url = models.URLField(max_length=100)
+    website_url = models.URLField(max_length=100)
+    dob = models.DateField(default=date.today)
+
+    def __str__(self):
+        return "<Organizer: {}>".format(self.user.name)
 
 
 class Campaign(models.Model):
@@ -28,7 +30,7 @@ class Campaign(models.Model):
     video_url = models.URLField(max_length=100)
     picture = models.ImageField(upload_to='/campaign_pics')
     goal_amount = models.DecimalField(max_digits=19, decimal_places=10)
-    end_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=date.today)
     rewards_enabled = models.BooleanField(default=False)
     conditionals_enabled = models.BooleanField(default=False)
     friends_participation_cond = models.BooleanField(default=False)
@@ -43,7 +45,7 @@ class Campaign(models.Model):
 
 class Reward(models.Model):
     campaign = models.ForeignKey(Campaign)
-    title = models.CharField(max_length="100")
+    title = models.CharField(max_length=100)
     pledge_amount = models.DecimalField(max_digits=19, decimal_places=10)
     number_funders = models.IntegerField()
     description = models.TextField()

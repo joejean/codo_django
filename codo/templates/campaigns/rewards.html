@@ -1,1 +1,115 @@
-rewards.html
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="jumbotron yellow-jumbotron">
+    <div class="container">
+      <h2 class="center-block">Create Your Campaign</h2>
+      <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. </h4>       
+    </div>
+  </div>
+      
+  <div class="container">
+    <form class="form form-horizontal" method="POST" action="">
+      {% csrf_token %}
+      {{ wizard.management_form }}
+     
+        {% if wizard.form.errors %}
+               <div class="row">
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Error!</strong>  Please correct the error{{ wizard.form.errors|pluralize }} below.
+                  </div>
+               </div>
+        {% endif %}
+          <div class="row">
+            <div class="col-md-12">
+              <h3><strong>Rewards (step {{ wizard.steps.step1 }} of {{ wizard.steps.count }})</strong></h3>
+            </div>
+          </div>
+          
+            <div class="row">
+              <div class="col-md-12">
+                <h5><strong>Thank your donors for supporting you!</strong></h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
+
+                <h5><strong>REWARD</strong></h5>
+                <div class="jumbotron">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                       {{wizard.form.pledge_amount.errors}}
+                        <label for="pledge_amount" class="col-sm-4 control-label">Pledge Amount</label>
+                        <div class="col-sm-8">
+                           {% render_field wizard.form.pledge_amount name="rewards-pledge_amount" id="id_rewards-pledge_amount" required="required" min="1" class="form-control" %}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      {{wizard.form.title.errors}}
+                        <label for="title" class="col-sm-4 control-label">Reward Title</label>
+                        <div class="col-sm-8">
+                          {% render_field wizard.form.title name="rewards-title" id="id_rewards-title" required="required" placeholder="Title of reward" required="required" class="form-control" %}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                      {{wizard.form.number_funders.errors}}
+                        <label for="number_funders" class="col-sm-4 control-label">Number of Funders</label>
+                        <div class="col-sm-8">
+                        {% render_field wizard.form.number_funders name="rewards-number_funders" id="id_rewards-number_funders" required="required" min="1" class="form-control" %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        {{wizard.form.description.errors}}
+                          <label for="description" class="col-sm-4 control-label"> Description</label>
+                          <div class="col-sm-8">
+                            {% render_field wizard.form.description name="rewards-description" id="id_rewards-description" required="required" class="form-control" %}
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="emptyLabel" class="col-sm-8 control-label"></label>
+                  <div class="col-sm-4">
+                    <button type="submit" class="btn btn-lg btn-red btn-block text-uppercase cont">Next > </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+    </form>
+  </div>
+
+  <div class="jumbotron faq-jumbotron">
+    <div class="container">
+      <h3>Frequently Asked Questions(FAQ)</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <h5><strong>Q:Sunt in culpa qui officia deserunt mollit ani?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div class="col-md-5">
+          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <h5><strong>Q:Dolor sit amet, consectetur adipisicing?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+{{block.super}}
+<script src="{% static 'bootstrap/js/create_campaign.js' %}"></script>
+{% endblock %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'widget_tweaks',
+    'django_countries',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,13 +142,19 @@ TEMPLATES = [
 ]
 
 
+#########################
+# OAUTH with allauth    #
+########################
 
-# OAUTH with allauth
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#this is for dev only
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+ACCOUNT_SIGNUP_FORM_CLASS = 'campaigns.forms.SignupForm'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+SITE_ID = 1
+SOCIALACCOUNT_QUERY_EMAIL = True
 LOGIN_REDIRECT_URL = "/"
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -190,8 +197,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media/")
 MEDIA_URL = "/uploads/"
 
-# Customized User Model (with authtools)
-# AUTH_USER_MODEL = 'authtools.User'
+PHONENUMBER_DB_FORMAT = 'E164'
 
-SITE_ID = 1
-SOCIALACCOUNT_QUERY_EMAIL = True
+

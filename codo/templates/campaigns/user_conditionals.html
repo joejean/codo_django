@@ -1,1 +1,123 @@
-user_conditionals.html
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="jumbotron yellow-jumbotron">
+    <div class="container">
+      <h2 class="center-block">Create Your Campaign</h2>
+      <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. </h4>       
+    </div>
+  </div>
+      
+  <div class="container">
+    <form class="form form-horizontal" method="POST" action="">
+      {% csrf_token %}
+      {{ wizard.management_form }}
+     
+        {% if wizard.form.errors %}
+               <div class="row">
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Error!</strong>  Please correct the error{{ wizard.form.errors|pluralize }} below.
+                  </div>
+               </div>
+        {% endif %}
+          <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+              <h3><strong>User Conditionals (step {{ wizard.steps.step1 }} of {{ wizard.steps.count }})</strong></h3>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-md-8 col-md-offset-1">
+                <h5><strong>Empower your donors, and allow them to donate to your project on their terms.</strong></h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
+              </div>
+            </div>
+            <div class="row" >
+              <div class="col-md-8 col-md-offset-1">
+                <div class="form-group">  
+                    <div class="checkbox col-md-12">
+                      <label>
+                        <div class="jumbotron">
+                          <h4><strong>Conditionals on Friends</strong></h4>
+                          {% render_field wizard.form.friends_participation_cond name="user_conditionals-friends_participation_cond" id="id_user_conditionals-friends_participation_cond" %}
+                          <strong>Conditional on participation</strong>
+                          <p>I will donate $100</p><br>
+                           {% render_field wizard.form.friends_participation_amount_cond name="user_conditionals-friends_participation_amount_cond" id="id_user_conditionals-friends_participation_amount_cond"%}
+                           <strong>Conditional on participation and amount</strong>
+                           <p>I will donate $100</p>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="checkbox col-md-12">
+                      <label>
+                        <div class="jumbotron">
+                          <h4><strong>Conditionals on Community</strong></h4>
+                          {% render_field wizard.form.community_participation_cond name="user_conditionals-community_participation_cond" id="id_user_conditionals-community_participation_cond" %}
+                          <strong>Conditional on participation</strong>
+                          <p>I will donate $100</p><br>
+                          {% render_field wizard.form.community_participation_amount_cond name="user_conditionals-community_participation_amount_cond" id="id_user_conditionals-community_participation_amount_cond" %}
+                          <strong>Conditional on participation and amount</strong> 
+                          <p>I will donate $100</p>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="checkbox col-md-12">
+                      <label>
+                        {% render_field wizard.form.milestone_cond name="user_conditionals-milestone_cond" id="id_user_conditionals-milestone_cond" %}
+                        <div class="jumbotron">
+                          <h4><strong>Conditional on Milestone</strong></h4>
+                          <p>I will donate $100 only if the total amount raised is $500</p>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="checkbox col-md-12">
+                      <label>
+                        {% render_field wizard.form.matching_donation_cond name="user_conditionals-matching_donation_cond" id="id_user_conditionals-matching_donation_cond" %}
+                        <div class="jumbotron">
+                          <h4><strong>Matching Donations</strong></h4>
+                          <p>I will donate $100 only if the total amount raised is $500</p>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label for="emptyLabel" class="col-sm-8 control-label"></label>
+                      <div class="col-sm-4">
+                        <button type="submit" class="btn btn-lg btn-red btn-block text-uppercase cont" >Next ></button>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div> <!--row -->
+    </form>
+  </div>
+
+  <div class="jumbotron faq-jumbotron">
+    <div class="container">
+      <h3>Frequently Asked Questions(FAQ)</h3>
+      <div class="row">
+        <div class="col-md-5">
+          <h5><strong>Q:Sunt in culpa qui officia deserunt mollit ani?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div class="col-md-5">
+          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <h5><strong>Q:Dolor sit amet, consectetur adipisicing?</strong></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+{{block.super}}
+<script src="{% static 'bootstrap/js/create_campaign.js' %}"></script>
+{% endblock %}

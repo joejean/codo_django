@@ -9,23 +9,27 @@ from django.contrib.auth import login, logout, authenticate, get_user_model
 from formtools.preview import FormPreview
 from formtools.wizard.views import SessionWizardView
 from .models import Campaign
-from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm 
+from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm,\
+                    AccountInfoForm
 
 User = get_user_model()
 
 
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
-         ("rewards", RewardForm)]
+         ("rewards", RewardForm),
+         ("account_info", AccountInfoForm)]
 
 TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
-             "user_conditionals": "campaigns/campaign_info.html",
-             "rewards": "campaigns/campaign_info.html"}
+             "user_conditionals": "campaigns/user_conditionals.html",
+             "rewards": "campaigns/rewards.html",
+             "account_info": "campaigns/account_info.html"}
 
 class CreateCampaign(SessionWizardView):
     def get_template_names(self):
-        return TEMPLATES[self.steps.current]
-    form_list = [CampaignInfoForm, UserConditionalsForm, RewardForm]
+        return [TEMPLATES[self.steps.current]]
+    #template_name = "campaigns/wizard_form.html"
+    form_list = [CampaignInfoForm]#, UserConditionalsForm, RewardForm]
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     def done(self, form_list, **kwargs):
         for form in form_list:

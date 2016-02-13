@@ -11,7 +11,7 @@ urlpatterns = patterns('',
                        url(r'^$', views.home),
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^new_campaign/$', views.create_campaign),
-                       url(r'^create_campaign/$', views.CreateCampaign.as_view(views.FORMS)),
+                       url(r'^create_campaign/$', views.CreateCampaign.as_view(views.FORMS)),#views.FORMS
                        url(r'^campaigns/$', views.campaigns),
                        url(r'^all_projects/$', views.all_projects),
                        )

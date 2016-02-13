@@ -1,10 +1,25 @@
 from django import forms
-from .models import Reward, Campaign
+from .models import Reward, Campaign, Organizer
+from config import settings
+from django_countries.widgets import CountrySelectWidget
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField()
+class SignupForm(forms.Form):
+    name = forms.CharField(max_length=60, label='Name')
+    def signup(self, request, user):
+        user.name = self.cleaned_data['name']
+        user.save()
+
+
+class AccountInfoForm(forms.ModelForm):
+    class Meta:
+        model = Organizer
+        fields = ['country', 'phone_number', 'short_bio', 'profile_picture',
+                    'facebook_url', 'twitter_url', 'website_url', 'dob']
+        widgets = {
+            'country': CountrySelectWidget(),
+            'dob': forms.DateInput(format='%d-%m-%Y')
+        }
 
 class CampaignInfoForm(forms.ModelForm):
     class Meta:
@@ -12,7 +27,8 @@ class CampaignInfoForm(forms.ModelForm):
         fields = ['title', 'blurb', 'category', 'description', 'video_url',
          'picture', 'goal_amount', 'end_date', 'rewards_enabled','conditionals_enabled']
         widgets = {
-            'category': forms.widgets.Select(choices=[('art','Art'),('test','Test')])
+            'category': forms.widgets.Select(choices=[('art','Art'),('test','Test')]),
+            'end_date':forms.DateInput(format='%d-%m-%Y')#forms.DateField(input_formats=['%m-%d-%Y'])
         }
 class UserConditionalsForm(forms.ModelForm):
     class Meta:
