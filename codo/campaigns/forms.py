@@ -5,9 +5,12 @@ from django_countries.widgets import CountrySelectWidget
 
 
 class SignupForm(forms.Form):
-    name = forms.CharField(max_length=60, label='Name')
+    full_name = forms.CharField(max_length=60, label='Name')
+
     def signup(self, request, user):
-        user.name = self.cleaned_data['name']
+        #Saving the user's full name in the user object first_name attribute
+        user.first_name = self.cleaned_data['full_name']
+        print(user)
         user.save()
 
 

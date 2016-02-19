@@ -20,7 +20,7 @@ class Organizer(models.Model):
     dob = models.DateField(default=date.today)
 
     def __str__(self):
-        return "<Organizer: {}>".format(self.user.name)
+        return "<Organizer: {}>".format(self.user.first_name)
 
 
 class Campaign(models.Model): 

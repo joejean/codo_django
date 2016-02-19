@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.facebook',
     'widget_tweaks',
     'django_countries',
+    'embed_video',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +136,7 @@ TEMPLATES = [
                 # `allauth` needs this from django
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
 
             ],
         },
@@ -195,7 +197,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Uploaded Files (Media)
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media/")
-MEDIA_URL = "/uploads/"
+MEDIA_URL = "/media/"
 
 PHONENUMBER_DB_FORMAT = 'E164'
 

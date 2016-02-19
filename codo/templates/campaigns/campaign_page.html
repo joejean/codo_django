@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+{% load embed_video_tags %}
 
 {% block content %}
       
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <h2>Project Name</h2>
-          <img src="img/project-picture.jpg" class="img-responsive img-rounded">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h2>{{campaign.title}}</h2>
+          <img src="{{campaign.picture.url}}" class="img-responsive img-rounded">
+          <p>{{campaign.blurb}}</p>
         </div>
         <div class="col-md-4">
           <h2>&nbsp;</h2>
           <h3><i class="fa fa-money"></i> $223 <br ><small>Funds Raised</small></h3>
           <hr>
-          <p><i class="fa fa-flag-o fa-2x"></i> $2000 Goal</p>
+          <p><i class="fa fa-flag-o fa-2x"></i> ${{campaign.goal_amount}} Goal</p>
           <p><i class="fa fa-clock-o fa-2x"></i> 20 Days To Go</p>
           <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
           <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
@@ -92,19 +92,11 @@
       <div class="row">
         <div class="col-md-8">
           <h2>Product Info</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. </p>
-
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. </p>
-
+          <p>{{campaign.description}}</p>
           
-          <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/ZXsQAXx_ao0" frameborder="0" allowfullscreen></iframe>
+          {% video campaign.video_url 'medium' %}
+          
+          <!-- <iframe class="center-block" width="560" height="315" src="{{campaign.video_url}}" frameborder="0" allowfullscreen></iframe> -->
 
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -119,7 +111,7 @@
              <div class="table-responsive">
                 <table class="table table-bordered">
                   <tr>
-                    <td>$5</td>
+                    <td>${{campaign.rewards.pledge_amount}}</td>
                     <td rowspan="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                     </td>
                     
@@ -146,12 +138,9 @@
                 </table>
               </div>
           </div>
-          <h2>About the Creators</h2>
-          <img src="http://placehold.it/100" class="img-rounded img-responsive pull-left">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
+          <h2>About the Creator</h2>
+          <img src="{{campaign.organizer.profile_picture.url}}" class="img-rounded img-responsive pull-left" width="100px" height="100px">
+          <p>{{campaign.organizer.short_bio}}</p>
           
         </div>
 

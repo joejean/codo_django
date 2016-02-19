@@ -43,19 +43,20 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
+                        {{wizard.form.title.errors}}
+                          <label for="title" class="col-sm-4 control-label">Reward Title</label>
+                          <div class="col-sm-8">
+                            {% render_field wizard.form.title name="rewards-title" id="id_rewards-title" required="required" placeholder="Title of reward" required="required" class="form-control" %}
+                          </div>
+                      </div>
+                      <div class="form-group">
                        {{wizard.form.pledge_amount.errors}}
                         <label for="pledge_amount" class="col-sm-4 control-label">Pledge Amount</label>
                         <div class="col-sm-8">
                            {% render_field wizard.form.pledge_amount name="rewards-pledge_amount" id="id_rewards-pledge_amount" required="required" min="1" class="form-control" %}
                         </div>
                       </div>
-                      <div class="form-group">
-                      {{wizard.form.title.errors}}
-                        <label for="title" class="col-sm-4 control-label">Reward Title</label>
-                        <div class="col-sm-8">
-                          {% render_field wizard.form.title name="rewards-title" id="id_rewards-title" required="required" placeholder="Title of reward" required="required" class="form-control" %}
-                        </div>
-                      </div>
+                      
                       <div class="form-group">
                       {{wizard.form.number_funders.errors}}
                         <label for="number_funders" class="col-sm-4 control-label">Number of Funders</label>
