@@ -1,12 +1,18 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from campaigns import views
 
 
 
-campaign_wizard = views.CreateCampaign.as_view(views.FORMS,url_name='campaign_step',\
-                   done_step_name='finished')
+campaign_wizard = login_required(views.CreateCampaign.as_view(views.FORMS,
+                  url_name='campaign_step',
+                  done_step_name='finished',
+                  condition_dict={'rewards':views.show_reward_form,
+                  'user_conditionals':views.show_conditionals_form}), 
+                  login_url='/accounts/login',
+                  )
 
 urlpatterns = patterns('',
                        # Examples:

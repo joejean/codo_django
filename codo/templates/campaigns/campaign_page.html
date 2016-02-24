@@ -95,7 +95,7 @@
           <p>{{campaign.description}}</p>
           
           {% video campaign.video_url 'medium' %}
-          
+
           <!-- <iframe class="center-block" width="560" height="315" src="{{campaign.video_url}}" frameborder="0" allowfullscreen></iframe> -->
 
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -107,37 +107,28 @@
         </div>
         <div class="col-md-4">
           <h2>Rewards</h2>
-          <div class="jumbotron">
-             <div class="table-responsive">
-                <table class="table table-bordered">
-                  <tr>
-                    <td>${{campaign.rewards.pledge_amount}}</td>
-                    <td rowspan="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td>100 Funders</td>
-                  </tr>
-                </table>
-              </div>
-          </div>
+          {% for reward in rewards %}
+            <div class="jumbotron">
+               <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td colspan="2" class="text-center"><strong>{{ reward.title }}</strong></td> 
+                    </tr>
+                    <tr>
+                      <td>${{reward.pledge_amount}}</td>
+                      <td rowspan="2">{{reward.description}}
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td>{{ reward.number_funders }} Funders</td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+          {% endfor %}
 
-          <div class="jumbotron">
-             <div class="table-responsive">
-                <table class="table table-bordered">
-                  <tr>
-                    <td>$5</td>
-                    <td rowspan="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    <td>100 Funders</td>
-                  </tr>
-                </table>
-              </div>
-          </div>
+       
           <h2>About the Creator</h2>
           <img src="{{campaign.organizer.profile_picture.url}}" class="img-rounded img-responsive pull-left" width="100px" height="100px">
           <p>{{campaign.organizer.short_bio}}</p>

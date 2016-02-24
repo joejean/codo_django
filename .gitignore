@@ -7,5 +7,7 @@ bin/*
 include/*
 lib/*
 pip-selfcheck.json
+media/*
 *.pyc
+*/__pycache__/*
 

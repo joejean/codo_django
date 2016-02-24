@@ -8,22 +8,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from formtools.preview import FormPreview
 from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
-from .models import Campaign, Organizer
-from .forms import CampaignInfoForm,UserConditionalsForm, RewardForm,\
+from .models import Campaign, Organizer, Reward
+from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
                     AccountInfoForm
 
 User = get_user_model()
 
 
+
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
-         ("rewards", RewardForm),
+         ("rewards", RewardFormSet),
          ("account_info", AccountInfoForm)]
+
 
 TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "user_conditionals": "campaigns/user_conditionals.html",
              "rewards": "campaigns/rewards.html",
              "account_info": "campaigns/account_info.html"}
+
 
 class CreateCampaign(NamedUrlSessionWizardView):
     def get_template_names(self):
@@ -32,6 +35,9 @@ class CreateCampaign(NamedUrlSessionWizardView):
     def done(self,form_list, form_dict,**kwargs):
         account_info = form_dict['account_info']
         campaign_info = form_dict['campaign_info']
+        #ToDo: Since it is possible that the user has not enabled conditionals
+        # and/or rewards,first test if they exist (using get()) before trying to 
+        # access them
         user_conditionals = form_dict['user_conditionals']
         rewards = form_dict['rewards']
 
@@ -55,9 +61,23 @@ class CreateCampaign(NamedUrlSessionWizardView):
         campaign.save()
 
         new_rewards = rewards.save(commit=False)
-        new_rewards.campaign = campaign
-        new_rewards.save()
-        return redirect('/')
+        for reward in new_rewards:
+            reward.campaign = campaign
+            reward.save()
+        #new_rewards.save()
+        return redirect('/campaigns/'+str(campaign.id))
+
+def show_reward_form(wizard):
+    # try to get the cleaned data of step 1
+    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
+    # check if the field ``enable reward`` was checked.
+    return cleaned_data.get('rewards_enabled', True)
+
+def show_conditionals_form(wizard):
+    # try to get the cleaned data of step 1
+    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
+    # check if the field ``enable reward`` was checked.
+    return cleaned_data.get('conditionals_enabled', True)
 
 class CampaignFormPreview(FormPreview):
 
@@ -77,29 +97,12 @@ def campaigns(request, id=0):
         return HttpResponse(campaigns)
     else:
         campaign = get_object_or_404(Campaign,id=int(id))
-        return render(request,"campaigns/campaign_page.html", {'campaign':campaign})
-
-
+        rewards = campaign.reward_set.all()
+        return render(request,"campaigns/campaign_page.html",\
+         {'campaign':campaign, 'rewards': rewards})
 
     
 def all_projects(request):
     return render(request, "campaigns/all_projects.html")
 
-@login_required(login_url='/accounts/login')
-def create_campaign(request):
-    if request.method == 'POST':
-        if 'campaign_name' in request.POST:
-            campaign_name = request.POST['campaign_name']
-        if 'campaign_description' in request.POST:
-            campaign_description = request.POST['campaign_description']
-        if 'campaign_picture_url' in request.POST:
-            campaign_picture_url = request.POST['campaign_picture_url']
-        if 'campaign_video_url' in request.POST:
-            campaign_video_url = request.POST['campaign_video_url']
-            #TODO: Make Sure the user is an organizer
-        campaign = Campaign.objects.create(organizer_id=request.user.id, name=campaign_name, 
-            description=campaign_description, video_url=campaign_video_url, 
-            picture_url=campaign_picture_url)
-        return redirect('/')
-    return render(request, 'campaigns/create_campaign.html')
 

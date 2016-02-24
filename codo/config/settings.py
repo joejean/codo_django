@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'django_countries',
     'embed_video',
+    'datetimewidget',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,6 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -199,6 +201,19 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media/")
 MEDIA_URL = "/media/"
 
+# For django-phonenumber
 PHONENUMBER_DB_FORMAT = 'E164'
+
+# Django-date-time widget
+USE_L10N = True
+USE_TZ = True 
+USE_I18N = True
+
+# For Stripe
+if 'STRIPE_SECRET_KEY' in os.environ: 
+    STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+else:
+    STRIPE_SECRET_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
 
 
