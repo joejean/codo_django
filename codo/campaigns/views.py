@@ -11,10 +11,7 @@ from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
                     AccountInfoForm
-
-User = get_user_model()
-
-
+from payments.payment_utils import create_stripe_account
 
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
@@ -27,6 +24,21 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "rewards": "campaigns/rewards.html",
              "account_info": "campaigns/account_info.html"}
 
+#Create Campaign Helper function
+def get_organizer(request, account_info):
+    organizer = Organizer.objects.filter(user=request.user)
+    if len(organizer) == 0:
+        new_organizer = account_info.save(commit=False)
+        new_organizer.user = request.user
+        new_organizer.stripe_account_id = create_stripe_account(new_organizer.email,\
+         new_organizer.first_name, new_organizer.last_name, dob, \
+         request.META.get('REMOTE_ADDR'), timestamp, \
+                          new_organizer.country)
+        new_organizer.save()
+    else:
+        new_organizer = organizer[0]
+
+    return new_organizer
 
 class CreateCampaign(NamedUrlSessionWizardView):
     def get_template_names(self):
@@ -35,37 +47,31 @@ class CreateCampaign(NamedUrlSessionWizardView):
     def done(self,form_list, form_dict,**kwargs):
         account_info = form_dict['account_info']
         campaign_info = form_dict['campaign_info']
-        #ToDo: Since it is possible that the user has not enabled conditionals
-        # and/or rewards,first test if they exist (using get()) before trying to 
-        # access them
-        user_conditionals = form_dict['user_conditionals']
-        rewards = form_dict['rewards']
+        user_conditionals = form_dict.get('user_conditionals', [])
+        rewards = form_dict.get('rewards', [])
 
-        conditionals = user_conditionals.cleaned_data
-        existing_organizer = Organizer.objects.filter(user=self.request.user)
-        if len(existing_organizer) == 0:
-            organizer = account_info.save(commit=False)
-            organizer.user = self.request.user
-            organizer.save()
-        else:
-            organizer = existing_organizer[0]
-
+        organizer = get_organizer(account_info,self.request.user)
         campaign = campaign_info.save(commit=False)
         campaign.organizer = organizer
-        campaign.friends_participation_cond = conditionals['friends_participation_cond']
-        campaign.friends_participation_amount_cond = conditionals['friends_participation_amount_cond']
-        campaign.community_participation_cond = conditionals['community_participation_cond']
-        campaign.community_participation_amount_cond = conditionals['community_participation_amount_cond']
-        campaign.milestone_cond = conditionals['milestone_cond']
-        campaign.matching_donation_cond = conditionals['matching_donation_cond']
+
+        if user_conditionals:
+            conditionals = user_conditionals.cleaned_data
+            campaign.friends_participation_cond = conditionals['friends_participation_cond']
+            campaign.friends_participation_amount_cond = conditionals['friends_participation_amount_cond']
+            campaign.community_participation_cond = conditionals['community_participation_cond']
+            campaign.community_participation_amount_cond = conditionals['community_participation_amount_cond']
+            campaign.milestone_cond = conditionals['milestone_cond']
+            campaign.matching_donation_cond = conditionals['matching_donation_cond']
         campaign.save()
 
-        new_rewards = rewards.save(commit=False)
-        for reward in new_rewards:
-            reward.campaign = campaign
-            reward.save()
-        #new_rewards.save()
+        if rewards:
+            new_rewards = rewards.save(commit=False)
+            for reward in new_rewards:
+                reward.campaign = campaign
+                reward.save()
+        
         return redirect('/campaigns/'+str(campaign.id))
+
 
 def show_reward_form(wizard):
     # try to get the cleaned data of step 1
@@ -73,11 +79,13 @@ def show_reward_form(wizard):
     # check if the field ``enable reward`` was checked.
     return cleaned_data.get('rewards_enabled', True)
 
+
 def show_conditionals_form(wizard):
     # try to get the cleaned data of step 1
     cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
     # check if the field ``enable reward`` was checked.
     return cleaned_data.get('conditionals_enabled', True)
+
 
 class CampaignFormPreview(FormPreview):
 
@@ -85,7 +93,6 @@ class CampaignFormPreview(FormPreview):
         # Do something with the cleaned_data, then redirect
         # to a "success" page.
         return redirect('/')
-
 
 
 def home(request):

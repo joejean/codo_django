@@ -16,7 +16,7 @@
           <h2>&nbsp;</h2>
           <h3><i class="fa fa-money"></i> $223 <br ><small>Funds Raised</small></h3>
           <hr>
-          <p><i class="fa fa-flag-o fa-2x"></i> ${{campaign.goal_amount}} Goal</p>
+          <p><i class="fa fa-flag-o fa-2x"></i> {{campaign.goal_amount}} Goal</p>
           <p><i class="fa fa-clock-o fa-2x"></i> 20 Days To Go</p>
           <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
           <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
@@ -106,6 +106,7 @@
 
         </div>
         <div class="col-md-4">
+        {% if rewards %}
           <h2>Rewards</h2>
           {% for reward in rewards %}
             <div class="jumbotron">
@@ -115,7 +116,7 @@
                       <td colspan="2" class="text-center"><strong>{{ reward.title }}</strong></td> 
                     </tr>
                     <tr>
-                      <td>${{reward.pledge_amount}}</td>
+                      <td>{{reward.pledge_amount}}</td>
                       <td rowspan="2">{{reward.description}}
                       </td>
                       
@@ -127,6 +128,7 @@
                 </div>
             </div>
           {% endfor %}
+        {% endif %}
 
        
           <h2>About the Creator</h2>

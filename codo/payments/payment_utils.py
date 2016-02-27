@@ -4,7 +4,7 @@ Our payment system is built on top of Stripe. Stripe requires that
 all requests be made over HTTPS.
 """
 import stripe
-from django.config import settings
+from django.conf import settings
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY

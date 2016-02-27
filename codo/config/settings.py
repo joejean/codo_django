@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'formtools',
     'campaigns',
+    'payments',
     'bootstrap3',
     'django.contrib.sites',
     'allauth',
@@ -46,6 +47,9 @@ INSTALLED_APPS = (
     'django_countries',
     'embed_video',
     'datetimewidget',
+    'debug_toolbar',
+    'django_wysiwyg',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -209,11 +213,20 @@ USE_L10N = True
 USE_TZ = True 
 USE_I18N = True
 
-# For Stripe
+# Payment Settings
 if 'STRIPE_SECRET_KEY' in os.environ: 
     STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
 else:
     STRIPE_SECRET_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+#This is the list of countries currently supported by Stripe
+AUTHORIZED_ORGANIZER_COUNTRIES = ['AU','CA','DK','FI','IE', 'NO', 'US', 'GB','SE']
+
+#Django WYSIWYG
+DJANGO_WYSIWYG_FLAVOR = "tinymce"
+
+
+
 
 
 
