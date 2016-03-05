@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from model_utils.models import TimeStampedModel
-from codo.campaigns.models import Campaign
+from django_countries.fields import CountryField
 
 class Merchant(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -9,8 +9,8 @@ class Merchant(TimeStampedModel):
     wepay_user_id = models.CharField(null=True, max_length=255)
 
     def __str__(self):
-        return "<Merchant: user id {}. Access Token {}>".format(\
-            self.wepay_user_id, self.access_token)
+        return "<Merchant: wepay user id {}. Access Token {}. User {}>".format(\
+            self.wepay_user_id, self.access_token, self.user.first_name)
 
 class Account(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -23,7 +23,7 @@ class Account(TimeStampedModel):
 
 class DirectDonation(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    campaign = models.ForeignKey(Campaign)
+    campaign = models.ForeignKey('campaigns.Campaign')
     amount = models.DecimalField(max_digits=15, decimal_places=2)
 
 class ConditionalDonation(models.Model):

@@ -24,25 +24,25 @@ class Organizer(models.Model):
     def get_wepay_access_token(self):
         merchant = Merchant.objects.filter(user=self.user)
         if merchant:
-            return merchant.access_token
+            return merchant[0].access_token
         return None
 
     def get_wepay_user_id(self):
         merchant = Merchant.objects.filter(user=self.user)
         if merchant:
-            return merchant.wepay_user_id
+            return merchant[0].wepay_user_id
         return None
 
     def get_wepay_account_id(self):
         account = Account.objects.filter(user=self.user)
         if account:
-            return account.account_id
+            return account[0].account_id
         return None
 
     def get_wepay_account_uri(self):
         account = Account.objects.filter(user=self.user)
         if account:
-            return account.account_uri
+            return account[0].account_uri
         return None
 
 

@@ -224,8 +224,21 @@ USE_TZ = True
 USE_I18N = True
 
 # Payment Settings (with wepay)
-WEPAY_REDIRECT_URI = 'http://localhost:8000/wepay'
-WEPAY_PRODUCTION = False
+if 'WEPAY_REDIRECT_URI' in os.environ: 
+    WEPAY_REDIRECT_URI= os.environ['WEPAY_REDIRECT_URI']
+else:
+    WEPAY_REDIRECT_URI = 'http://localhost:8000/wepay'
+
+if 'WEPAY_DONATION_SUCCESS_REDIRECT_URI' in os.environ: 
+    WEPAY_DONATION_SUCCESS_REDIRECT_URI = os.environ['WEPAY_DONATION_SUCCESS_REDIRECT_URI']
+else:
+    WEPAY_DONATION_SUCCESS_REDIRECT_URI = None
+
+if 'WEPAY_PRODUCTION' in os.environ: 
+    WEPAY_PRODUCTION = os.environ['WEPAY_PRODUCTION']
+else:
+    WEPAY_PRODUCTION = False
+
 if 'WEPAY_CLIENT_SECRET' in os.environ: 
     WEPAY_CLIENT_SECRET = os.environ['WEPAY_CLIENT_SECRET']
 else:
