@@ -27,4 +27,5 @@ urlpatterns = patterns('',
                        url(r'^campaigns/$', views.campaigns),
                        url(r'^campaigns/(?P<id>[0-9]+)$', views.campaigns),
                        url(r'^all_projects/$', views.all_projects),
+                       url(r'^wepay/$', views.wepay_success),
                        )

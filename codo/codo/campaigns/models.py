@@ -8,7 +8,7 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from model_utils import Choices 
 from model_utils.models import TimeStampedModel
-
+from payments.models import Merchant,Account
 
 class Organizer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -20,10 +20,31 @@ class Organizer(models.Model):
     twitter_url = models.URLField(max_length=100)
     website_url = models.URLField(max_length=100)
     dob = models.DateField(default=date.today)
-    stripe_account_id = models.CharField(max_length=100,default='0')
     
-    def has_stripe_account(self):
-        return self.stripe_account_id != "0"
+    def get_wepay_access_token(self):
+        merchant = Merchant.objects.filter(user=self.user)
+        if merchant:
+            return merchant.access_token
+        return None
+
+    def get_wepay_user_id(self):
+        merchant = Merchant.objects.filter(user=self.user)
+        if merchant:
+            return merchant.wepay_user_id
+        return None
+
+    def get_wepay_account_id(self):
+        account = Account.objects.filter(user=self.user)
+        if account:
+            return account.account_id
+        return None
+
+    def get_wepay_account_uri(self):
+        account = Account.objects.filter(user=self.user)
+        if account:
+            return account.account_uri
+        return None
+
 
     def __str__(self):
         return "<Organizer: {}>".format(self.user.first_name)
@@ -37,7 +58,8 @@ class Campaign(TimeStampedModel):
     description = models.TextField()
     video_url = models.URLField(max_length=100)
     picture = models.ImageField(upload_to='campaign_pics')
-    goal_amount = MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
+    goal_amount = models.DecimalField(max_digits=15, decimal_places=2)
+    #MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
     end_date = models.DateField(default=date.today)
     rewards_enabled = models.BooleanField(default=False)
     conditionals_enabled = models.BooleanField(default=False)
@@ -56,26 +78,10 @@ class Campaign(TimeStampedModel):
 class Reward(models.Model):
     campaign = models.ForeignKey(Campaign)
     title = models.CharField(max_length=100)
-    pledge_amount = MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
+    pledge_amount = models.DecimalField(max_digits=15, decimal_places=2)
+    #MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
     number_funders = models.IntegerField()
     description = models.TextField()
     def __str__(self):
         return "<Reward: {}>".format(self.title)
-
-class BankAccount(models.Model):
-
-    """
-    :param: country: Two-letter ISO code representing the country the bank \
-                     account is located in.
-    :param : currency:Three-letter ISO currency code representing the currency\
-                     paid out to the bank account.
-    """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    country = models.CharField(max_length=5)
-    currency = models.CharField(max_length=10)
-    account_number = models.CharField(max_length=150)
-    routing_number = models.CharField(max_length=100, default="000000SS")
-
-    def __str__(self):
-        return "<BankAccount: {}>".format(self.id)
 

@@ -11,7 +11,8 @@ from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
                     AccountInfoForm
-from payments.payment_utils import create_stripe_account
+from payments.payment_utils import create_merchant, create_account
+from payments.models import Merchant
 
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
@@ -25,11 +26,11 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "account_info": "campaigns/account_info.html"}
 
 #Create Campaign Helper function
-def get_organizer(request, account_info):
-    organizer = Organizer.objects.filter(user=request.user)
+def get_organizer(user, account_info):
+    organizer = Organizer.objects.filter(user=user)
     if len(organizer) == 0:
         new_organizer = account_info.save(commit=False)
-        new_organizer.user = request.user
+        new_organizer.user = user
         new_organizer.stripe_account_id = create_stripe_account(new_organizer.email,\
          new_organizer.first_name, new_organizer.last_name, dob, \
          request.META.get('REMOTE_ADDR'), timestamp, \
@@ -50,7 +51,7 @@ class CreateCampaign(NamedUrlSessionWizardView):
         user_conditionals = form_dict.get('user_conditionals', [])
         rewards = form_dict.get('rewards', [])
 
-        organizer = get_organizer(account_info,self.request.user)
+        organizer = get_organizer(self.request.user, account_info)
         campaign = campaign_info.save(commit=False)
         campaign.organizer = organizer
 
@@ -69,7 +70,10 @@ class CreateCampaign(NamedUrlSessionWizardView):
             for reward in new_rewards:
                 reward.campaign = campaign
                 reward.save()
-        
+        merchant = Merchant.objects.filter(user=self.request.user)
+        if not merchant:
+            return redirect('https://stage.wepay.com/v2/oauth2/authorize?client_id=196430&redirect_uri=http://localhost:8000/wepay&scope=manage_accounts,collect_payments,view_user,send_money,preapprove_payments,manage_subscriptions')
+
         return redirect('/campaigns/'+str(campaign.id))
 
 
@@ -111,5 +115,21 @@ def campaigns(request, id=0):
     
 def all_projects(request):
     return render(request, "campaigns/all_projects.html")
+
+def wepay_success(request):
+    code = request.GET.get('code', "")
+    response = create_merchant(code)
+    new_merchant = Merchant()
+    new_merchant.user = request.user
+    new_merchant.access_token = response.get('access_token',"")
+    new_merchant.save()
+    account = create_account(new_merchant.access_token)
+    new_account = Account()
+    new_account.account_id = account.get('account_id',"")
+    new_account.account_uri = account.get('account_uri',"")
+    new_account.save()
+
+    return redirect("/")
+
 
 

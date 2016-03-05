@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django_wysiwyg',
     'tinymce',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -95,6 +96,15 @@ else:
 
         }
     }
+# Cache
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -213,11 +223,18 @@ USE_L10N = True
 USE_TZ = True 
 USE_I18N = True
 
-# Payment Settings
-if 'STRIPE_SECRET_KEY' in os.environ: 
-    STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+# Payment Settings (with wepay)
+WEPAY_REDIRECT_URI = 'http://localhost:8000/wepay'
+WEPAY_PRODUCTION = False
+if 'WEPAY_CLIENT_SECRET' in os.environ: 
+    WEPAY_CLIENT_SECRET = os.environ['WEPAY_CLIENT_SECRET']
 else:
-    STRIPE_SECRET_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+    WEPAY_CLIENT_SECRET = "d08080ea95"
+
+if 'WEPAY_CLIENT_ID' in os.environ: 
+    WEPAY_CLIENT_ID = os.environ['WEPAY_CLIENT_ID']
+else:
+    WEPAY_CLIENT_ID = "196430"
 
 #This is the list of countries currently supported by Stripe
 AUTHORIZED_ORGANIZER_COUNTRIES = ['AU','CA','DK','FI','IE', 'NO', 'US', 'GB','SE']
