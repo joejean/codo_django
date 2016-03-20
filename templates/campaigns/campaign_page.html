@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load embed_video_tags %}
+
+{% block content %}
+      
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>{{campaign.title}}</h2>
+          <img src="{{campaign.picture.url}}" class="img-responsive img-rounded">
+          <p>{{campaign.blurb}}</p>
+        </div>
+        <div class="col-md-4">
+          <h2>&nbsp;</h2>
+          <h3><i class="fa fa-money"></i> $223 <br ><small>Funds Raised</small></h3>
+          <hr>
+          <p><i class="fa fa-flag-o fa-2x"></i> {{campaign.goal_amount}} Goal</p>
+          <p><i class="fa fa-clock-o fa-2x"></i> 20 Days To Go</p>
+          <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+          <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+      
+          <a href="" data-toggle="modal" data-target="#paymentModal" class="col-md-12 btn btn-primary">Fund This Project</a>
+
+          <!-- Payment Modal -->
+          <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Funding Options</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="jumbotron">
+                          <a href="/direct_donation/">
+                          <h4>Make a Direct Donation</h4>
+                          <p>Example: Donate 20 USD.</p>
+                          <hr>
+                            <div>
+                              <button class=" btn btn-primary center-block"><i class="fa fa-check fa-2x"></i></button>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="jumbotron">
+                          <h4>Challenge your community</h4>
+                          <p>Example: I will donate 20 AED only if 10 people donate 20 AED each.</p>
+                          <a href="/">
+                            <div>
+                              <hr>
+                              <p class="text-center"><i class="fa fa-caret-down fa-2x"></i></p>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="jumbotron">
+                          <h4>Challenge your friends</h4>
+                          <p>Example: I will donate 20 AED if Bob donates 20 aed.</p>
+                          <a href="/">
+                            <div>
+                              <hr>
+                              <p class="text-center"><i class="fa fa-caret-down fa-2x"></i></p>
+                            </div>
+                          </a>
+                        </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+          
+          <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
+          
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <h2>Product Info</h2>
+          <p>{{campaign.description}}</p>
+          
+          {% video campaign.video_url 'medium' %}
+
+          <!-- <iframe class="center-block" width="560" height="315" src="{{campaign.video_url}}" frameborder="0" allowfullscreen></iframe> -->
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. </p>
+
+
+        </div>
+        <div class="col-md-4">
+        {% if rewards %}
+          <h2>Rewards</h2>
+          {% for reward in rewards %}
+            <div class="jumbotron">
+               <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td colspan="2" class="text-center"><strong>{{ reward.title }}</strong></td> 
+                    </tr>
+                    <tr>
+                      <td>{{reward.pledge_amount}}</td>
+                      <td rowspan="2">{{reward.description}}
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td>{{ reward.number_funders }} Funders</td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+       
+          <h2>About the Creator</h2>
+          <img src="{{campaign.organizer.profile_picture.url}}" class="img-rounded img-responsive pull-left" width="100px" height="100px">
+          <p>{{campaign.organizer.short_bio}}</p>
+          
+        </div>
+
+      </div>
+
+    </div>
+
+{% endblock %}
