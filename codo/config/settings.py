@@ -132,8 +132,6 @@ STATIC_URL = '/static/'
 
 # Templates 
 
-TEMPLATE_DEBUG = True
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

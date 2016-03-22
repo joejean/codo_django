@@ -8,7 +8,7 @@
     <header>
         <div class="container">
           <p class="intro-text">Inroducing Codo</p>
-          <p class="intro-sub-text">Crowdfunding with Strings attached <a href="/new_campaign" class="btn btn-red text-uppercase">Start Your Campaign</a></p>
+          <p class="intro-sub-text">Crowdfunding with Strings attached <a href=" {% url 'new_campaign' %}" class="btn btn-red text-uppercase">Start Your Campaign</a></p>
         </div>
     </header>
     <!-- what's new with codo -->
@@ -53,7 +53,7 @@
             <h4>Trending Projects</h4>
           </div>
           <div class="col-md-4">
-             <a href="/all_projects" class="btn btn-default pull-right text-uppercase">view All Projects</a>
+             <a href="{% url 'campaigns_list' %}" class="btn btn-default pull-right text-uppercase">view All Projects</a>
           </div>
         </div>
         <div class="col-md-4">

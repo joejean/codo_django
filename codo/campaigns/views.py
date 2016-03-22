@@ -113,9 +113,6 @@ def campaigns(request, id=0):
         return render(request,"campaigns/campaign_page.html",\
          {'campaign':campaign, 'rewards': rewards})
 
-    
-def all_projects(request):
-    return render(request, "campaigns/all_projects.html")
 
 def wepay_success(request):
     code = request.GET.get('code', "")
