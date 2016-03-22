@@ -11,3 +11,4 @@ media/*
 *.pyc
 */__pycache__/*
 
+selenium/

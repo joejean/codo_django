@@ -8,6 +8,6 @@ urlpatterns = patterns('',
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/', include('allauth.urls')),
-                       url(r'^$', views.home, name='index'),
+                       url(r'^$', views.index, name='index'),
                        url(r'^campaigns/', include('campaigns.urls')),
                        )

@@ -96,7 +96,7 @@ class CampaignFormPreview(FormPreview):
         return redirect('/')
 
 
-def home(request):
+def index(request):
     return render(request, "campaigns/index.html")
 
 def campaigns(request, id=0):

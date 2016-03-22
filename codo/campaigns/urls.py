@@ -12,7 +12,7 @@ campaign_wizard = login_required(views.CreateCampaign.as_view(views.FORMS,
 
 
 urlpatterns = patterns('',
-                       url(r'^$', views.home),
+                       url(r'^$', views.index),
                        url(r'^new_campaign/(?P<step>.+)/$', campaign_wizard, name='campaign_step'),
                        url(r'^new_campaign/$', campaign_wizard, name='new_campaign'),
                        url(r'^all_campaigns/$', views.campaigns, name='campaigns_list'),
