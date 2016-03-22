@@ -82,6 +82,7 @@ class Reward(models.Model):
     #MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
     number_funders = models.IntegerField()
     description = models.TextField()
+    
     def __str__(self):
         return "<Reward: {}>".format(self.title)
 
