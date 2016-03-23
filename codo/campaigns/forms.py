@@ -3,7 +3,7 @@ from .models import Reward, Campaign, Organizer
 from config import settings
 from django_countries.widgets import CountrySelectWidget
 from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
-
+from bootstrap3_datetime.widgets import DateTimePicker
 
 
 class BaseRewardFormSet(forms.BaseModelFormSet):
@@ -29,7 +29,8 @@ class AccountInfoForm(forms.ModelForm):
                     'facebook_url', 'twitter_url', 'website_url', 'dob']
         widgets = {
             'country': CountrySelectWidget(),
-            'dob': forms.DateInput(format='%d-%m-%Y')
+            'dob': DateTimePicker(options={"format": "YYYY-MM-DD",
+                                       "pickTime": False})
         }
 
 class CampaignInfoForm(forms.ModelForm):
@@ -39,8 +40,10 @@ class CampaignInfoForm(forms.ModelForm):
          'picture', 'goal_amount', 'end_date', 'rewards_enabled','conditionals_enabled']
         widgets = {
             'category': forms.widgets.Select(choices=[('art','Art'),('test','Test')]),
-            'end_date': forms.DateInput(format='%d-%m-%Y')
+            'end_date': DateTimePicker(options={"format": "YYYY-MM-DD",
+                                       "pickTime": False})  
         }
+        
 class UserConditionalsForm(forms.ModelForm):
     class Meta:
         model = Campaign

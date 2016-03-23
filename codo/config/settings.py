@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django_wysiwyg',
     'tinymce',
+    'bootstrap3_datetime',
     
 )
 

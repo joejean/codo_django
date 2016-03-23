@@ -2,7 +2,6 @@
 
 {% load staticfiles %}
 {% load widget_tweaks %}
-
 {% block content %}
   <div class="jumbotron yellow-jumbotron">
     <div class="container">
@@ -171,5 +170,6 @@
 
 {% block javascript %}
 {{block.super}}
+{{wizard.form.media}}
 <script src="{% static 'bootstrap/js/create_campaign.js' %}"></script>
 {% endblock %}
