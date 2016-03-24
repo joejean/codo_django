@@ -3,6 +3,8 @@ from django.conf import settings
 from model_utils.models import TimeStampedModel
 from django_countries.fields import CountryField
 
+
+
 class Merchant(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     access_token = models.CharField(null=True, max_length=255)

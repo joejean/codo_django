@@ -13,5 +13,5 @@ class HomePageTest(TestCase):
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = index(request)
-        expected_html = render_to_string('campaigns/index.html')
         self.assertTrue(response.content.decode(), expected_html)
+        expected_html = render_to_string('campaigns/index.html')

@@ -1,0 +1,101 @@
+@import "bootstrap/bootstrap.less";
+@import "variables.less";
+@import "mixins.less";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  padding-top: 50px;
+  margin-bottom: @footer-height;
+}
+
+header {
+    background-image: url('../../img/home-header.jpg');
+    background-repeat: none;
+    background-attachment: scroll;
+    background-position: center center;
+    .background-cover;
+    width: 100%;
+    height: 550px;
+    color: white;
+    .intro-text {
+        padding-top: 400px;
+        padding-bottom: 5px;
+        font-size: 42px;
+        line-height: 25px;
+        font-weight: bold;
+    }
+    .intro-sub-text {
+        font-size: 34px;    
+    }
+}
+
+//Panel Styles for FUnding Options Panel //
+
+.panel-heading span
+{
+    margin-top: -26px;
+    font-size: 15px;
+    margin-right: -12px;
+}
+
+.clickable {
+    background: rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+//Buttons
+.btn-red {
+  .button-variant(@btn-red-color; @btn-red-bg; @btn-red-border);
+}
+.btn-green {
+  .button-variant(@btn-green-color; @btn-green-bg; @btn-green-border);
+}
+.btn-yellow {
+  .button-variant(@btn-yellow-color; @btn-yellow-bg; @btn-yellow-border);
+}
+
+
+//Jumbotrons
+.yellow-jumbotron{
+    background-color: @yellow-jumbotron-bg;
+}
+
+.faq-jumbotron{
+    margin-top: 40px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 25px 0;
+    background-color: @footer-background-color;
+    height: @footer-height;
+    ul {
+        list-style: none;
+        li{
+            h5 {
+                color: white;
+                font-weight: bold;
+            }
+            a{
+                color: @footer-link-color;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    color: white;
+                    outline: none;
+                }
+            }
+        }
+    } 
+}

@@ -14,8 +14,14 @@
 
     <div class="container">
         {% if checkout_uri %}
-            <div class="row">
-                <div class="col-md-12" id="wepay_checkout"></div>
+
+            <!-- 16:9 aspect ratio -->
+<!-- <div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="..."></iframe>
+</div> -->
+
+            <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive-item" id="wepay_checkout"></div>
             </div>
         {% else %}
         <form class="form form-horizontal" method="POST" enctype="multipart/form-data" action="">

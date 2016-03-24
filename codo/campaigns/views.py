@@ -2,18 +2,21 @@ import os
 from django.conf import settings
 from django.core import serializers 
 from django.core.files.storage import FileSystemStorage
+from django.core.urlresolvers import reverse 
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from formtools.preview import FormPreview
 from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
-from .models import Campaign, Organizer, Reward
-from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
-                    AccountInfoForm
 from payments.forms import DirectDonationForm
 from payments.payment_utils import create_wepay_merchant, create_wepay_account, wepay_checkout
 from payments.models import Merchant, Account
+from .models import Campaign, Organizer, Reward
+from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
+                    AccountInfoForm
+from .utils import get_organizer, wepay_returns_error, process_wepay_error
+
 
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
@@ -26,17 +29,7 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "rewards": "campaigns/rewards.html",
              "account_info": "campaigns/account_info.html"}
 
-#Create Campaign Helper function
-def get_organizer(user, account_info):
-    organizer = Organizer.objects.filter(user=user)
-    if len(organizer) == 0:
-        new_organizer = account_info.save(commit=False)
-        new_organizer.user = user
-        new_organizer.save()
-    else:
-        new_organizer = organizer[0]
 
-    return new_organizer
 
 class CreateCampaign(NamedUrlSessionWizardView):
     def get_template_names(self):
@@ -117,15 +110,11 @@ def campaigns(request, id=0):
 def wepay_success(request):
     code = request.GET.get('code', "")
     response = create_wepay_merchant(code)
-    print('CREATE MERCHANT')
-    print(response)
     new_merchant = Merchant()
     new_merchant.user = request.user
     new_merchant.access_token = response.get('access_token',"")
     new_merchant.save()
     account = create_wepay_account(new_merchant.access_token)
-    print('PRINTING ACCOUNT')
-    print(account)
     new_account = Account()
     new_account.user = request.user
     new_account.account_id = account.get('account_id',"")
@@ -150,13 +139,16 @@ def direct_donation(request):
     if request.method == 'POST':
         amount = request.POST.get('amount', "")
         response = wepay_checkout(access_token, account_id, amount, campaign_title)
-        response = response.get('hosted_checkout')
-        print(response)
-        return render(request, 'payments/direct_donation.html',\
-        {'checkout_uri':response.get('checkout_uri')} )
+        if wepay_returns_error(response):
+            return process_wepay_error(request, response)
+        else:
+            response = response.get('hosted_checkout')
+            return render(request, 'payments/direct_donation.html',\
+            {'checkout_uri':response.get('checkout_uri')} )
 
     
-
+def error(request):
+    return render(request, 'campaigns/error.html')
 
 
 

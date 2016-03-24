@@ -21,18 +21,27 @@
           <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
           <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
       
-          <a href="" data-toggle="modal" data-target="#paymentModal" class="col-md-12 btn btn-primary">Fund This Project</a>
+          <button id="fundprojectBtn" href=""  class="col-md-12 btn btn-primary">Fund This Project</button>
 
-          <!-- Payment Modal -->
-          <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Funding Options</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
+          <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
+          
+        </div>
+
+      </div>
+      <!-- New Payment Panel -->
+      <div class="row paymentPanel">
+        <div class="col-md-12">
+                    
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Funding Options</h3>
+                    <!-- Watch Out: Here We must use the effect name in the data tag-->
+              <span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>
+            
+
+            </div>
+            <div class="panel-body">
+              <div class="row">
                     <div class="col-md-12">
                         <div class="jumbotron">
                           <a href="{% url 'direct_donation' %}">
@@ -66,24 +75,14 @@
                         </div>
                     </div>
                     
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
               </div>
             </div>
           </div>
-
-        
-          
-          <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
-          
         </div>
-
       </div>
 
-      <div class="row">
+     <!--  Project info part including Video -->
+      <div class="row campaignDescription">
         <div class="col-md-8">
           <h2>Product Info</h2>
           <p>{{campaign.description}}</p>
@@ -135,4 +134,9 @@
 
     </div>
 
+{% endblock %}
+
+{% block javascript %}
+  {{super}}
+  <script data-main="{% static 'bootstrap/js/helper/campaign_page' %}" src="{% static 'bootstrap/js/require.js' %}"></script>
 {% endblock %}

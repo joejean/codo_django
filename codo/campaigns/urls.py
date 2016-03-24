@@ -19,4 +19,5 @@ urlpatterns = patterns('',
                        url(r'^campaign/(?P<id>[0-9]+)$', views.campaigns, name='single_campaign'),
                        url(r'^wepay/$', views.wepay_success, name="wepay_redirect"),
                        url(r'^direct_donation/$', views.direct_donation, name="direct_donation"),
+                       url(r'^error/$', views.error, name="campaign_error"),
                        )

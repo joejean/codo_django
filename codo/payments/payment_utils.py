@@ -36,6 +36,9 @@ def wepay_checkout(access_token, account_id, amount, campaign_title):
     'short_description': 'Contribution to Codo\'s {}'.format(campaign_title),
     'type': 'donation',
     'currency': 'USD',
+    'hosted_checkout':  {
+        "mode": "iframe"
+        },
     }
     if redirect_uri is not None:
         parameters['callback_uri'] = redirect_uri
