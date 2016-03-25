@@ -1,0 +1,1 @@
+## Documentation for Crowdfunding Platform Which Supports conditional Donation
