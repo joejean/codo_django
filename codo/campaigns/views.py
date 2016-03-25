@@ -4,9 +4,11 @@ from django.core import serializers
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse 
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import UpdateView
 from formtools.preview import FormPreview
 from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from payments.forms import DirectDonationForm
@@ -14,20 +16,21 @@ from payments.payment_utils import create_wepay_merchant, create_wepay_account, 
 from payments.models import Merchant, Account
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
-                    AccountInfoForm
+                    OrganizerInfoForm
 from .utils import get_organizer, wepay_returns_error, process_wepay_error
+
 
 
 FORMS = [("campaign_info", CampaignInfoForm),
          ("user_conditionals", UserConditionalsForm),
          ("rewards", RewardFormSet),
-         ("account_info", AccountInfoForm)]
+         ("organizer_info", OrganizerInfoForm)]
 
 
 TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "user_conditionals": "campaigns/user_conditionals.html",
              "rewards": "campaigns/rewards.html",
-             "account_info": "campaigns/account_info.html"}
+             "organizer_info": "campaigns/organizer_info.html"}
 
 
 
@@ -67,20 +70,7 @@ class CreateCampaign(NamedUrlSessionWizardView):
         return redirect('/campaigns/'+str(campaign.id))
 
 
-def show_reward_form(wizard):
-    # try to get the cleaned data of step 1
-    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
-    # check if the field ``enable reward`` was checked.
-    return cleaned_data.get('rewards_enabled', True)
-
-
-def show_conditionals_form(wizard):
-    # try to get the cleaned data of step 1
-    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
-    # check if the field ``enable reward`` was checked.
-    return cleaned_data.get('conditionals_enabled', True)
-
-
+# TODO: See if I can preview the above form before saving it
 class CampaignFormPreview(FormPreview):
 
     def done(self, request, cleaned_data):
@@ -89,23 +79,50 @@ class CampaignFormPreview(FormPreview):
         return redirect('/')
 
 
+class CampaignsList(ListView):
+    model = Campaign
+    # This is not mandatory as long as the template name follows the
+    # pattern <model_name>_list.html
+    template_name = 'campaigns/campaign_list.html'
+    context_object_name = 'campaigns'
+
+class CampaignDetail(DetailView):
+    model = Campaign
+    template_name = 'campaigns/campaign_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CampaignDetail, self).get_context_data(**kwargs)
+        self.request.session['campaign_id'] = int(self.kwargs['pk'])
+        # Add more stuff to the context dictionary here if need be
+        return context
+
+class ProfileDetail(DetailView):
+    model = Organizer
+    template_name = 'campaigns/profile_detail.html'
+
+class OrganizerProfileUpdate(UpdateView):
+    model = Organizer
+    form_class = OrganizerInfoForm
+    template_name_suffix = '_update_form'
+    #Only let organizers(users) update their own profile
+    def user_passes_test(self, request):
+        if request.user.is_authenticated():
+            self.object = self.get_object()
+            return self.object.user == request.user
+        return False
+
+    def dispatch(self, request, *args, **kwargs):
+        #Redirect organizer(user) to their own profile if they try to access
+        #another organizer's profile
+        if not self.user_passes_test(request):
+            return redirect(reverse('profile_update',kwargs={'pk':request.user.id}))
+        return super(OrganizerProfileUpdate, self).dispatch(
+            request, *args, **kwargs)
+
+
+
 def index(request):
-    return render(request, "campaigns/index.html")
-
-def campaigns(request, id=0):
-    if id == 0:
-        campaigns = serializers.serialize("json", Campaign.objects.all())
-        return HttpResponse(campaigns)
-    else:
-        campaign = get_object_or_404(Campaign,id=int(id))
-        request.session['campaign_id'] = campaign.id
-        request.session['campaign_title'] = campaign.title
-        request.session['account_id'] = campaign.organizer.get_wepay_account_id() 
-        request.session['access_token'] = campaign.organizer.get_wepay_access_token()
-        rewards = campaign.reward_set.all()
-        return render(request,"campaigns/campaign_page.html",\
-         {'campaign':campaign, 'rewards': rewards})
-
+    return render(request, "campaigns/index.html") 
 
 def wepay_success(request):
     code = request.GET.get('code', "")
@@ -125,20 +142,18 @@ def wepay_success(request):
 def direct_donation(request):
     if request.session.get('campaign_id',""):
         campaign_id = request.session['campaign_id']
-    if request.session.get('campaign_title'):
-        campaign_title = request.session['campaign_title']
-    if request.session.get('access_token'):
-        access_token = request.session['access_token']
-    if request.session.get('account_id'):
-        account_id = request.session['account_id']
-
+        campaign = get_object_or_404(Campaign, pk=campaign_id)
+        access_token = campaign.organizer.get_wepay_access_token()
+        account_id = campaign.organizer.get_wepay_account_id()
+    else:
+        return Http404("Campaign does not exist")
     if request.method == 'GET':
         direct_donation_form = DirectDonationForm()
         return render(request, 'payments/direct_donation.html',\
-         {'campaign_title':campaign_title,'form':direct_donation_form})
+         {'campaign_title':campaign.title,'form':direct_donation_form})
     if request.method == 'POST':
         amount = request.POST.get('amount', "")
-        response = wepay_checkout(access_token, account_id, amount, campaign_title)
+        response = wepay_checkout(access_token, account_id, amount, campaign.title)
         if wepay_returns_error(response):
             return process_wepay_error(request, response)
         else:

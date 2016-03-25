@@ -99,9 +99,9 @@
 
         </div>
         <div class="col-md-4">
-        {% if rewards %}
+        {% if campaign.reward_set.all.count > 0 %}
           <h2>Rewards</h2>
-          {% for reward in rewards %}
+          {% for reward in campaign.reward_set.all %}
             <div class="jumbotron">
                <div class="table-responsive">
                   <table class="table table-bordered">
@@ -122,7 +122,7 @@
             </div>
           {% endfor %}
         {% endif %}
-
+      
        
           <h2>About the Creator</h2>
           <img src="{{campaign.organizer.profile_picture.url}}" class="img-rounded img-responsive pull-left" width="100px" height="100px">

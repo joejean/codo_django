@@ -50,7 +50,7 @@
                     <ul class="dropdown-menu">
                         <li><a>{{user.first_name}}</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">(Public) Profile</a></li>
+                        <li><a href="{% url 'profile_detail' pk=user.id %}">Profile</a></li>
                         <li><a href="#">Campaigns</a></li>
                         <li><a href="#">Backed Campaigns</a></li>
                         <li><a href="#">Starred Campaigns</a></li>

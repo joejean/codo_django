@@ -22,7 +22,7 @@ class SignupForm(forms.Form):
         user.save()
 
 
-class AccountInfoForm(forms.ModelForm):
+class OrganizerInfoForm(forms.ModelForm):
     class Meta:
         model = Organizer
         fields = ['country', 'phone_number', 'short_bio', 'profile_picture',
@@ -30,7 +30,7 @@ class AccountInfoForm(forms.ModelForm):
         widgets = {
             'country': CountrySelectWidget(),
             'dob': DateTimePicker(options={"format": "YYYY-MM-DD",
-                                       "pickTime": False})
+                                            "pickTime": False})
         }
 
 class CampaignInfoForm(forms.ModelForm):
@@ -41,9 +41,9 @@ class CampaignInfoForm(forms.ModelForm):
         widgets = {
             'category': forms.widgets.Select(choices=[('art','Art'),('test','Test')]),
             'end_date': DateTimePicker(options={"format": "YYYY-MM-DD",
-                                       "pickTime": False})  
+                                                "pickTime": False})  
         }
-        
+
 class UserConditionalsForm(forms.ModelForm):
     class Meta:
         model = Campaign

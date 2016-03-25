@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+            <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                                {% if organizer.profile_picture %}
+                                <img src="{{organizer.profile_picture.url}}" alt="" class="center-block img-circle img-responsive">
+                                {% else %}
+                                <img src="{% static 'img/default-avatar.png' %}" alt="" class="center-block img-circle img-responsive">
+                                {% endif %}
+                                
+                        </div><!--/col--> 
+                      
+                      
+                        <div class="col-xs-12 col-sm-8">
+                            <h2>{{organizer.user.first_name}} {{organizer.user.last_name}}</h2>
+                            <p><strong>About: </strong> Web Designer / UI. </p>
+                            <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
+                            <p><strong>Skills: </strong>
+                                <span class="label label-info tags">html5</span> 
+                                <span class="label label-info tags">css3</span>
+                                <span class="label label-info tags">jquery</span>
+                                <span class="label label-info tags">bootstrap3</span>
+                            </p>
+                        </div><!--/col-->          
+                       
+
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong> 20,7K </strong></h2>                    
+                            <p><small>Followers</small></p>
+                            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>245</strong></h2>                    
+                            <p><small>Following</small></p>
+                            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>43</strong></h2>                    
+                            <p><small>Snippets</small></p>
+                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
+                        </div><!--/col-->
+                    </div><!--/row-->
+
+            </div><!--/panel-body-->
+            {% if organizer.user == user %}
+                <div class="panel-footer">
+                <a href="{% url 'profile_update' pk=user.id %}" class="btn btn-red">Update Profile</a>
+                </div>
+            {% endif %}
+        
+          </div><!--/panel-->
+
+    
+    
+    </div>
+  </div>
+</div>
+
+{% endblock %}

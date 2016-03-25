@@ -33,3 +33,19 @@ def process_wepay_error(request, wepay_response):
         return redirect(reverse('campaign_error'))
 
     #TODO: Implement more error checking/processing
+
+# Return true if user selected 'rewards_enabled' in previous step
+# false otherwise
+def show_reward_form(wizard):
+    # try to get the cleaned data of step 1
+    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
+    # check if the field ``enable reward`` was checked.
+    return cleaned_data.get('rewards_enabled', True)
+
+# Return true if user selected 'conditionals_enabled' in previous step
+# false otherwise
+def show_conditionals_form(wizard):
+    # try to get the cleaned data of step 1
+    cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
+    # check if the field ``enable reward`` was checked.
+    return cleaned_data.get('conditionals_enabled', True)
