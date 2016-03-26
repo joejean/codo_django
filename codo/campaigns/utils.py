@@ -49,3 +49,8 @@ def show_conditionals_form(wizard):
     cleaned_data = wizard.get_cleaned_data_for_step('campaign_info') or {}
     # check if the field ``enable reward`` was checked.
     return cleaned_data.get('conditionals_enabled', True)
+
+def show_organizer_info_form(user):
+    organizer = Organizer.objects.filter(user=user)
+    return organizer[0].phone_number is None
+

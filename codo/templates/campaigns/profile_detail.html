@@ -22,38 +22,35 @@
                       
                         <div class="col-xs-12 col-sm-8">
                             <h2>{{organizer.user.first_name}} {{organizer.user.last_name}}</h2>
-                            <p><strong>About: </strong> Web Designer / UI. </p>
-                            <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-                            <p><strong>Skills: </strong>
-                                <span class="label label-info tags">html5</span> 
-                                <span class="label label-info tags">css3</span>
-                                <span class="label label-info tags">jquery</span>
-                                <span class="label label-info tags">bootstrap3</span>
+                            <p><strong>About: </strong>{{organizer.short_bio}}</p>
+                            <p><strong>Country: </strong>{{organizer.country.name}}</p>
+                            <p><strong>Links</strong></p>
+                            <p>
+                                <a href="{{organizer.twitter_url}}" target="_blank"><i class="fa fa-twitter fa-4x"></i></a>
+                                <a href="{{organizer.facebook_url}}" target="_blank"><i class="fa fa-facebook fa-4x" target="_blank"></i></a>
+                                <a href="{{organizer.website_url}}" target="_blank"><i class="fa fa-globe fa-4x"></i></a>
                             </p>
                         </div><!--/col-->          
                        
-
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong> 20,7K </strong></h2>                    
-                            <p><small>Followers</small></p>
-                            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                    </div> <!-- row -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <h2><strong> 12 </strong></h2>                    
+                            <p><small>Campaigns</small></p>
+                            <button class="btn btn-warning btn-block"><span class="fa fa-plus-circle"></span> View Campaigns</button>
                         </div><!--/col-->
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong>245</strong></h2>                    
-                            <p><small>Following</small></p>
-                            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                        <div class="col-xs-12 col-sm-6">
+                            <h2><strong> 12 </strong></h2>                    
+                            <p><small>Backed Campaigns</small></p>
+                            <button class="btn btn-warning btn-block"><span class="fa fa-plus-circle"></span> View Backed Campaigns</button>
                         </div><!--/col-->
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong>43</strong></h2>                    
-                            <p><small>Snippets</small></p>
-                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
-                        </div><!--/col-->
+                        
                     </div><!--/row-->
 
             </div><!--/panel-body-->
             {% if organizer.user == user %}
                 <div class="panel-footer">
-                <a href="{% url 'profile_update' pk=user.id %}" class="btn btn-red">Update Profile</a>
+                <a href="{% url 'profile_update' pk=user.organizer.id %}" class="btn btn-red">Update Profile</a>
                 </div>
             {% endif %}
         
@@ -66,3 +63,4 @@
 </div>
 
 {% endblock %}
+

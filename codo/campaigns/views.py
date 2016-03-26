@@ -15,10 +15,11 @@ from payments.forms import DirectDonationForm
 from payments.payment_utils import create_wepay_merchant, create_wepay_account, wepay_checkout
 from payments.models import Merchant, Account
 from .models import Campaign, Organizer, Reward
-from .forms import CampaignInfoForm,UserConditionalsForm, RewardFormSet,\
+from .forms import CampaignInfoForm, UserConditionalsForm, RewardFormSet,\
                     OrganizerInfoForm
 from .utils import get_organizer, wepay_returns_error, process_wepay_error
-
+from .utils import (show_reward_form, show_conditionals_form,
+                    show_organizer_info_form)
 
 
 FORMS = [("campaign_info", CampaignInfoForm),
@@ -35,6 +36,11 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
 
 
 class CreateCampaign(NamedUrlSessionWizardView):
+    condition_dict={
+            'rewards':show_reward_form,
+            'user_conditionals':show_conditionals_form,
+            'organizer_info': lambda w:(show_organizer_info_form(w.request.user)),
+            }
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
@@ -100,10 +106,10 @@ class ProfileDetail(DetailView):
     model = Organizer
     template_name = 'campaigns/profile_detail.html'
 
-class OrganizerProfileUpdate(UpdateView):
+class ProfileUpdate(UpdateView):
     model = Organizer
     form_class = OrganizerInfoForm
-    template_name_suffix = '_update_form'
+    template_name = 'campaigns/profile_update.html'
     #Only let organizers(users) update their own profile
     def user_passes_test(self, request):
         if request.user.is_authenticated():
@@ -116,7 +122,7 @@ class OrganizerProfileUpdate(UpdateView):
         #another organizer's profile
         if not self.user_passes_test(request):
             return redirect(reverse('profile_update',kwargs={'pk':request.user.id}))
-        return super(OrganizerProfileUpdate, self).dispatch(
+        return super(ProfileUpdate, self).dispatch(
             request, *args, **kwargs)
 
 

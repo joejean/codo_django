@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'django_wysiwyg',
     'tinymce',
     'bootstrap3_datetime',
+    'annoying',
     
 )
 

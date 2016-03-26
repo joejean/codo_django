@@ -9,17 +9,22 @@ from phonenumber_field.modelfields import PhoneNumberField
 from model_utils import Choices 
 from model_utils.models import TimeStampedModel
 from payments.models import Merchant,Account
+from django.core.urlresolvers import reverse
+from annoying.fields import AutoOneToOneField
 
 class Organizer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = AutoOneToOneField(settings.AUTH_USER_MODEL)
     country = CountryField(blank_label='(select country)')
-    phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField(blank=True)
     short_bio = models.TextField()
     profile_picture = models.ImageField(upload_to='profile_pics')
     facebook_url = models.URLField(max_length=100)
     twitter_url = models.URLField(max_length=100)
     website_url = models.URLField(max_length=100)
     dob = models.DateField(default=date.today)
+
+    def get_absolute_url(self):
+        return reverse('profile_detail', kwargs={'pk': self.pk})
     
     def get_wepay_access_token(self):
         merchant = Merchant.objects.filter(user=self.user)
