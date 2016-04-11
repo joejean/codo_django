@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'formtools',
     'campaigns',
     'payments',
+    'challenges',
     'bootstrap3',
     'django.contrib.sites',
     'allauth',
@@ -52,6 +53,7 @@ INSTALLED_APPS = (
     'tinymce',
     'bootstrap3_datetime',
     'annoying',
+    'autofixture',
     
 )
 
