@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
-
+from django.contrib.auth import get_user_model
 
 def logAmount(ip,port,user,campaign,amount,challenges):
 	'''@param campaign can be a campaign id or a campaign object'''
@@ -15,6 +15,11 @@ def logAmount(ip,port,user,campaign,amount,challenges):
 #     session.merge(Survey(*survey))
 #     session.commit()
 #     session.close()
+
+
+def get_user_from_username(username):
+	User = get_user_model()
+	return User.objects.filter(username=username)[0]
 
 def get_full_name(user):
 	return user.first_name +" "+user.last_name

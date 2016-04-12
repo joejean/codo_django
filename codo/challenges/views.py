@@ -5,7 +5,7 @@ from .solver import *
 from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from .utils import logAmount, logVisit, addMember, makeGroup, addToGroup,\
-					addCondition, addChallengeLinks, param_error
+					addCondition, addChallengeLinks, param_error, get_user_from_username
 from ipware.ip import get_real_ip
 from copy import deepcopy
 import sys
@@ -19,13 +19,12 @@ def user_challenges_info(request):
 			return param_error("campaign")
 		hasDon, donCon, donAmt, impact = hasDonation(request.user, campaign)
 		return JsonResponse({
-		"user" = request.user.username,
-		"has_donation" = str(hasDon).lower(),
-		"donation_amt" = donAmt,
-		"impact" = impact,
-		"donation_condition" = donCon,
+		"user":request.user.username,
+		"has_donation":str(hasDon).lower(),
+		"donation_amt":donAmt,
+		"impact":impact,
+		"donation_condition":donCon,
 		})
-	   
 
 def rippler(request):
 	if request.method == "POST":
@@ -76,10 +75,7 @@ def rippler(request):
 			highest = int(request.POST.get("highest"))
 			lowest = int(request.POST.get("lowest"))
 			stepsize = int(request.POST.get("stepsize"))
-			campaign = request.POST.get('campaign')
-			if campaign is None:
-				return param_error("campaign")
-			return JsonResponse({"impactPoints":highestImpact(user, lowest, highest, stepsize, campaign)})
+			return JsonResponse({"impactPoints":highestImpact(user, lowest, highest, stepsize)})
 
 		# Query for hypothetical or process donation
 		if action == "processDonation":
@@ -91,10 +87,10 @@ def rippler(request):
 			impact = change['total']-after[user]
 			percent = impact/after[user] * 100 if after[user] else 0
 			if request.POST.get('state') == "submit":
-				#TODO: Remove System Here
-				submitDonation(request.user,request.POST['donation'], request.POST['system'])
+				
+				submitDonation(request.user, request.POST['campaign'],request.POST['donation'])
 				if request.POST.get('challengees') != '':
-					addChallengeLinks(request.user,request.POST['challengees'],request.POST['donation'])
+					addChallengeLinks(request.user,request.POST['challengees'],request.POST['donation'],request.POST['campaign'])
 			return JsonResponse({"before":before, "after":after, "change":change, "impact": impact, "percent": percent })
 
 		# List all users
@@ -116,7 +112,10 @@ def rippler(request):
 
 		if action == "getNetwork":
 			user = request.user
-			return JsonResponse({'links':getNetwork(user)})
+			campaign = request.POST.get('campaign')
+			if campaign is None:
+				return param_error("campaign")
+			return JsonResponse({'links':getNetwork(user, campaign)})
 
 		if action == "getRipples":
 			user = request.user
@@ -150,13 +149,15 @@ def getMembers():
 	result = Identifier.objects.filter(category="member")
 	return result
 
-#TODO: Need to modify this to take the campaign into account
-def getNetwork(user):
-	lines = ChallengeLink.objects.filter(Q(challenger=user) | Q(challengee=user))
+
+def getNetwork(user, campaign):
+	links = ChallengeLink.objects.filter(Q(challenger=user) | Q(challengee=user))
+	lines = links.filter(campaign=campaign)
 	result = [{'challenger':row.challenger, 'challengee':row.challengee, 'condition':row.pledge} for row in lines]
 	return result
 
 def checkChallengeString(user):
+	'''Get all standing challenges for a user for all campaigns'''
 	relevant =  Condition.objects.none()
 	for row in Membership.objects.filter(member=user.username):
 		group = row.group_name
@@ -196,51 +197,52 @@ def getRipples(user,lowest,highest,stepsize):
 	return activation_points
 
 
-def nResolvedConditions():
-	result = len(Condition.objects.exclude(resolved=0))
+def nResolvedConditions(campaign):
+	result = Condition.objects.exclude(resolved=0).filter(campaign=campaign)
+	return len(result)
+
+def nUnresolvedConditions(campaign):
+	result = Condition.objects.filter(resolved=0, campaign=campaign)
+	return len(result)
+
+def currentTotal(campaign):
+	resolved_conditions = Condition.objects.exclude(resolved=0).filter(campaign=campaign)
+	result = sum([x[0] for x in resolved_conditions ])
 	return result
 
-def nUnresolvedConditions():
-	result = len(Condition.objects.filter(resolved=0))
-	return result
-
-def currentTotal():
-	result = sum([x[0] for x in Condition.objects.exclude(resolved=0)])
-	return result
-
-def listUnresolvedConditions():
-	unresolved = Condition.objects.filter(resolved=0)
+def listUnresolvedConditions(campaign):
+	unresolved = Condition.objects.filter(resolved=0, campaign=campaign)
 	result = [item.user.username + " " + item.pledge for item in unresolved]
 	return result
 
-def lastNResolved(n):
-	result = Condition.objects.exclude(resolved=0).order_by('-changed_on')[:n]
+def lastNResolved(n, campaign):
+	result = Condition.objects.exclude(resolved=0).filter(campaign=campaign).order_by('-changed_on')[:n]
 	return [{'name':row.user.username, 'donation': row.resolved} for row in result] 
 
-def lastNUnresolved(n):
-	result = Condition.objects.filter(resolved=0).order_by('-changed_on')[:n]
+def lastNUnresolved(n, campaign):
+	result = Condition.objects.filter(resolved=0,campaign=campaign).order_by('-changed_on')[:n]
 	return result
 
 # return <true/false, donation string, resolved?>
 def hasDonation(user, campaign):
 	row = Condition.objects.filter(user=user, campaign=campaign).first()
-	impactrow = Log.objects.filter(user=user).first()
+	impactrow = Log.objects.filter(user=user, campaign=campaign).first()
 	return (True, row.pledge, row.resolved, impactrow.impact if impactrow else 0) if row else (False, '', 0, 0)
 
 
 #TODO: Special Attention
-def markThoseResolved():
+def markThoseResolved(campaign):
 	scenario = Scenario()
 	scenario.populateFromDB()
 	active = filter(lambda x: x[0]!='total',scenario.packAndSolve())
 	for name, amount in active:
-		row, created = Condition.objects.get_or_create(user.username=name)
-		if not row:
+		condition, created = Condition.objects.get_or_create(user=get_user_from_username(name), campaign=campaign)
+		if not condition:
 			continue
-		if row.resolved != amount:
-			row.resolved = amount
-			row.changed_on = func.now()
-			row.save()
+		if condition.resolved != amount:
+			condition.resolved = amount
+			condition.changed_on = func.now()
+			condition.save()
 	
 #TODO: Need to modify this to take the campaign into account
 def submitDonation(user,campaign,donation):
@@ -249,7 +251,7 @@ def submitDonation(user,campaign,donation):
 	log, created = Log.objects.update_or_create(user=user, campaign=campaign,
 	 pledge=donation, total_before=before['total'], total_after=after['total'],
 	 impact=change['total'] - after[user]) 
-	markThoseResolved()
+	markThoseResolved(campaign)
 	return after
 
 def beforeAfter(user, donation):
@@ -304,7 +306,7 @@ def getFullNetwork(campaign):
 	users = Identifier.objects.filter(category='member')
 	network = []
 	for username in users:
-		donation = Condition.objects.filter(user.username=username, campaign=campaign).first()
+		donation = Condition.objects.filter(user=get_user_from_username(name), campaign=campaign).first()
 		if donation:
 			pledge = donation.pledge
 			resolved = int(donation.resolved)
@@ -313,8 +315,7 @@ def getFullNetwork(campaign):
 			pledge = None
 			resolved = 0
 			max_donation = 0
-		#TODO: Should getNetwork() take campaign as an a param as well?
-		personal_Network = getNetwork(user.username)
+		personal_Network = getNetwork(user.username, campaign)
 		challengers, challengees = [], []
 		for node in personal_Network:
 			#TODO: Check to see if challenger here returns a user object or a username

@@ -10,4 +10,5 @@ urlpatterns = patterns('',
                        url(r'^accounts/', include('allauth.urls')),
                        url(r'^$', views.index, name='index'),
                        url(r'^campaigns/', include('campaigns.urls')),
+                       url(r'^challenges/', include('challenges.urls')),
                        )

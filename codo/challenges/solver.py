@@ -1,5 +1,5 @@
 import string, random, subprocess, re, time
-from .models import Amount_Log, Log, Visit, ChallengeLink, Condition,\
+from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
                      Membership,Identifier
 
 original = """\ENCODING=ISO-8859-1
