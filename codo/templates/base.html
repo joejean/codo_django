@@ -135,6 +135,13 @@
     </footer>
 
     {% block javascript %}
+    <!-- This is used to help pass Django data to the JS files. 
+    just add the the dictionary "djangoData" with your data to the context and it will be available here -->
+    {% if djangoData %}
+      <script type="text/javascript">
+          (function () {window.djangoData = {{djangoData|safe}};})();
+      </script>
+    {% endif %}
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -143,5 +150,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'bootstrap/js/ie10-viewport-bug-workaround.js' %}"></script>
     {% endblock %}
+    
   </body>
 </html>

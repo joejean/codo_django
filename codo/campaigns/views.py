@@ -45,7 +45,7 @@ class CreateCampaign(NamedUrlSessionWizardView):
         return [TEMPLATES[self.steps.current]]
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     def done(self,form_list, form_dict,**kwargs):
-        account_info = form_dict['account_info']
+        account_info = form_dict.get('organizer_info',[])
         campaign_info = form_dict['campaign_info']
         user_conditionals = form_dict.get('user_conditionals', [])
         rewards = form_dict.get('rewards', [])
@@ -71,9 +71,9 @@ class CreateCampaign(NamedUrlSessionWizardView):
                 reward.save()
         merchant = Merchant.objects.filter(user=self.request.user)
         if not merchant:
-            return redirect('https://stage.wepay.com/v2/oauth2/authorize?client_id=196430&redirect_uri=http://localhost:8000/wepay&scope=manage_accounts,collect_payments,view_user,send_money,preapprove_payments,manage_subscriptions')
+            return redirect('https://stage.wepay.com/v2/oauth2/authorize?client_id=196430&redirect_uri=http://localhost:8000/campaigns/wepay&scope=manage_accounts,collect_payments,view_user,send_money,preapprove_payments,manage_subscriptions')
 
-        return redirect('/campaigns/'+str(campaign.id))
+        return redirect(reverse('single_campaign', kwargs={'pk':campaign.id}))
 
 
 # TODO: See if I can preview the above form before saving it

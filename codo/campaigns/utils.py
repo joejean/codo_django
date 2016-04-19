@@ -7,13 +7,27 @@ from django.core.urlresolvers import reverse
 #if not, Create one from the account_info object parameter, 
 #update it and save it to the DB.
 def get_organizer(user, account_info):
-    organizer = Organizer.objects.filter(user=user)
-    if len(organizer) == 0:
-        new_organizer = account_info.save(commit=False)
-        new_organizer.user = user
-        new_organizer.save()
+    # If account info is not an empty list, we need to update the organizer's
+    # Account if they exist in the db or just create a new one
+    if account_info: 
+        try:
+            organizer = Organizer.objects.get(user=user)
+            if not organizer.phone_number:
+                organizer.phone_number = account_info.cleaned_data['phone_number']
+                organizer.short_bio = account_info.cleaned_data['short_bio']
+                organizer.profile_picture = account_info.cleaned_data['profile_picture'] #this is my file field
+                organizer.facebook_url = account_info.cleaned_data['facebook_url']
+                organizer.twitter_url = account_info.cleaned_data['twitter_url']
+                organizer.website_url = account_info.cleaned_data['website_url']
+                organizer.dob = account_info.cleaned_data['dob']
+                organizer.save()
+            new_organizer = organizer
+        except Organizer.DoesNotExist:
+            new_organizer = account_info.save(commit=False)
+            new_organizer.user = user
+            new_organizer.save()
     else:
-        new_organizer = organizer[0]
+        new_organizer = Organizer.objects.get(user=user)
 
     return new_organizer
 
@@ -52,5 +66,5 @@ def show_conditionals_form(wizard):
 
 def show_organizer_info_form(user):
     organizer = Organizer.objects.filter(user=user)
-    return organizer[0].phone_number is None
+    return organizer[0].phone_number == ''
 

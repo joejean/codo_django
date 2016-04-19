@@ -10,7 +10,11 @@ def create_wepay_merchant(code):
     # set production to True for live environments
     wepay = WePay(production, None)
     # Get a Token to later create an account for a user
-    response = wepay.get_token(redirect_uri, client_id, client_secret, code)
+    try:
+        response = wepay.get_token(redirect_uri, client_id, client_secret, code)
+    except:
+        response = "Error"
+    
     return response
 
 def create_wepay_account(access_token):

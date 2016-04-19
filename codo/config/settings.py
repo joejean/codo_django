@@ -229,7 +229,7 @@ USE_I18N = True
 if 'WEPAY_REDIRECT_URI' in os.environ: 
     WEPAY_REDIRECT_URI= os.environ['WEPAY_REDIRECT_URI']
 else:
-    WEPAY_REDIRECT_URI = 'http://localhost:8000/wepay'
+    WEPAY_REDIRECT_URI = 'http://localhost:8000/campaigns/wepay'
 
 if 'WEPAY_DONATION_SUCCESS_REDIRECT_URI' in os.environ: 
     WEPAY_DONATION_SUCCESS_REDIRECT_URI = os.environ['WEPAY_DONATION_SUCCESS_REDIRECT_URI']
