@@ -1,18 +1,9 @@
-$(".paymentPanel").hide();
-$(".campaignDescription").show();
+$(function () {
 
-$(function(){
-$('.clickable').on('click',function(){
-
-    var effect = $(this).data('effect');
-        $(this).closest('.panel')[effect]();
-
+    $('.toggle').click(function (event) {
+        event.preventDefault();
+        var target = $(this).attr('href');
+        $(target).toggleClass('hidden show');
     });
-    
-})
 
-
-$("#fundprojectBtn").click(function(){
-    $(".paymentPanel").toggle();
-    $(".campaignDescription").toggle();
 });
