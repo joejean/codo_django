@@ -15,7 +15,7 @@ def get_organizer(user, account_info):
             if not organizer.phone_number:
                 organizer.phone_number = account_info.cleaned_data['phone_number']
                 organizer.short_bio = account_info.cleaned_data['short_bio']
-                organizer.profile_picture = account_info.cleaned_data['profile_picture'] #this is my file field
+                organizer.profile_picture = account_info.cleaned_data['profile_picture']
                 organizer.facebook_url = account_info.cleaned_data['facebook_url']
                 organizer.twitter_url = account_info.cleaned_data['twitter_url']
                 organizer.website_url = account_info.cleaned_data['website_url']

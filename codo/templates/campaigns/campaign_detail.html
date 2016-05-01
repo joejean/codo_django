@@ -72,9 +72,6 @@
                             ONLY if <b>10</b> people 
                             donate <b>10 AED</b> each. <br><br>
                           </aside>
-
-                          
-                          
                           <div id="micro" class="form">
                             I will donate <br><input type="number" id="t3_donation_amount" class="amount" min='5' max='1000' value="20" step="1"></input> AED ONLY if <br><input type="number" id="num_people" class="input_amt" min="2" max="100" value="10" step="1"></input> people donate at least<br><input type="number" id="micro_amount" class="input_amt" min='10' max='1000' value="10" step="1"></input> AED each.
                             <br>
@@ -177,5 +174,8 @@
 
 {% block javascript %}
   {{super}}
-  <script data-main="{% static 'bootstrap/js/helper/campaign_page' %}" src="{% static 'bootstrap/js/require.js' %}"></script>
+  <script src="{% static 'bootstrap/js/jquery-ui.js' %}"></script>
+  <script src="{% static 'bootstrap/js/helper.js' %}"></script>
+  <script src="{% static 'bootstrap/js/ripples.js' %}"></script>
+
 {% endblock %}
