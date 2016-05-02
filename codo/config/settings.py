@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'bootstrap3_datetime',
     'annoying',
     'autofixture',
+    'haystack',
     
 )
 
@@ -256,6 +257,16 @@ AUTHORIZED_ORGANIZER_COUNTRIES = ['AU','CA','DK','FI','IE', 'NO', 'US', 'GB','SE
 
 #Django WYSIWYG
 DJANGO_WYSIWYG_FLAVOR = "tinymce"
+
+#haystack (for search)
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
+    },
+}
 
 
 

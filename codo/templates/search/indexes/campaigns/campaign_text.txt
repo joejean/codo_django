@@ -1,0 +1,3 @@
+{{ object.title }}
+{{ object.organizer.user.get_full_name }}
+{{ object.description }}

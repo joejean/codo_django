@@ -24,5 +24,6 @@ patterns('',
          url(r'^profile/(?P<pk>[0-9]+)/update/$', login_required(views.ProfileUpdate.as_view()),\
               name="profile_update"),
          url(r'^profile/(?P<pk>[0-9]+)/$', views.ProfileDetail.as_view(),\
-              name="profile_detail")
+              name="profile_detail"),
+         url(r'^search/', include('haystack.urls')),
         )

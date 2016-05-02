@@ -56,6 +56,10 @@ class Organizer(models.Model):
 
 
 class Campaign(TimeStampedModel): 
+    ''' Campaign Model. The TimeStampedModel provides self-updating created and 
+        modified fields on any model that inherits from it. See
+        http://django-model-utils.readthedocs.io/en/latest/models.html
+    '''
     organizer = models.ForeignKey(Organizer)
     title = models.CharField(max_length=100)
     blurb = models.CharField(max_length=300)
