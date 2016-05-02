@@ -3,39 +3,66 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h2>Search</h2>
 
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
-
-        {% if query %}
-            <h3>Results</h3>
-
-            {% for result in page.object_list %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
-                </p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
-
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+  
+    <div class="container">
+    
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Explore <strong>All</strong> Campaigns</h2>
+          </div>
+        </div>
+        <div class="row">
+            <form class="form form-inline" method="GET" action=".">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class="col-md-12">
+                  <input name="q" id="id_q" type="text" class="form-control input-lg" placeholder="Search Campaigns" required autofocus>
                 </div>
-            {% endif %}
-        {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
-        {% endif %}
-    </form>
+              </div>
+              <div class="form-group">
+                <div class="col-md-3">
+                   <input type="submit" class="btn btn-red btn-lg text-uppercase">
+                </div>
+              </div>
+            </form>
+        </div>
+        <hr>
+      
+      {% if query %}
+        {% for campaign in page.object_list %}
+          <div class="row">
+            <!-- TODO: Need to be able to add 4 campaigns per row -->
+              <div class="col-md-3">
+                <div class="thumbnail">
+                    <img src="{{campaign.picture.url}}" class="img-responsive" alt="...">
+                    <div class="caption">
+                      <h3>{{campaign.title}}</h3>
+                      <p>{{campaign.blurb}}</p>
+                      <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+                      <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                      <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                          <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                      </div>
+                      <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                      <br >
+                      <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+
+                  
+                    </div>
+                </div>
+              </div>
+            
+            
+          </div>
+          {% empty %}
+             <h2> No results</h2>
+          {% endfor %}
+      {% endif %}   
+
+    </div> <!-- /container -->
+    
 {% endblock %}
