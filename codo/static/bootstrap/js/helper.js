@@ -1,5 +1,7 @@
 /* JS file with helper functions */ 
-
+var baseUrl = window.djangoData['baseUrl'];
+var campaign = window.djangoData['campaign']
+var csrftoken = Cookies.get('csrftoken');
 
 function sanitizeString(str){
     if(/^[a-zA-Z0-9]+$/.test(str) == false) {
@@ -9,23 +11,37 @@ function sanitizeString(str){
     }
 }
 
+/*The following CSRF related stuff is for Django to work otherwise
+we get a forbidden error */
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
 /* Retrieves project statistics*/
 function getProjectInfo(){
     $.ajax({
-         url: 'http://127.0.0.1:8080/rippler',
+        url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action":"getProjectStats"},
+        data: {"action":"getProjectStats", "campaign":campaign},
         dataType: "JSON",
         success: function(response){
-            // console.log(response);
+            //console.log(response);
 
             $('#amt_funded > .big_num').html("  " + Math.floor(response['amt_funded']) + " AED");
-            $('#num_funders > .big_num').html(" " + response['num_funders'] + "  ");
-            $('#num_challenges > .big_num').html(response['num_challenges'] + " ");
+            $('#num_funders').html(" " + response['num_funders'] + " Funders");
+            $('#num_challenges').html(response['num_challenges'] + " Challeges");
             prevDonations();
         },
         error: function(xhr, status, error){
-            console.log("Error in getProjectInfo  method: " + error);
+            console.log("Error in getProjectInfo method: " + xhr.responseText);
         }
     })  
 }
@@ -33,9 +49,9 @@ function getProjectInfo(){
 /* Returns the last n resolved donations */ 
 function prevDonations(){
     $.ajax({
-        url: 'http://127.0.0.1:8080/rippler',
+        url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action":"prevDonations", "n": 1000},
+        data: {"action":"prevDonations", "n": 1000, "campaign":campaign},
         dataType: "json",
         success:function(response){
             donations = response['donations'];
@@ -46,7 +62,7 @@ function prevDonations(){
 
         },
         error: function(xhr, status, error){
-            console.log("Error in prevDonations: " + error);
+            console.log("Error in prevDonations: " + xhr.responseText);
         }
     })
 }
@@ -55,9 +71,9 @@ function prevDonations(){
 function prevChallenges(){
     var list = [];
     $.ajax({
-        url: 'http://127.0.0.1:8080/rippler',
+        url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action": "prevChallenges"},
+        data: {"action": "prevChallenges", "campaign":campaign},
         dataType: "json",
         success:function(response){
             // console.log(response['challenges']);
@@ -75,7 +91,7 @@ function prevChallenges(){
             }
         },
         error: function(xhr, status, error){
-            console.log("Error in Challenges: " + error);
+            console.log("Error in Challenges: " + xhr.responseText);
         }
     })
 }
@@ -84,9 +100,11 @@ function prevChallenges(){
 function processDonation(donation_condition, state, challengees){
     console.log(donation_condition);
     $.ajax({
-        url: 'http://127.0.0.1:8080/rippler',
+        url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action":"processDonation", "user": window.user, "donation": donation_condition, "state": state, "challengees": challengees, "system": system},
+        data: {"action":"processDonation", "user": window.user, 
+        "donation": donation_condition, "state": state, 
+        "challengees": challengees, "system": system, "campaign":campaign},
         dataType: "JSON",
         success: function(response){
             // console.log(state);
@@ -115,7 +133,7 @@ function processDonation(donation_condition, state, challengees){
 
         },
         error: function(xhr, status, error){
-            console.log( "Error: " + error);
+            console.log( "Error in processDonation: " +  xhr.responseText);
             console.log( "Status: " + status );
             console.dir( xhr );
         }
@@ -125,7 +143,7 @@ function processDonation(donation_condition, state, challengees){
 /* Returns list of challenges for the user */
 function checkForChallenges(){
     $.ajax({
-        url: 'http://127.0.0.1:8080/rippler',
+        url: baseUrl+'/challenges/rippler/',
         method: "POST",
         data: {"action":"checkForChallenges", "user": window.user},
         dataType: "json",
@@ -151,7 +169,7 @@ function checkForChallenges(){
 
         },
         error: function(xhr, status, error){
-            console.log( "Error: " + error);
+            console.log( "Error in checkForChallenges: " + xhr.responseText);
             console.log( "Status: " + status );
             console.dir( xhr );
         }
@@ -581,7 +599,7 @@ function survey(donation_condition, donation){
         $('#thankyou > .container').append("<h3>Thank you for donating, " + user+ "!</h3><form id='survey'><div>Please help us by filling out the survey below. You will then be directed to the confirmation screen.<br><br></div> " + campaign_qs + " " + conditional_qs_test +" " + interface_qs + "<button id='survey_submit' class='button-primary'>Next</button></form>");
     }
 
-    $('#survey_submit').click(function(e){
+    /*$('#survey_submit').click(function(e){
         e.preventDefault();
 
 
@@ -636,7 +654,7 @@ function survey(donation_condition, donation){
         console.log(sendData);
 
         $.ajax({
-            url: 'http://127.0.0.1:8080/survey',
+            url: baseUrl+'/challenges/rippler',
             method: "POST",
             data: {"user": window.user, "data": sendData, "system": system},
             dataType: "JSON",
@@ -651,7 +669,7 @@ function survey(donation_condition, donation){
 
 
        
-    })
+    })*/
 }
 
 /* Processes screen after a donation is submitted */

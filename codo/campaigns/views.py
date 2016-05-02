@@ -100,6 +100,10 @@ class CampaignDetail(DetailView):
         context = super(CampaignDetail, self).get_context_data(**kwargs)
         self.request.session['campaign_id'] = int(self.kwargs['pk'])
         # Add more stuff to the context dictionary here if need be
+        djangoData = {}
+        djangoData['campaign'] = int(self.kwargs['pk'])
+        djangoData['baseUrl'] = self.request.build_absolute_uri('/')[:-1]
+        context['djangoData'] = djangoData
         return context
 
 class ProfileDetail(DetailView):

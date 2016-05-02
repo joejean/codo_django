@@ -135,8 +135,10 @@
     </footer>
 
     {% block javascript %}
+   <!--  Javascript Cookie Helper lib -->
+    <script src="{% static 'bootstrap/js/js.cookie.js' %}"></script>
     <!-- This is used to help pass Django data to the JS files. 
-    just add the the dictionary "djangoData" with your data to the context and it will be available here -->
+    just add the the dictionary "djangoData" with your data to the context and it will be available in your Javascript -->
     {% if djangoData %}
       <script type="text/javascript">
           (function () {window.djangoData = {{djangoData|safe}};})();

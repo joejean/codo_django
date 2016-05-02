@@ -81,6 +81,11 @@ class Campaign(TimeStampedModel):
     STATUS = Choices('unapproved','inreview', 'accepted','rejected')
     status = models.CharField(choices=STATUS, default=STATUS.unapproved, max_length=20)
 
+    def get_days_left(self):
+        num_days = (self.end_date - date.today()).days
+        return num_days if num_days>=0 else 0
+
+
     def __str__(self):
         return "<Campaign: {}>".format(self.title)
 

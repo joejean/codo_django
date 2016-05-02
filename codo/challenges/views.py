@@ -50,10 +50,11 @@ def rippler(request):
 
 		# Query for project statistics (current funded, goal, number of users resolved, number of users unresolved)
 		if action == "getProjectStats":
+			print request.user
 			campaign = request.POST.get('campaign')
 			if campaign is None:
 				return param_error("campaign")
-			return JsonResponse({"amt_funded":currentTotal(campaign), "goal_amt":0, "num_funders":nResolvedConditions(campaign), "num_challenges":nUnresolvedConditions(campaign)})
+			return JsonResponse({"amt_funded":currentTotal(campaign), "num_funders":nResolvedConditions(campaign), "num_challenges":nUnresolvedConditions(campaign)})
 
 		# Query for still-standing challenges/conditions (unresolved)
 		if action == "prevChallenges":

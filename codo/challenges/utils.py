@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from django.contrib.auth import get_user_model
@@ -74,4 +74,4 @@ def param_error(param):
 	'''Helper function to return an error message when a required
 	   parameter is missing from the POST request data.
 	'''
-	return JsonResponse({"error": "please provide the {} parameter in a variable called '{}'.".format(param, param)})
+	return HttpResponseBadRequest("please provide the {} parameter in a variable called '{}'.".format(param, param))
