@@ -104,7 +104,7 @@ function processDonation(donation_condition, state, challengees){
         method: "POST",
         data: {"action":"processDonation", "user": window.user, 
         "donation": donation_condition, "state": state, 
-        "challengees": challengees, "system": system, "campaign":campaign},
+        "challengees": challengees, "campaign":campaign},
         dataType: "JSON",
         success: function(response){
             // console.log(state);

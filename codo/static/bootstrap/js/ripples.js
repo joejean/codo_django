@@ -54,16 +54,16 @@ $(document).ready(function(){
         $('#' + curr_form).show();
     })
 
-    //Friends Challenge - Add button interaction
+    //Friends Challenge - Add button interaction; WORKING
     $('#addfriend').on('click', function(){
         //Count # of friends added so far
         var count = $(this).parent().find(".friendcount").length;
         
 
         //add another friend
-        var formaddendum = '<div class="newfriend"><br> AND if<br><input type="text" id="friends' + count + '" class="friendcount" placeholder="Enter friend\'s netID"></input> also donates <br>' + 
-        '<input type="number" id="friend_amount'+count+'" class="input_amt" min="10" max="1000" value="20"></input> AED (optional)<br>' +
-        '<span id="removefriend-"' + count + ' class="link remove"> [-] Remove friend</span></div> ';
+        var formaddendum = '<div class="newfriend"><br> AND if<br><input type="text" id="friends' + count + '" class="friendcount form-control" placeholder="Enter friend\'s email"></input> also donates <br>' + 
+        '<input type="number" id="friend_amount'+count+'" class="input_amt form-control" min="10" max="1000" value="20"></input> USD (optional)<br>' +
+        '<span id="removefriend-"' + count + ' class="link remove"> [<i class="fa fa-minus" aria-hidden="true"></i>] Remove friend.</span></div> ';
 
         // console.log($(this).prev());
         $(formaddendum).insertAfter($(this).prev());
