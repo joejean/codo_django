@@ -21,75 +21,70 @@
           <p><i class="fa fa-users fa-2x"></i><span id="num_funders">0 Funders</span></p>
           <p><i class="fa fa-star-o fa-3x"></i><span id="num_challenges">0 Challenges</span> </p>
           
-          <a href="#paymentModal" class="toggle col-md-12 btn btn-primary">Fund This Project</a>
+          <a href="#paymentModal" data-toggle="collapse" class="col-md-12 btn btn-primary">Fund This Project</a>
 
           <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
           
         </div>
 
       </div>
-      <!-- New Payment Panel -->
-      <div class="row paymentPanel hidden" id="paymentModal">
-        <div class="col-md-12">   
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Funding Options</h3>
-              <span class="pull-right"><a href="#paymentModal" class="toggle"><i class="fa fa-times fa-2x"></i></a></span>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div id="donation" class="seven columns">
-                  <div class="container">
-                    <div id="donation_form" class="chal_form">
-                    <span class="title">Make a Direct Donation</span>
-                    <aside id="direct_aside">
-                      Example: I will donate <b>20 AED<br><br></b>
-                    </aside>
+         <!-- New Payment Panel -->
+      <div class="row collapse" id="paymentModal">
+        <div class="panel-group" id="accordion">
+          <div class="col-md-12">   
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Funding Options</h3>
+                <span class="pull-right"><a href="#paymentModal" data-toggle="collapse"><i class="fa fa-times fa-2x"></i></a></span>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div id="donation" class="seven columns">
+                      <div id="donation_form" class="chal_form">
+                        <span class="title">Make a Direct Donation</span>
+                        <aside id="direct_aside">
+                          Example: I will donate <b>20 AED<br><br></b>
+                        </aside>
 
-                    <div id="direct" class="form">
-                      I will donate <br>
-                      <input type="number" id="donation_amount" class="amount" min='5' max='1000' value='20' step="1"></input> AED.
-                      <br>
-                      <button id = "donate" class="button-primary">Donate</button>
+                        <div id="direct" class="form collapse">
+                          I will donate <br>
+                          <input type="number" id="donation_amount" class="amount" min='5' max='1000' value='20' step="1"></input> AED.
+                          <br>
+                          <button id = "donate" class="button-primary">Donate</button>
+                        </div>
+                        <hr>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#direct">
+                        <img class="img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
+                        </a>
+
+                      </div>
                     </div>
-
-
-                    <hr>
-                    <img class="arrow img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
-                    
-                  </div>
-                  
-                  <div class="break"></div>
-
-                  <div id="microform" class="chal_form"> 
-                          <span class="title">Challenge your community</span><br>
-                          <aside id="micro_aside" >
-                            Example: I will donate <b>20 AED</b>
-                            ONLY if <b>10</b> people 
-                            donate <b>10 AED</b> each. <br><br>
-                          </aside>
-                          <div id="micro" class="form">
-                            I will donate <br><input type="number" id="t3_donation_amount" class="amount" min='5' max='1000' value="20" step="1"></input> AED ONLY if <br><input type="number" id="num_people" class="input_amt" min="2" max="100" value="10" step="1"></input> people donate at least<br><input type="number" id="micro_amount" class="input_amt" min='10' max='1000' value="10" step="1"></input> AED each.
-                            <br>
-                            <!-- <div id="current_stats" class="msg"></div> -->
-                            <button id="micro" class="button-primary challenge_button">Add Challenge</button>
-                          </div>
-
-
-                          <hr>
-                          <img class="arrow img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
-                  </div> 
-
-                  <div class="break"></div>
-                  <div id="friendsform" class="chal_form"> 
+                    <div id="microform" class="chal_form"> 
+                      <span class="title">Challenge your community</span><br>
+                      <aside id="micro_aside" >
+                        Example: I will donate <b>20 AED</b>
+                        ONLY if <b>10</b> people 
+                        donate <b>10 AED</b> each. <br><br>
+                      </aside>
+                      <div id="micro" class="form collapse">
+                        I will donate <br><input type="number" id="t3_donation_amount" class="amount" min='5' max='1000' value="20" step="1"></input> AED ONLY if <br><input type="number" id="num_people" class="input_amt" min="2" max="100" value="10" step="1"></input> people donate at least<br><input type="number" id="micro_amount" class="input_amt" min='10' max='1000' value="10" step="1"></input> AED each.
+                        <br>
+                        <div id="current_stats" class="msg"></div>
+                        <button id="micro" class="button-primary challenge_button">Add Challenge</button>
+                      </div>
+                      <hr>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#micro">
+                      <img class="img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
+                      </a>
+                    </div> 
+                    <div id="friendsform" class="chal_form"> 
                           <span class="title">Challenge your friends</span>
                           <aside id="friendly_aside">
                             Example: I will donate <b>20 AED</b> if <b>Bob</b> donates <b>20 AED</b>.<br><br> 
                           </aside>
 
-                          
-
-                          <div id="friendly" class="form">
+                          <div id="friendly" class="form collapse">
                               I will donate <br><input type="number" id="t1_donation_amount"  class="amount" min='5' max='1000' value="20" step="1"></input> 
                               AED if
                               <br><input  type="text" id="friends" class='friendcount' placeholder="Enter friend's netID"></input> 
@@ -101,19 +96,21 @@
                               <br><br><button id="friendly" class="button-primary challenge_button">Add Challenge</button>
                           </div>
 
-                          <hr>
-                          <img class="arrow img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#friendly">
+                          <img class="img-responsive" src="{% static 'img/arro.png' %}" style="width: 40px; height: 30px; margin-left: 40%; opacity: 0.5">
+                          </a>
                   </div>
-            </div>
-                
-          </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                  </div> <!-- End of col-md-7 -->
+                  <div class="col-md-5"> <!-- Impact visualization -->
+                  </div> <!-- End of Impact Visualization -->
+                </div> <!-- End of row -->
+              </div> <!-- End of Panel Body -->
+            </div> <!-- End of Panel Default -->
+          </div> <!-- End of column md 12 -->
+        </div> <!-- End accordion -->
+      </div> <!-- End of Payment Modal -->
 
-     <!--  Project info part including Video -->
+     <!--  Campaign information part including Video -->
       <div class="row campaignDescription">
         <div class="col-md-8">
           <h2>Campaign Information</h2>
@@ -170,8 +167,7 @@
 
 {% block javascript %}
   {{block.super}}
-  <script src="{% static 'bootstrap/js/helper/campaign_page.js' %}"></script>
   <script src="{% static 'bootstrap/js/jquery-ui.js' %}"></script>
   <script src="{% static 'bootstrap/js/helper.js' %}"></script>
-  <script src="{% static 'bootstrap/js/ripples.js' %}"></script>
+ <!--  <script src="{% static 'bootstrap/js/ripples.js' %}"></script> -->
 {% endblock %}
