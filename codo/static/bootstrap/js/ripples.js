@@ -8,18 +8,18 @@ var challenges = [];
 
 var curr_donation;
 var notifications = [];
+var has_donation = window.djangoData["has_donation"]
 
 $(document).ready(function(){
 
-    $('.form').hide(); 
+   /* $('.form').hide(); 
     // $('#more').hide();
     $('#current_friends').hide();
     // $('#notifications').hide();
 
     //get user info and project info
-    $('#user_name').html(window.user);
+    $('#user_name').html(window.user);*/
 
-    
     var dfd = $.Deferred();
     dfd.done(getProjectInfo())
     .done(function(){
@@ -29,16 +29,10 @@ $(document).ready(function(){
             
         }
         else{
-            if(system == "test"){
-                processDonation("20", 'explore')
-                // getChallengesForAmount(user, 20);
-                
-            }     
-            else{
-                processDonation("20", "explore");
-                checkForChallenges();
+           
+            processDonation("20", "explore");
+            checkForChallenges();
 
-            }
         }
     });  
 

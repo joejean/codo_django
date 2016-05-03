@@ -5,26 +5,27 @@ from .solver import *
 from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from .utils import logAmount, logVisit, addMember, makeGroup, addToGroup,\
-					addCondition, addChallengeLinks, param_error, get_user_from_username
+					addCondition, addChallengeLinks, param_error, get_user_from_username,\
+					hasDonation
 from ipware.ip import get_real_ip
 from copy import deepcopy
 import sys
 
 
 #This replaces the server class from the old codebase
-def user_challenges_info(request):
-	if request.method == 'POST':
-		campaign = request.POST.get('campaign')
-		if campaign is None:
-			return param_error("campaign")
-		hasDon, donCon, donAmt, impact = hasDonation(request.user, campaign)
-		return JsonResponse({
-		"user":request.user.username,
-		"has_donation":str(hasDon).lower(),
-		"donation_amt":donAmt,
-		"impact":impact,
-		"donation_condition":donCon,
-		})
+# def user_challenges_info(request):
+# 	if request.method == 'POST':
+# 		campaign = request.POST.get('campaign')
+# 		if campaign is None:
+# 			return param_error("campaign")
+# 		hasDon, donCon, donAmt, impact = hasDonation(request.user, campaign)
+# 		return JsonResponse({
+# 		"user":request.user.username,
+# 		"has_donation":str(hasDon).lower(),
+# 		"donation_amt":donAmt,
+# 		"impact":impact,
+# 		"donation_condition":donCon,
+# 		})
 
 def rippler(request):
 	if request.method == "POST":
@@ -224,11 +225,7 @@ def lastNUnresolved(n, campaign):
 	result = Condition.objects.filter(resolved=0,campaign=campaign).order_by('-changed_on')[:n]
 	return result
 
-# return <true/false, donation string, resolved?>
-def hasDonation(user, campaign):
-	row = Condition.objects.filter(user=user, campaign=campaign).first()
-	impactrow = Log.objects.filter(user=user, campaign=campaign).first()
-	return (True, row.pledge, row.resolved, impactrow.impact if impactrow else 0) if row else (False, '', 0, 0)
+
 
 
 #TODO: Special Attention

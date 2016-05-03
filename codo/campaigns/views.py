@@ -14,6 +14,7 @@ from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from payments.forms import DirectDonationForm
 from payments.payment_utils import create_wepay_merchant, create_wepay_account, wepay_checkout
 from payments.models import Merchant, Account
+from challenges.utils import get_user_challenges_info
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm, UserConditionalsForm, RewardFormSet,\
                     OrganizerInfoForm
@@ -97,11 +98,17 @@ class CampaignDetail(DetailView):
     template_name = 'campaigns/campaign_detail.html'
 
     def get_context_data(self, **kwargs):
+        #Get context dictionary so we can add more stuff to it
         context = super(CampaignDetail, self).get_context_data(**kwargs)
-        self.request.session['campaign_id'] = int(self.kwargs['pk'])
-        # Add more stuff to the context dictionary here if need be
+        campaign_id = int(self.kwargs['pk'])
+        self.request.session['campaign_id'] = campaign_id
+        hasDon, donCon, donAmt, impact = get_user_challenges_info(self.request.user, campaign_id)
         djangoData = {}
-        djangoData['campaign'] = int(self.kwargs['pk'])
+        djangoData["has_donation"] = str(hasDon).lower()
+        djangoData["donation_amt"] = donAmt
+        djangoData["impact"] = impact
+        djangoData["donation_condition"] = donCon
+        djangoData['campaign'] = campaign_id
         djangoData['baseUrl'] = self.request.build_absolute_uri('/')[:-1]
         context['djangoData'] = djangoData
         return context

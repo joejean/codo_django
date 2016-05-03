@@ -3,6 +3,7 @@ from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from django.contrib.auth import get_user_model
 
+
 def logAmount(ip,port,user,campaign,amount,challenges):
 	'''@param campaign can be a campaign id or a campaign object'''
 	amount_log = AmountLog(ip=ip, port=port, user=user,campaign=campaign,
@@ -16,6 +17,23 @@ def logAmount(ip,port,user,campaign,amount,challenges):
 #     session.commit()
 #     session.close()
 
+#This replaces the server class from the old codebase
+def get_user_challenges_info(user,campaign):
+	hasDon, donCon, donAmt, impact = hasDonation(user, campaign)
+	return hasDon, donCon, donAmt, impact
+	# return JsonResponse({
+	# "user":user.username,
+	# "has_donation":str(hasDon).lower(),
+	# "donation_amt":donAmt,
+	# "impact":impact,
+	# "donation_condition":donCon,
+	# })
+
+# return <true/false, donation string, resolved?>
+def hasDonation(user, campaign):
+	row = Condition.objects.filter(user=user, campaign=campaign).first()
+	impactrow = Log.objects.filter(user=user, campaign=campaign).first()
+	return (True, row.pledge, row.resolved, impactrow.impact if impactrow else 0) if row else (False, '', 0, 0)
 
 def get_user_from_username(username):
 	User = get_user_model()
