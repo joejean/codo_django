@@ -12,3 +12,6 @@ urlpatterns = patterns('',
                        url(r'^campaigns/', include('campaigns.urls')),
                        url(r'^challenges/', include('challenges.urls')),
                        )
+
+admin.site.site_header = 'CrowdEmpowered Administration'
+admin.site.site_title = 'CrowdEmpowered'
