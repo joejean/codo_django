@@ -15,3 +15,5 @@ selenium/
 prepros.cfg
 local/
 ../solr-4.10.2/example/logs/solr.log
+cplex.log
+
