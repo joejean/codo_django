@@ -39,9 +39,12 @@ class Visit(models.Model):
 
 
 class ChallengeLink(models.Model):
+	'''Challenger and Challengee are both email addresses'''
 	campaign = models.ForeignKey(Campaign)
-	challenger = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="challenger_user")
-	challengee = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="challengee_user")
+	challenger = models.CharField(max_length=45)
+	#models.ForeignKey(settings.AUTH_USER_MODEL, related_name="challenger_user")
+	challengee = models.CharField(max_length=45)
+	#models.ForeignKey(settings.AUTH_USER_MODEL, related_name="challengee_user")
 	pledge = models.TextField()
 	class Meta:
 		#This is how we do a multiple column primary key in Django

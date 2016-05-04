@@ -1,11 +1,18 @@
 /* JS file with helper functions */ 
 var baseUrl = window.djangoData['baseUrl'];
-var campaign = window.djangoData['campaign']
+var user = window.djangoData['user_email']; //Here user is email of the user
+var campaign = window.djangoData['campaign'];
+var has_donation = window.djangoData['has_donation'];
+var donation_condition = window.djangoData['donation_condition'];
+var donation_amt = window.djangoData['donation_amt'];
 var csrftoken = Cookies.get('csrftoken');
 
+
 function sanitizeString(str){
-    if(/^[a-zA-Z0-9]+$/.test(str) == false) {
-        alert('Input should only contain letters and numbers - no special characters.');
+    //Make sure the string is an email.
+    var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(re.test(str) == false) {
+        alert('You should Provide a valid Email Address');
     }else{
         return true;
     }
@@ -34,7 +41,6 @@ function getProjectInfo(){
         dataType: "JSON",
         success: function(response){
             //console.log(response);
-
             $('#amt_funded > .big_num').html("  " + Math.floor(response['amt_funded']) + " AED");
             $('#num_funders').html(" " + response['num_funders'] + " Funders");
             $('#num_challenges').html(response['num_challenges'] + " Challeges");
@@ -56,8 +62,8 @@ function prevDonations(){
         success:function(response){
             donations = response['donations'];
             prevChallenges();
-            if(window.has_donation){
-                afterSubmit(window.donation_condition, window.donation_amt);
+            if(has_donation){
+                afterSubmit(donation_condition, donation_amt);
             }
 
         },
@@ -79,10 +85,10 @@ function prevChallenges(){
             // console.log(response['challenges']);
             challenges = response['challenges'];
             
-            // console.log(window.user);
-            if(window.user){
+            // console.log(user);
+            if(user){
                 checkForChallenges();
-                getChallengesForAmount(window.user, 20);
+                getChallengesForAmount(user, 20);
             }
             else{
                 // console.log("not logged in");
@@ -97,27 +103,27 @@ function prevChallenges(){
 }
 
 /* Processes a donation_condition in the "explore" or "submit" states */ 
-function processDonation(donation_condition, state, challengees){
-    console.log(donation_condition);
+function processDonation(donationCondition, state, challengees){
+    console.log(donationCondition);
     $.ajax({
         url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action":"processDonation", "user": window.user, 
-        "donation": donation_condition, "state": state, 
+        data: {"action":"processDonation", "user": user, 
+        "donation": donationCondition, "state": state, 
         "challengees": challengees, "campaign":campaign},
         dataType: "JSON",
         success: function(response){
             // console.log(state);
             // console.log(response);
             var total_impact = response['impact'];
-            var donation_amt = donation_condition.split(" ");
+            var donation_amt = donationCondition.split(" ");
 
             //Update values
             $('#donation_amt').val(donation_amt[0]);
             $('#your_donation').html(parseInt(donation_amt[0]) + " AED");
 
 
-            curr_donation = {"name": window.user, "donation": donation_amt[0], "condition": donation_condition, "challengees": challengees};
+            curr_donation = {"name": user, "donation": donation_amt[0], "condition": donationCondition, "challengees": challengees};
 
             // if(donations.length > 0)
             //     regularVisualization(donations, curr_donation, response['change']);
@@ -125,17 +131,15 @@ function processDonation(donation_condition, state, challengees){
             getChallengesForAmount(user, parseInt(donation_amt[0]));
             if(state == "submit"){
                 getProjectInfo();
-                survey(donation_condition, parseInt(donation_amt[0]));
-                window.donation_condition = donation_condition;
-                window.donation_amt = parseInt(donation_amt[0]);
-                // afterSubmit(donation_condition, parseInt(donation_amt[0]));
+                //survey(donation_condition, parseInt(donation_amt[0]));
+                donation_condition = donationCondition;
+                donation_amt = parseInt(donation_amt[0]);
+                // afterSubmit(donationCondition, parseInt(donation_amt[0]));
             }
-
         },
         error: function(xhr, status, error){
             console.log( "Error in processDonation: " +  xhr.responseText);
-            console.log( "Status: " + status );
-            console.dir( xhr );
+            //console.log( "Status: " + status );
         }
     }); 
 }
@@ -145,7 +149,7 @@ function checkForChallenges(){
     $.ajax({
         url: baseUrl+'/challenges/rippler/',
         method: "POST",
-        data: {"action":"checkForChallenges", "user": window.user},
+        data: {"action":"checkForChallenges", "user": user},
         dataType: "json",
         success: function(response){
             // console.log("You've been challenged " + response['challenge'].length +  " times.");
@@ -156,7 +160,7 @@ function checkForChallenges(){
                 $('#notifications').hide();
             }
 
-            if(!window.has_donation)
+            if(!has_donation)
                 $('#noti').html("<div class='title'>You've been challenged!</div>")
             var noti_text = "<div id='noti_text'><br><ul>"
             for(var i = 0; i < response['challenge'].length; i++){
@@ -216,7 +220,7 @@ function getChallengesForAmount(user, amount){
                     num_people++;
                     friend = terms[b-1];
 
-                    if(friend != window.user){
+                    if(friend != user){
                         if(getUserDonation(friend) >= parseInt(terms[b+1])){
                             progress++;
                         }
@@ -428,13 +432,13 @@ function getDonationCondition(condition_type, state){
     if(condition_type === "friendly"){
         $('#current_friends').empty();
         var friend_string = "";
-        var donation_amt = $('#friendly').children('#t1_donation_amount').val();
+        var donation_amt = $('#friendly').find('#t1_donation_amount').val();
         var count = $('#friendly').find(".friendcount").length;
-        var friend = $('#friendly').children('#friends').val();
+        var friend = $('#friendly').find('#friends').val();
         
 
         // console.log("why no work?");
-        var friend_amt = $('#friendly').children('#friend_amount').val();
+        var friend_amt = $('#friendly').find('#friend_amount').val();
         if(friend_amt.toString().indexOf('.') > -1){
             friend_amt = Math.floor(friend_amt);
         }
@@ -442,7 +446,7 @@ function getDonationCondition(condition_type, state){
         if(friend != "" && sanitizeString(friend)){
             friend_string = friend + " HAS > " + friend_amt;
             friends += friend;
-            if(friend == window.user){
+            if(friend == user){
                 $('#current_friends').html("You cannot challenge yourself. Sorry!<br>");
                 $('#current_friends').show();                
                 return false;
@@ -474,7 +478,7 @@ function getDonationCondition(condition_type, state){
                     friend_string += " AND " + friend + " HAS > " + friend_amt;
                     friends += "," + friend;
 
-                    if(friend == window.user){
+                    if(friend == user){
                         $('#current_friends').html("You cannot challenge yourself. Sorry!<br>");
                         $('#current_friends').show();                
                         return false;
@@ -507,12 +511,12 @@ function getDonationCondition(condition_type, state){
 
     //MICRO challenge
     else if(condition_type === "micro"){
-        var donation_amt = $('#micro').children('#t3_donation_amount').val();
-        var num_people = $('#micro').children('#num_people').val();
+        var donation_amt = $('#micro').find('#t3_donation_amount').val();
+        var num_people = $('#micro').find('#num_people').val();
         if(num_people.toString().indexOf('.') > -1){
             num_people = Math.floor(num_people);
         }
-        var micro_amt = $('#micro').children('#micro_amount').val();
+        var micro_amt = $('#micro').find('#micro_amount').val();
         if(micro_amt.toString().indexOf('.') > -1){
             micro_amt = Math.floor(micro_amt);
         }
@@ -534,7 +538,7 @@ function getDonationCondition(condition_type, state){
     if(donation_condition != "")
         processDonation(donation_condition, state, friends);
 }
-
+/*
 function survey(donation_condition, donation){
 
     $('#donation').remove();
@@ -599,7 +603,7 @@ function survey(donation_condition, donation){
         $('#thankyou > .container').append("<h3>Thank you for donating, " + user+ "!</h3><form id='survey'><div>Please help us by filling out the survey below. You will then be directed to the confirmation screen.<br><br></div> " + campaign_qs + " " + conditional_qs_test +" " + interface_qs + "<button id='survey_submit' class='button-primary'>Next</button></form>");
     }
 
-    /*$('#survey_submit').click(function(e){
+    $('#survey_submit').click(function(e){
         e.preventDefault();
 
 
@@ -656,7 +660,7 @@ function survey(donation_condition, donation){
         $.ajax({
             url: baseUrl+'/challenges/rippler',
             method: "POST",
-            data: {"user": window.user, "data": sendData, "system": system},
+            data: {"user": user, "data": sendData, "system": system},
             dataType: "JSON",
             success:function(response){
         
@@ -669,8 +673,8 @@ function survey(donation_condition, donation){
 
 
        
-    })*/
-}
+    })
+}*/
 
 /* Processes screen after a donation is submitted */
 function afterSubmit(donation_condition, donation){

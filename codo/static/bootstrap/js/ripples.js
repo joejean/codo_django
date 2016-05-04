@@ -20,6 +20,16 @@ $(document).ready(function(){
     //get user info and project info
     $('#user_name').html(window.user);*/
 
+    function validateEmail(str){
+        //Make sure the string is an email.
+        var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(re.test(str) == false) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     var dfd = $.Deferred();
     dfd.done(getProjectInfo())
     .done(function(){
@@ -107,14 +117,14 @@ $(document).ready(function(){
     });
 
     $('.friendcount').on('input', function(){
-        var str = $(this).val();
-        if(/^[a-zA-Z0-9]+$/.test(str) == false){
+        var email = $(this).val();
+        if(validateEmail(email) == false){
             
             //display error message
             $('#current_friends').empty();
-            $('#current_friends').html("Error: Invalid characters in netID. Only alphabets and numeric digits allowed.");
+            $('#current_friends').html("Error: Invalid email address. Please provide a valid Email");
             $('#current_friends').show();
-            $(this).val("");
+            //$(this).val("");
         }else{
              $('#current_friends').hide();
         }

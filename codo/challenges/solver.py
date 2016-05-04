@@ -27,7 +27,6 @@ def isFloatable(string):
 
 # Takes as input a condition string "100 if Jay > 50" and returns the x, y and x_max linear equations/values
 def parseCondition(name, conditions):
-
     # Matching donations 
     if "MATCH" in conditions.split(' '):
         terms = conditions.split(' ')
@@ -200,11 +199,11 @@ class Scenario:
                     members = self.groups[result.group('identifier')]
 
                 # Expand markup equation 
-                expansion = ' '.join([ (result.group('sign')+" "+result.group('scalar')).strip() +" "+ result.group('variable')+ result.group('amount')+"_"+member for member in members ])
+                expansion = ' '.join([ (result.group('sign')+" "+result.group('scalar')).strip() +" "+ result.group('variable')+ result.group('amount')+"_"+member.email for member in members ])
                 newSet.add(eq.replace(tag,expansion))
 
                 if result.group("variable") == "z":
-                    [self.zedBank.add(member+"|z|"+result.group("amount")) for member in members]
+                    [self.zedBank.add(member.email+"|z|"+result.group("amount")) for member in members]
         self.constraints = newSet
 
     def makeZeds(self):
@@ -262,9 +261,10 @@ class Scenario:
         members = Identifier.objects.filter(category="member")
         for member in members:
             self.groups[member.name] = set([member.name])
+        #TODO: Add Campaign support here
         conditions = Condition.objects.all()
         for c in conditions:
-            self.includeDonation(c.user.username,c.pledge)
+            self.includeDonation(c.user.email,c.pledge)
         
 
 def runTest():

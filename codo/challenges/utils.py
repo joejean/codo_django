@@ -6,9 +6,9 @@ from django.contrib.auth import get_user_model
 
 def logAmount(ip,port,user,campaign,amount,challenges):
 	'''@param campaign can be a campaign id or a campaign object'''
-	amount_log = AmountLog(ip=ip, port=port, user=user,campaign=campaign,
+	amount_log = AmountLog.objects.create(ip=ip, port=port, user=user,campaign_id=campaign,
 		amount=amount, challenges=challenges)
-	amount_log.save()
+
 
 
 # def submitSurvey(survey):
@@ -35,9 +35,9 @@ def hasDonation(user, campaign):
 	impactrow = Log.objects.filter(user=user, campaign=campaign).first()
 	return (True, row.pledge, row.resolved, impactrow.impact if impactrow else 0) if row else (False, '', 0, 0)
 
-def get_user_from_username(username):
+def get_user_from_email(email):
 	User = get_user_model()
-	return User.objects.filter(username=username)[0]
+	return User.objects.filter(email=email)[0]
 
 def get_full_name(user):
 	return user.first_name +" "+user.last_name
@@ -65,11 +65,11 @@ def addToGroup(name, group):
 	membership.save() 
 
 def addCondition(user, pledge,campaign):
-	member = Identifier.objects.filter(name=user.username).first()
+	member = Identifier.objects.filter(name=user.email).first()
 	if member is None:
-		addMember(user.username)
-	condition = Condition(user=user, pledge=pledge, campaign=campaign)
-	condition.save()
+		addMember(user.email)
+	condition = Condition.objects.create(user=user, pledge=pledge, campaign_id=campaign)
+	
 
 
 def addChallengeLinks(challenger,challengees, condition, campaign):
@@ -77,15 +77,15 @@ def addChallengeLinks(challenger,challengees, condition, campaign):
 		@param challengees : comma separated string of usernames.
 		@param challenger: user object
 	'''
-	member = Identifier.objects.filter(name=challenger.username)
+	member = Identifier.objects.filter(name=challenger.email)
 	if not member:
-		addMember(challenger.username)
+		addMember(challenger.email)
 	for challengee in challengees.split(','):
 		member = Identifier.objects.filter(name=challengee)
 		if not member:
 			addMember(challengee)
-		challenge_link = ChallengeLink(challenger=challenger.username, challengee=challengee, condition=condition,campaign=campaign)
-		challenge_link.save()
+		challenge_link = ChallengeLink.objects.create(challenger=challenger.email, challengee=challengee, pledge=condition,campaign_id=campaign)
+		
 		
 
 def param_error(param):
