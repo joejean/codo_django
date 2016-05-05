@@ -7,12 +7,13 @@ var donation_condition = window.djangoData['donation_condition'];
 var donation_amt = window.djangoData['donation_amt'];
 var csrftoken = Cookies.get('csrftoken');
 
-
+//TODO: CHANGE THIS BACK TO NORMAL
 function sanitizeString(str){
     //Make sure the string is an email.
     var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if(re.test(str) == false) {
-        alert('You should Provide a valid Email Address');
+        return true;
+        //alert('You should Provide a valid Email Address');
     }else{
         return true;
     }

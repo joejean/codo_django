@@ -20,11 +20,12 @@ $(document).ready(function(){
     //get user info and project info
     $('#user_name').html(window.user);*/
 
+    //TODO: CHANGE THIS BACK TO NORMAL
     function validateEmail(str){
         //Make sure the string is an email.
         var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if(re.test(str) == false) {
-            return false;
+            return true;
         }else{
             return true;
         }

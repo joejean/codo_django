@@ -104,7 +104,7 @@ class CampaignDetail(DetailView):
         self.request.session['campaign_id'] = campaign_id
         hasDon, donCon, donAmt, impact = get_user_challenges_info(self.request.user, campaign_id)
         djangoData = {}
-        djangoData["user_email"] = str(self.request.user.email)
+        djangoData["user_email"] = str(self.request.user.username)
         djangoData["has_donation"] = str(hasDon).lower()
         djangoData["donation_amt"] = float(donAmt)
         djangoData["impact"] = float(impact)

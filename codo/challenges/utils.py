@@ -65,9 +65,9 @@ def addToGroup(name, group):
 	membership.save() 
 
 def addCondition(user, pledge,campaign):
-	member = Identifier.objects.filter(name=user.email).first()
+	member = Identifier.objects.filter(name=user.username).first()
 	if member is None:
-		addMember(user.email)
+		addMember(user.username)
 	condition = Condition.objects.create(user=user, pledge=pledge, campaign_id=campaign)
 	
 
@@ -77,14 +77,14 @@ def addChallengeLinks(challenger,challengees, condition, campaign):
 		@param challengees : comma separated string of usernames.
 		@param challenger: user object
 	'''
-	member = Identifier.objects.filter(name=challenger.email)
+	member = Identifier.objects.filter(name=challenger.username)
 	if not member:
-		addMember(challenger.email)
+		addMember(challenger.username)
 	for challengee in challengees.split(','):
 		member = Identifier.objects.filter(name=challengee)
 		if not member:
 			addMember(challengee)
-		challenge_link = ChallengeLink.objects.create(challenger=challenger.email, challengee=challengee, pledge=condition,campaign_id=campaign)
+		challenge_link = ChallengeLink.objects.create(challenger=challenger.username, challengee=challengee, pledge=condition,campaign_id=campaign)
 		
 		
 

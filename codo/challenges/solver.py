@@ -203,11 +203,11 @@ class Scenario:
                     members = self.groups[result.group('identifier')]
 
                 # Expand markup equation 
-                expansion = ' '.join([ (result.group('sign')+" "+result.group('scalar')).strip() +" "+ result.group('variable')+ result.group('amount')+"_"+member.email for member in members ])
+                expansion = ' '.join([ (result.group('sign')+" "+result.group('scalar')).strip() +" "+ result.group('variable')+ result.group('amount')+"_"+member for member in members ])
                 newSet.add(eq.replace(tag,expansion))
-
                 if result.group("variable") == "z":
-                    [self.zedBank.add(member.email+"|z|"+result.group("amount")) for member in members]
+                    print members
+                    [self.zedBank.add(member+"|z|"+result.group("amount")) for member in members]
         self.constraints = newSet
 
     def makeZeds(self):
@@ -271,7 +271,7 @@ class Scenario:
         #TODO: Add Campaign support here
         conditions = Condition.objects.all()
         for c in conditions:
-            self.includeDonation(c.user.email,c.pledge)
+            self.includeDonation(c.user.username,c.pledge)
         
 
 def runTest():

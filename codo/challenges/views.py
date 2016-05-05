@@ -21,7 +21,7 @@ from datetime import datetime
 # 			return param_error("campaign")
 # 		hasDon, donCon, donAmt, impact = hasDonation(request.user, campaign)
 # 		return JsonResponse({
-# 		"user":request.user.email,
+# 		"user":request.user.username,
 # 		"has_donation":str(hasDon).lower(),
 # 		"donation_amt":donAmt,
 # 		"impact":impact,
@@ -88,8 +88,8 @@ def rippler(request):
 			before, after, change = changeBetween(beforeAfter(user, donation))
 			nChallenges = len([k for k in change.keys() if k!='total' and change[k]>0])
 			if all([letter in string.digits+'.' for letter in donation]) and len(donation)>0: logAmount(ip,port,user,campaign,float(donation),nChallenges)
-			impact = change['total']-after[user.email]
-			percent = impact/after[user.email] * 100 if after[user.email] else 0
+			impact = change['total']-after[user.username]
+			percent = impact/after[user.username] * 100 if after[user.username] else 0
 			if request.POST.get('state') == "submit":
 				
 				submitDonation(request.user, request.POST['campaign'],request.POST['donation'])
@@ -155,7 +155,7 @@ def getMembers():
 
 
 def getNetwork(user, campaign):
-	links = ChallengeLink.objects.filter(Q(challenger=user.email) | Q(challengee=user.email))
+	links = ChallengeLink.objects.filter(Q(challenger=user.username) | Q(challengee=user.username))
 	lines = links.filter(campaign=campaign)
 	result = [{'challenger':row.challenger, 'challengee':row.challengee, 'condition':row.pledge} for row in lines]
 	return result
@@ -163,18 +163,18 @@ def getNetwork(user, campaign):
 def checkChallengeString(user):
 	'''Get all standing challenges for a user for all campaigns'''
 	relevant =  Condition.objects.none()
-	for row in Membership.objects.filter(member=user.email):
+	for row in Membership.objects.filter(member=user.username):
 		group = row.group_name
-		relevant.filter(pledge__icontains(user.email),pledge__icontains(group))
+		relevant.filter(pledge__icontains(user.username),pledge__icontains(group))
 	result = {"challenge":[dict(zip(['name', 'pledge'],[row.name, row.pledge])) for row in relevant]}
 	return result
 
 def checkCampaignChallenges(user, campaign):
 	'''Check for user challenges in a particular campaign'''
 	relevant =  Condition.objects.none()
-	for row in Membership.objects.filter(member=user.email):
+	for row in Membership.objects.filter(member=user.username):
 		group = row.group_name
-		relevant.filter(pledge__icontains(user.email),pledge__icontains(group),campaign=campaign)
+		relevant.filter(pledge__icontains(user.username),pledge__icontains(group),campaign=campaign)
 	result = {"challenge":[dict(zip(['name', 'pledge'],[row.name, row.pledge])) for row in relevant]}
 	return result
 
@@ -188,7 +188,7 @@ def getRipples(user,lowest,highest,stepsize):
 	activation_points = {}
 	for i in range(lowest,highest,stepsize):
 		tempState = deepcopy(after)
-		tempState.includeDonation(user.email,str(i))
+		tempState.includeDonation(user.username,str(i))
 		b, a, c = changeBetween((active_before,tempState.packAndSolve()))
 		realChange = [(key,a[key]) for key in a.keys() if a[key]!=0 and key in b.keys() and a[key]!=b[key]]
 		for u, amount in realChange:
@@ -216,12 +216,12 @@ def currentTotal(campaign):
 
 def listUnresolvedConditions(campaign):
 	unresolved = Condition.objects.filter(resolved=0, campaign=campaign)
-	result = [item.user.email + " " + item.pledge for item in unresolved]
+	result = [item.user.username + " " + item.pledge for item in unresolved]
 	return result
 
 def lastNResolved(n, campaign):
 	result = Condition.objects.exclude(resolved=0).filter(campaign=campaign).order_by('-changed_on')[:n]
-	return [{'name':row.user.email, 'donation': row.resolved} for row in result] 
+	return [{'name':row.user.username, 'donation': row.resolved} for row in result] 
 
 def lastNUnresolved(n, campaign):
 	result = Condition.objects.filter(resolved=0,campaign=campaign).order_by('-changed_on')[:n]
@@ -234,9 +234,7 @@ def markThoseResolved(campaign):
 	scenario.populateFromDB()
 	active = filter(lambda x: x[0]!='total',scenario.packAndSolve())
 	for name, amount in active:
-		#get_user_from_email(name)
-		condition = Condition.objects.filter(user__email=name, campaign_id=campaign).first()
-		print condition
+		condition = Condition.objects.filter(user__username=name, campaign_id=campaign).first()
 		if not condition:
 			continue
 		if condition.resolved != amount:
@@ -249,7 +247,7 @@ def submitDonation(user,campaign,donation):
 	addCondition(user,donation,campaign)
 	log, created = Log.objects.update_or_create(user=user, campaign_id=campaign,
 	 pledge=donation, total_before=before['total'], total_after=after['total'],
-	 impact=change['total'] - after[user.email]) 
+	 impact=change['total'] - after[user.username]) 
 	markThoseResolved(campaign)
 	return after
 
@@ -257,8 +255,8 @@ def beforeAfter(user, donation):
 	before = Scenario()
 	before.populateFromDB()
 	after  = deepcopy(before)
-	after.groups[user.email]=set([user.email])
-	after.includeDonation(user.email, donation)
+	after.groups[user.username]=set([user.username])
+	after.includeDonation(user.username, donation)
 	b = before.packAndSolve()
 	a = after.packAndSolve()
 	return b, a
@@ -277,12 +275,12 @@ def highestImpact(user,lowest,highest,stepsize):
 	before = Scenario()
 	before.populateFromDB() 
 	after  = deepcopy(before)
-	after.groups[user.email]=set([user.email])
+	after.groups[user.username]=set([user.username])
 	prevTotal = dict(before.packAndSolve())['total']
 	ratios = []
 	for i in range(lowest,highest,stepsize):
 		tempState = deepcopy(after)
-		tempState.includeDonation(user.email,str(i))
+		tempState.includeDonation(user.username,str(i))
 		tempTotal = dict(tempState.packAndSolve())['total']
 		tempImpact = tempTotal - prevTotal - i
 		ratios.append((i,100*tempImpact/float(i), tempImpact))
@@ -297,7 +295,7 @@ def highestImpact(user,lowest,highest,stepsize):
 #NOTE: This does not seem to be used
 def replicateConditions():
 	logs = Log.objects.all()
-	conditions = [(str(row.user.email),str(row.pledge)) for row in logs]
+	conditions = [(str(row.user.username),str(row.pledge)) for row in logs]
 	return conditions
 
 #TODO: Test to see if it works
@@ -305,7 +303,7 @@ def getFullNetwork(campaign):
 	users = Identifier.objects.filter(category='member')
 	network = []
 	for useremail in users:
-		donation = Condition.objects.filter(user__email=useremail, campaign=campaign).first()
+		donation = Condition.objects.filter(user__username=useremail, campaign=campaign).first()
 		if donation:
 			pledge = donation.pledge
 			resolved = int(donation.resolved)
@@ -314,7 +312,7 @@ def getFullNetwork(campaign):
 			pledge = None
 			resolved = 0
 			max_donation = 0
-		personal_Network = getNetwork(user.email, campaign)
+		personal_Network = getNetwork(user.username, campaign)
 		challengers, challengees = [], []
 		for node in personal_Network:
 			#TODO: Check to see if challenger here returns a user object or a username
