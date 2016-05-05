@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 
 def logAmount(ip,port,user,campaign,amount,challenges):
-	'''@param campaign can be a campaign id or a campaign object'''
+	'''@param campaign is a campaign id'''
 	amount_log = AmountLog.objects.create(ip=ip, port=port, user=user,campaign_id=campaign,
 		amount=amount, challenges=challenges)
 

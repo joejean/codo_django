@@ -228,15 +228,15 @@ def lastNUnresolved(n, campaign):
 	return result
 
 
-
-
 #TODO: Special Attention
 def markThoseResolved(campaign):
 	scenario = Scenario()
 	scenario.populateFromDB()
 	active = filter(lambda x: x[0]!='total',scenario.packAndSolve())
 	for name, amount in active:
-		condition, created = Condition.objects.get_or_create(user=get_user_from_email(name), campaign_id=campaign)
+		#get_user_from_email(name)
+		condition = Condition.objects.filter(user__email=name, campaign_id=campaign).first()
+		print condition
 		if not condition:
 			continue
 		if condition.resolved != amount:
@@ -244,7 +244,6 @@ def markThoseResolved(campaign):
 			condition.changed_on = datetime.now()
 			condition.save()
 	
-#TODO: Need to modify this to take the campaign into account
 def submitDonation(user,campaign,donation):
 	before, after, change = changeBetween(beforeAfter(user, donation))
 	addCondition(user,donation,campaign)
@@ -306,7 +305,7 @@ def getFullNetwork(campaign):
 	users = Identifier.objects.filter(category='member')
 	network = []
 	for useremail in users:
-		donation = Condition.objects.filter(user=get_user_from_email(useremail), campaign=campaign).first()
+		donation = Condition.objects.filter(user__email=useremail, campaign=campaign).first()
 		if donation:
 			pledge = donation.pledge
 			resolved = int(donation.resolved)
@@ -319,11 +318,11 @@ def getFullNetwork(campaign):
 		challengers, challengees = [], []
 		for node in personal_Network:
 			#TODO: Check to see if challenger here returns a user object or a username
-			if node['challenger'] != username:
+			if node['challenger'] != useremail:
 				challengers.append(node['challenger'])
-			if node['challengee'] != username:
+			if node['challengee'] != useremail:
 				challengees.append(node['challengee'])
-		network.append({'username': username, 'max_donation': max_donation, 'resolved': resolved, 'condition': pledge,  'challenging': challengees, 'challenged_by': challengers})
+		network.append({'username': useremail, 'max_donation': max_donation, 'resolved': resolved, 'condition': pledge,  'challenging': challengees, 'challenged_by': challengers})
 	relevant_network = []
 	for node in network:
 		relevant = True

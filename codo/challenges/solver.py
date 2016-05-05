@@ -252,7 +252,10 @@ class Scenario:
         self.fillBlanks()
         result = self.solveLP()
         subprocess.call(['rm '+CPLEX_OUTPUT_PATH+self.filename],shell=True)
+        print("PACKANDSOLVE RESULTS")
+        print(result)
         return result
+
 
     
     #TODO: Need to modify this to take the campaign into account
