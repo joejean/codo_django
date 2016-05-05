@@ -1,6 +1,10 @@
+from django.conf import settings 
 import string, random, subprocess, re, time
 from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
                      Membership,Identifier
+
+CPLEX_OUTPUT_PATH = settings.CPLEX_OUTPUT_PATH
+CPLEX_INSTALL_PATH = settings.CPLEX_INSTALL_PATH
 
 original = """\ENCODING=ISO-8859-1
 \Problem name: 
@@ -224,10 +228,10 @@ class Scenario:
         template = template.replace("[objective]","   obj:  "+ " + ".join(sorted(list(self.xyBank))))
         template = template.replace( "[bounds]","   "+ "\n   ".join(sorted(list(self.bounds), key= lambda x: x.split('_')[1])))
         template = template.replace("[generals]","\t"+"\n\t".join(sorted(["z"+z.split("|")[2] +"_"+z.split("|")[0] for z in self.zedBank]+map(lambda x: x.replace('xy_',"y_"),list(self.xyBank)))))
-        f = open(self.filename,'w')
+        f = open(CPLEX_OUTPUT_PATH+self.filename,'w')
         f.write(template)
         f.close()
-        readout = subprocess.check_output(['/opt/ibm/ILOG/CPLEX_Studio126/cplex/bin/x86-64_linux/cplex -c "read /home/joe/Documents/codo/%s" "optimize"  "display solution objective" "display solution variables -"'%(self.filename)],shell=True).strip().split('\n')
+        readout = subprocess.check_output([CPLEX_INSTALL_PATH+' -c "read "'+CPLEX_OUTPUT_PATH+'"%s" "optimize"  "display solution objective" "display solution variables -"'%(self.filename)],shell=True).strip().split('\n')
         try:
             solution = map(lambda x: (x[0].split("_")[1],float(x[1])),[filter(None, x.split(' ')) for x in  readout[readout.index('CPLEX> Incumbent solution')+2:-1] if "xy_" in x])
         except ValueError:
@@ -247,7 +251,7 @@ class Scenario:
         self.makeZeds()
         self.fillBlanks()
         result = self.solveLP()
-        subprocess.call(['rm '+self.filename],shell=True)
+        subprocess.call(['rm '+CPLEX_OUTPUT_PATH+self.filename],shell=True)
         return result
 
     

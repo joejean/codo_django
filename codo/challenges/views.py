@@ -10,6 +10,7 @@ from .utils import logAmount, logVisit, addMember, makeGroup, addToGroup,\
 from ipware.ip import get_real_ip
 from copy import deepcopy
 import sys
+from datetime import datetime
 
 
 #This replaces the server class from the old codebase
@@ -54,7 +55,8 @@ def rippler(request):
 			campaign = request.POST.get('campaign')
 			if campaign is None:
 				return param_error("campaign")
-			return JsonResponse({"amt_funded":currentTotal(campaign), "num_funders":nResolvedConditions(campaign), "num_challenges":nUnresolvedConditions(campaign)})
+			
+			return JsonResponse({"amt_funded":currentTotal(campaign),"num_funders":nResolvedConditions(campaign),"num_challenges":nUnresolvedConditions(campaign)})
 
 		# Query for still-standing challenges/conditions (unresolved)
 		if action == "prevChallenges":
@@ -86,7 +88,6 @@ def rippler(request):
 			before, after, change = changeBetween(beforeAfter(user, donation))
 			nChallenges = len([k for k in change.keys() if k!='total' and change[k]>0])
 			if all([letter in string.digits+'.' for letter in donation]) and len(donation)>0: logAmount(ip,port,user,campaign,float(donation),nChallenges)
-			print after
 			impact = change['total']-after[user.email]
 			percent = impact/after[user.email] * 100 if after[user.email] else 0
 			if request.POST.get('state') == "submit":
@@ -209,8 +210,8 @@ def nUnresolvedConditions(campaign):
 	return len(result)
 
 def currentTotal(campaign):
-	resolved_conditions = Condition.objects.exclude(resolved=0).filter(campaign=campaign)
-	result = sum([x[0] for x in resolved_conditions ])
+	resolved_conditions = Condition.objects.exclude(resolved=0).filter(campaign=campaign) 
+	result = sum([float(x.resolved) for x in resolved_conditions ])
 	return result
 
 def listUnresolvedConditions(campaign):
@@ -235,12 +236,12 @@ def markThoseResolved(campaign):
 	scenario.populateFromDB()
 	active = filter(lambda x: x[0]!='total',scenario.packAndSolve())
 	for name, amount in active:
-		condition, created = Condition.objects.get_or_create(user=get_user_from_email(name), campaign=campaign)
+		condition, created = Condition.objects.get_or_create(user=get_user_from_email(name), campaign_id=campaign)
 		if not condition:
 			continue
 		if condition.resolved != amount:
 			condition.resolved = amount
-			condition.changed_on = func.now()
+			condition.changed_on = datetime.now()
 			condition.save()
 	
 #TODO: Need to modify this to take the campaign into account

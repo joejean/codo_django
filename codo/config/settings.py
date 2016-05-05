@@ -268,6 +268,17 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+#CPLEX CONFIG VARIABLES
+if 'CPLEX_OUTPUT_PATH' in os.environ:
+    CPLEX_OUTPUT_PATH = os.environ['CPLEX_OUTPUT_PATH']
+else:
+    CPLEX_OUTPUT_PATH = '/home/joe/.virtualenvs/codo_django2/'
+
+if 'CPLEX_INSTALL_PATH' in os.environ:
+    CPLEX_INSTALL_PATH = os.environ['CPLEX_INSTALL_PATH']
+else:
+    CPLEX_INSTALL_PATH = '/opt/ibm/ILOG/CPLEX_Studio126/cplex/bin/x86-64_linux/cplex'
+
 
 
 
