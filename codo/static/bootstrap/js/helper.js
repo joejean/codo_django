@@ -42,9 +42,9 @@ function getProjectInfo(){
         dataType: "JSON",
         success: function(response){
             //console.log(response);
-            $('#amt_funded > .big_num').html("  " + Math.floor(response['amt_funded']) + " AED");
+            $('#amt_funded').html("  " + Math.floor(response['amt_funded']));
             $('#num_funders').html(" " + response['num_funders'] + " Funders");
-            $('#num_challenges').html(response['num_challenges'] + " Challeges");
+            $('#num_challenges').html(response['num_challenges'] + " Challenges");
             prevDonations();
         },
         error: function(xhr, status, error){

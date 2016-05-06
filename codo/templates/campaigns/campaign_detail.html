@@ -14,22 +14,30 @@
         </div>
         <div class="col-md-4">
           <h2>&nbsp;</h2>
-          <h3><i class="fa fa-money"></i> $223 <br ><small>Funds Raised</small></h3>
+          <h3><i class="fa fa-money"></i> $<span id="amt_funded">0</span> <br ><small>Funds Raised</small></h3>
           <hr>
           <p><i class="fa fa-flag-o fa-2x"></i> {{campaign.goal_amount}} Goal</p>
           <p><i class="fa fa-clock-o fa-2x"></i> {{campaign.get_days_left}} Day{{campaign.get_days_left|pluralize}} To Go</p>
           <p><i class="fa fa-users fa-2x"></i><span id="num_funders">0 Funders</span></p>
           <p><i class="fa fa-star-o fa-3x"></i><span id="num_challenges">0 Challenges</span> </p>
-          
-          <a href="#paymentModal" data-toggle="collapse" class="col-md-12 btn btn-primary">Fund This Project</a>
+          {% if user.is_authenticated %}
+            {% if djangoData.has_donation == 'true' %}
 
-          <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
-          
+            {% else %}
+              <a href="#paymentModal" data-toggle="collapse" class="col-md-12 btn btn-primary">Fund This Project</a>
+              <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'account_login'%}?next={% firstof request.path '/' %}" class="col-md-12 btn btn-primary">Login To Fund this Project</a>
+          {% endif %}
+ 
         </div>
 
       </div>
+      {% if user.is_authenticated %}
+        {% if djangoData.has_donation != 'true' %}
          <!-- New Payment Panel -->
-      <div class="row collapse" id="paymentModal">
+        <div class="row collapse" id="paymentModal">
         <div class = "panel panel-info">
            <div class = "panel-heading">
               <h3 class="panel-title">Funding Options</h3>
@@ -147,7 +155,9 @@
                 </div>
            </div> <!-- End of panel body -->
         </div>
-      </div> <!-- End of Payment Modal -->
+        </div> <!-- End of Payment Modal -->
+        {% endif %}
+      {% endif %}
 
      <!--  Campaign information part including Video -->
       <div class="row campaignDescription">

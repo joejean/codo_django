@@ -19,7 +19,11 @@ def logAmount(ip,port,user,campaign,amount,challenges):
 
 #This replaces the server class from the old codebase
 def get_user_challenges_info(user,campaign):
-	hasDon, donCon, donAmt, impact = hasDonation(user, campaign)
+	if user.is_authenticated():
+		hasDon, donCon, donAmt, impact = hasDonation(user, campaign)
+	else:
+		hasDon = donCon = ""
+		donAmt = impact = 0
 	return hasDon, donCon, donAmt, impact
 	# return JsonResponse({
 	# "user":user.username,
