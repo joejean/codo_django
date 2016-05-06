@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
-
+{% load campaign_tags %}
 {% block content %}
  
     <!-- Header -->
@@ -14,11 +14,11 @@
     <!-- what's new with codo -->
     <div class="jumbotron yellow-jumbotron">
       <div class="container">
-        <h2> What's new with Codo</h2>
+        <h2> What's new with CrowdEmpowered</h2>
         <div class="row">
           <div class="col-sm-12 col-md-4">
             <h3>Donate on your terms</h3>
-            <img src="http://placehold.it/150" alt="..." class="img-responsive img-circle pull-right">
+            <img src="{% static 'img/contract.png' %}" width="150" height="150" alt="Contract Icon From Flaticon.com" class="img-responsive img-circle pull-right">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -26,7 +26,7 @@
           </div>
           <div class="col-sm-12 col-md-4">
             <h3>Engage with your community</h3>
-            <img src="http://placehold.it/150" alt="..." class="img-responsive img-circle pull-right">
+            <img src="{% static 'img/community_2.png' %}" width="150" height="150" alt="..." class="img-responsive img-circle pull-right">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -34,7 +34,7 @@
           </div>
           <div class="col-sm-12 col-md-4">
             <h3>Multiply your impact</h3>
-            <img src="http://placehold.it/150" alt="..." class="img-responsive img-circle pull-right">
+            <img src="{% static 'img/magnify.png' %}" width="150" height="150" alt="..." class="img-responsive img-circle pull-right">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -47,84 +47,121 @@
 
     <div class="container">
       <!--  -->
-      <div class="row">
+      {% if campaigns %}
         <div class="row">
+          <div class="row">
           <div class="col-md-8">
-            <h4>Trending Projects</h4>
+            <h4>Trending Campaigns</h4>
           </div>
           <div class="col-md-4">
-             <a href="{% url 'campaigns_list' %}" class="btn btn-default pull-right text-uppercase">view All Projects</a>
+             <a href="/campaigns/search" class="btn btn-default pull-right text-uppercase">Search All Campaigns</a>
+          </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
-              <div class="caption">
-                <h3>Persistence of Paper</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
-                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
-                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                    <span class="sr-only">80% Complete (danger)</span>
-                  </div>
-                </div>
-                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
-                <br >
-                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
-
-            
-              </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
-              <div class="caption">
-                <h3>Persistence of Paper</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
-                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
-                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                    <span class="sr-only">80% Complete (danger)</span>
-                  </div>
-                </div>
-                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
-                <br >
-                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
-
-            
-              </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
-              <div class="caption">
-                <h3>Persistence of Paper</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
-                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
-                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
-                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                    <span class="sr-only">80% Complete (danger)</span>
-                  </div>
-                </div>
-                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
-                <br >
-                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
-
-            
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
+      
+        {% for group in campaigns|group_by:4 %}
+          <div class="row">
+            {% for campaign in group%}
+              <div class="col-md-3">
+                <a href="{{campaign.get_absolute_url}}">
+                  <div class="thumbnail">
+                    <img src="{{campaign.picture.url}}" class="img-responsive" alt="{{campaign.title}}">
+                    <div class="caption">
+                      <h3>{{campaign.title|truncatechars:40}}</h3>
+                      <p>{{campaign.blurb}}</p>
+                      <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+                      <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                      <p><i class="fa fa-clock-o fa-2x"></i> {{campaign.end_date|timeuntil}} Left</p>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                          <span class="sr-only">80% Complete (danger)</span>
+                        </div>
+                      </div>
+                      <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                      <br >
+                      <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+                    </div>
+                  </div> <!-- thumbnail -->
+                </a>
+              </div> <!-- col-md-3 -->
+            {% endfor %}
+          </div> <!-- End Row -->
+          <hr>
+          {% empty %}
+             <h2> No Campaigns Yet</h2>
+        {% endfor %}
+      {% endif %}
+      
     </div> <!-- /container -->
 
 {% endblock %}
+
+
+<!-- <div class="row">
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
+              <div class="caption">
+                <h3>Persistence of Paper</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                    <span class="sr-only">80% Complete (danger)</span>
+                  </div>
+                </div>
+                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                <br >
+                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+      
+            
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
+              <div class="caption">
+                <h3>Persistence of Paper</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                    <span class="sr-only">80% Complete (danger)</span>
+                  </div>
+                </div>
+                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                <br >
+                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+      
+            
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <img src="http://placehold.it/350X200" class="img-responsive" alt="...">
+              <div class="caption">
+                <h3>Persistence of Paper</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+                <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
+                <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                <p><i class="fa fa-clock-o fa-2x"></i> 20 Days Left</p>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                    <span class="sr-only">80% Complete (danger)</span>
+                  </div>
+                </div>
+                <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                <br >
+                <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+      
+            
+              </div>
+          </div>
+        </div>
+      </div> -->

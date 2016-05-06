@@ -1,0 +1,409 @@
+INFO  - 2016-05-06 20:53:30.216; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2016-05-06 20:53:30.293; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/contexts at interval 0
+INFO  - 2016-05-06 20:53:30.321; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/contexts/solr-jetty-context.xml
+INFO  - 2016-05-06 20:53:31.855; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2016-05-06 20:53:31.973; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2016-05-06 20:53:32.041; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2016-05-06 20:53:32.042; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2016-05-06 20:53:32.051; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2016-05-06 20:53:32.209; org.apache.solr.core.ConfigSolr; Loading container configuration from /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/solr.xml
+INFO  - 2016-05-06 20:53:32.488; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr
+INFO  - 2016-05-06 20:53:32.508; org.apache.solr.core.CoreContainer; New CoreContainer 1606286799
+INFO  - 2016-05-06 20:53:32.508; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2016-05-06 20:53:32.537; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2016-05-06 20:53:32.537; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2016-05-06 20:53:32.540; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2016-05-06 20:53:32.540; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2016-05-06 20:53:32.542; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2016-05-06 20:53:32.542; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2016-05-06 20:53:32.542; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2016-05-06 20:53:32.543; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2016-05-06 20:53:32.543; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2016-05-06 20:53:32.984; org.apache.solr.update.UpdateShardHandler; Creating UpdateShardHandler HTTP client with params: socketTimeout=0&connTimeout=0&retry=false
+INFO  - 2016-05-06 20:53:32.986; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2016-05-06 20:53:32.987; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2016-05-06 20:53:32.987; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2016-05-06 20:53:33.072; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr
+INFO  - 2016-05-06 20:53:33.090; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/
+INFO  - 2016-05-06 20:53:33.091; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2016-05-06 20:53:33.117; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/'
+INFO  - 2016-05-06 20:53:33.188; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+INFO  - 2016-05-06 20:53:33.190; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/pdfbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 20:53:33.190; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jhighlight-1.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.190; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/apache-mime4j-dom-0.7.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.191; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/vorbis-java-tika-0.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.191; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/rome-0.9.jar' to classloader
+INFO  - 2016-05-06 20:53:33.191; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-xmp-1.5.jar' to classloader
+INFO  - 2016-05-06 20:53:33.191; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/boilerpipe-1.1.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.191; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xmpcore-5.1.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.192; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-3.10.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.192; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/commons-compress-1.7.jar' to classloader
+INFO  - 2016-05-06 20:53:33.192; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/isoparser-1.0-RC-1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.192; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/fontbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 20:53:33.192; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xmlbeans-2.6.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.193; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xercesImpl-2.9.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.193; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-core-1.5.jar' to classloader
+INFO  - 2016-05-06 20:53:33.193; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/bcprov-jdk15-1.45.jar' to classloader
+INFO  - 2016-05-06 20:53:33.193; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-scratchpad-3.10.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.193; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/vorbis-java-core-0.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.194; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/juniversalchardet-1.0.3.jar' to classloader
+INFO  - 2016-05-06 20:53:33.194; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/bcmail-jdk15-1.45.jar' to classloader
+INFO  - 2016-05-06 20:53:33.194; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xz-1.4.jar' to classloader
+INFO  - 2016-05-06 20:53:33.194; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/dom4j-1.6.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.194; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jdom-1.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jempbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/icu4j-53.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-ooxml-3.10.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tagsoup-1.2.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/aspectjrt-1.6.11.jar' to classloader
+INFO  - 2016-05-06 20:53:33.195; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-ooxml-schemas-3.10.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.196; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-parsers-1.5.jar' to classloader
+INFO  - 2016-05-06 20:53:33.196; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/apache-mime4j-core-0.7.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.196; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/metadata-extractor-2.6.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.197; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-cell-4.10.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.197; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/carrot2-mini-3.9.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/mahout-math-0.6.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/jackson-mapper-asl-1.9.13.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/attributes-binder-1.2.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/jackson-core-asl-1.9.13.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/mahout-collections-1.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.198; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/hppc-0.5.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.199; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/simple-xml-2.7.jar' to classloader
+INFO  - 2016-05-06 20:53:33.199; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-clustering-4.10.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.199; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/langid/lib/langdetect-1.1-20120112.jar' to classloader
+INFO  - 2016-05-06 20:53:33.199; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/langid/lib/jsonic-1.2.7.jar' to classloader
+INFO  - 2016-05-06 20:53:33.200; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-langid-4.10.2.jar' to classloader
+INFO  - 2016-05-06 20:53:33.200; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/commons-beanutils-1.8.3.jar' to classloader
+INFO  - 2016-05-06 20:53:33.200; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/commons-collections-3.2.1.jar' to classloader
+INFO  - 2016-05-06 20:53:33.201; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/velocity-1.7.jar' to classloader
+INFO  - 2016-05-06 20:53:33.201; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/velocity-tools-2.0.jar' to classloader
+INFO  - 2016-05-06 20:53:33.202; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-velocity-4.10.2.jar' to classloader
+INFO  - 2016-05-06 20:53:34.067; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2016-05-06 20:53:34.085; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: 4.10.2
+INFO  - 2016-05-06 20:53:34.214; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2016-05-06 20:53:34.223; org.apache.solr.schema.IndexSchema; Reading Solr Schema from /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf/schema.xml
+INFO  - 2016-05-06 20:53:34.258; org.apache.solr.schema.IndexSchema; [collection1] Schema name=default
+WARN  - 2016-05-06 20:53:34.359; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableIntField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 20:53:34.362; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableLongField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 20:53:34.363; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableFloatField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 20:53:34.366; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableDoubleField]. Please consult documentation how to replace it accordingly.
+INFO  - 2016-05-06 20:53:34.429; org.apache.solr.schema.IndexSchema; default search field in schema is text
+INFO  - 2016-05-06 20:53:34.430; org.apache.solr.schema.IndexSchema; query parser default operator is AND
+INFO  - 2016-05-06 20:53:34.431; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2016-05-06 20:53:34.529; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using configuration from instancedir /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/
+INFO  - 2016-05-06 20:53:34.555; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2016-05-06 20:53:34.564; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/, dataDir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/
+INFO  - 2016-05-06 20:53:34.578; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2016-05-06 20:53:34.581; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2016-05-06 20:53:34.581; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2016-05-06 20:53:34.610; org.apache.solr.core.CachingDirectoryFactory; return new directory for /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data
+INFO  - 2016-05-06 20:53:34.645; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index/
+INFO  - 2016-05-06 20:53:34.646; org.apache.solr.core.CachingDirectoryFactory; return new directory for /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index
+INFO  - 2016-05-06 20:53:34.687; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2016-05-06 20:53:34.688; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2016-05-06 20:53:34.688; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2016-05-06 20:53:34.690; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2016-05-06 20:53:34.690; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2016-05-06 20:53:34.806; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2016-05-06 20:53:34.810; org.apache.solr.core.RequestHandlers; created /update: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.810; org.apache.solr.core.RequestHandlers; created /update/json: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.810; org.apache.solr.core.RequestHandlers; created /update/csv: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.811; org.apache.solr.core.RequestHandlers; created /update/json/docs: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.813; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.814; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.815; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2016-05-06 20:53:34.815; org.apache.solr.core.RequestHandlers; created /export: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.815; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+WARN  - 2016-05-06 20:53:34.816; org.apache.solr.core.RequestHandlers; Multiple requestHandler registered to the same name: /update ignoring: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.816; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2016-05-06 20:53:34.816; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.extraction.ExtractingRequestHandler
+INFO  - 2016-05-06 20:53:34.816; org.apache.solr.core.RequestHandlers; created /update/extract: solr.extraction.ExtractingRequestHandler
+INFO  - 2016-05-06 20:53:34.816; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.FieldAnalysisRequestHandler
+INFO  - 2016-05-06 20:53:34.817; org.apache.solr.core.RequestHandlers; created /analysis/field: solr.FieldAnalysisRequestHandler
+INFO  - 2016-05-06 20:53:34.817; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.DocumentAnalysisRequestHandler
+INFO  - 2016-05-06 20:53:34.817; org.apache.solr.core.RequestHandlers; created /analysis/document: solr.DocumentAnalysisRequestHandler
+INFO  - 2016-05-06 20:53:34.818; org.apache.solr.core.RequestHandlers; created /admin/: solr.admin.AdminHandlers
+INFO  - 2016-05-06 20:53:34.820; org.apache.solr.core.RequestHandlers; created /admin/ping: solr.PingRequestHandler
+INFO  - 2016-05-06 20:53:34.822; org.apache.solr.core.RequestHandlers; created /debug/dump: solr.DumpRequestHandler
+INFO  - 2016-05-06 20:53:34.830; org.apache.solr.core.RequestHandlers; created /replication: solr.ReplicationHandler
+INFO  - 2016-05-06 20:53:34.830; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.830; org.apache.solr.core.RequestHandlers; created /spell: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.830; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; created /suggest: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; created /tvrh: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; created /terms: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.831; org.apache.solr.core.RequestHandlers; created /elevate: solr.SearchHandler
+INFO  - 2016-05-06 20:53:34.851; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 20:53:34.853; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 20:53:34.855; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 20:53:34.855; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 20:53:34.856; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 20:53:34.931; org.apache.solr.update.CommitTracker; Hard AutoCommit: if uncommited for 15000ms; 
+INFO  - 2016-05-06 20:53:34.931; org.apache.solr.update.CommitTracker; Soft AutoCommit: disabled
+INFO  - 2016-05-06 20:53:35.000; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onInit: commits: num=1
+	commit{dir=NRTCachingDirectory(MMapDirectory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_2,generation=2}
+INFO  - 2016-05-06 20:53:35.000; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 2
+INFO  - 2016-05-06 20:53:35.042; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@4d8fa7e0[collection1] main
+INFO  - 2016-05-06 20:53:35.047; org.apache.solr.rest.ManagedResourceStorage$FileStorageIO; File-based storage initialized to use dir: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 20:53:35.047; org.apache.solr.rest.RestManager; Initializing RestManager with initArgs: {storageDir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf}
+INFO  - 2016-05-06 20:53:35.053; org.apache.solr.rest.ManagedResourceStorage; Reading _rest_managed.json using file:dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 20:53:35.087; org.apache.solr.rest.ManagedResourceStorage; Loaded LinkedHashMap at path _rest_managed.json using file:dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 20:53:35.087; org.apache.solr.rest.ManagedResource; Loaded initArgs {} for /rest/managed
+INFO  - 2016-05-06 20:53:35.088; org.apache.solr.rest.RestManager; Initializing 0 registered ManagedResources
+INFO  - 2016-05-06 20:53:35.088; org.apache.solr.handler.component.SpellCheckComponent; Initializing spell checkers
+INFO  - 2016-05-06 20:53:35.094; org.apache.solr.spelling.DirectSolrSpellChecker; init: {name=default,field=text,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+INFO  - 2016-05-06 20:53:35.098; org.apache.solr.handler.component.SpellCheckComponent; No queryConverter defined, using default converter
+INFO  - 2016-05-06 20:53:35.099; org.apache.solr.handler.component.SuggestComponent; Initializing SuggestComponent
+INFO  - 2016-05-06 20:53:35.100; org.apache.solr.spelling.suggest.SolrSuggester; init: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2016-05-06 20:53:35.108; org.apache.solr.spelling.suggest.SolrSuggester; Dictionary loaded with params: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2016-05-06 20:53:35.109; org.apache.solr.handler.component.QueryElevationComponent; Loading QueryElevation from: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf/elevate.xml
+INFO  - 2016-05-06 20:53:35.131; org.apache.solr.handler.ReplicationHandler; Commits will be reserved for  10000
+INFO  - 2016-05-06 20:53:35.132; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@4d8fa7e0[collection1] main{StandardDirectoryReader(segments_2:3:nrt _0(4.10.2):C3)}
+INFO  - 2016-05-06 20:53:35.133; org.apache.solr.core.CoreContainer; registering core: collection1
+INFO  - 2016-05-06 20:53:35.136; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example
+INFO  - 2016-05-06 20:53:35.136; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2016-05-06 20:53:35.185; org.apache.solr.core.SolrCore; [collection1] webapp=null path=null params={q=static+firstSearcher+warming+in+solrconfig.xml&distrib=false&event=firstSearcher} hits=0 status=0 QTime=51 
+INFO  - 2016-05-06 20:53:35.186; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2016-05-06 20:53:35.186; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: default
+INFO  - 2016-05-06 20:53:35.187; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: wordbreak
+INFO  - 2016-05-06 20:53:35.187; org.apache.solr.handler.component.SuggestComponent$SuggesterListener; Loading suggester index for: mySuggester
+INFO  - 2016-05-06 20:53:35.187; org.apache.solr.spelling.suggest.SolrSuggester; reload()
+INFO  - 2016-05-06 20:53:35.188; org.apache.solr.spelling.suggest.SolrSuggester; build()
+INFO  - 2016-05-06 20:53:35.188; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2016-05-06 20:53:35.202; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@4d8fa7e0[collection1] main{StandardDirectoryReader(segments_2:3:nrt _0(4.10.2):C3)}
+INFO  - 2016-05-06 20:53:46.357; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(b)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=0 status=0 QTime=8 
+INFO  - 2016-05-06 20:53:46.371; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(b)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=0&wt=json} hits=0 status=0 QTime=1 
+INFO  - 2016-05-06 20:55:55.883; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(b)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=0 status=0 QTime=1 
+INFO  - 2016-05-06 20:55:55.887; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(b)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=0&wt=json} hits=0 status=0 QTime=0 
+INFO  - 2016-05-06 20:56:03.105; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=2 
+INFO  - 2016-05-06 20:56:14.416; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(lorem)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=2 status=0 QTime=1 
+INFO  - 2016-05-06 20:56:24.687; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(l)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=0 status=0 QTime=1 
+INFO  - 2016-05-06 20:56:24.690; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(l)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=0&wt=json} hits=0 status=0 QTime=0 
+INFO  - 2016-05-06 20:56:28.705; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(lo)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=0 status=0 QTime=1 
+INFO  - 2016-05-06 20:56:28.711; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(lo)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=0&wt=json} hits=0 status=0 QTime=1 
+INFO  - 2016-05-06 20:56:34.034; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(be)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=0 status=0 QTime=0 
+INFO  - 2016-05-06 20:56:34.079; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(be)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=0&wt=json} hits=0 status=0 QTime=40 
+INFO  - 2016-05-06 20:56:37.170; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(lorem)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=2 status=0 QTime=1 
+INFO  - 2016-05-06 21:25:31.865; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=2 
+INFO  - 2016-05-06 22:15:04.161; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:15:10.656; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 
+INFO  - 2016-05-06 22:18:29.429; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 
+INFO  - 2016-05-06 22:18:56.033; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 
+INFO  - 2016-05-06 22:22:07.788; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+INFO  - 2016-05-06 22:22:08.313; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onCommit: commits: num=2
+	commit{dir=NRTCachingDirectory(MMapDirectory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_2,generation=2}
+	commit{dir=NRTCachingDirectory(MMapDirectory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_3,generation=3}
+INFO  - 2016-05-06 22:22:08.313; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 3
+INFO  - 2016-05-06 22:22:08.317; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@666a188e[collection1] main
+INFO  - 2016-05-06 22:22:08.324; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@666a188e[collection1] main{StandardDirectoryReader(segments_2:7:nrt _1(4.10.2):C3)}
+INFO  - 2016-05-06 22:22:08.330; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2016-05-06 22:22:08.331; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@666a188e[collection1] main{StandardDirectoryReader(segments_2:7:nrt _1(4.10.2):C3)}
+INFO  - 2016-05-06 22:22:08.333; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2016-05-06 22:22:08.351; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update/ params={commit=true} {add=[campaigns.campaign.1 (1533604190203412480), campaigns.campaign.2 (1533604190250598400), campaigns.campaign.23 (1533604190255841280)],commit=} 0 660
+INFO  - 2016-05-06 22:22:17.906; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:25:42.683; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=2 
+INFO  - 2016-05-06 22:26:07.012; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2016-05-06 22:26:07.013; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr-webapp/webapp/},/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/webapps/solr.war
+INFO  - 2016-05-06 22:26:08.014; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=1606286799
+INFO  - 2016-05-06 22:26:08.014; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@5f3c817
+INFO  - 2016-05-06 22:26:08.016; org.apache.solr.update.DirectUpdateHandler2; closing DirectUpdateHandler2{commits=1,autocommit maxTime=15000ms,autocommits=0,soft autocommits=0,optimizes=0,rollbacks=0,expungeDeletes=0,docsPending=0,adds=0,deletesById=0,deletesByQuery=0,errors=0,cumulative_adds=3,cumulative_deletesById=0,cumulative_deletesByQuery=0,cumulative_errors=0,transaction_logs_total_size=8188,transaction_logs_total_number=6}
+INFO  - 2016-05-06 22:26:08.016; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2016-05-06 22:26:08.016; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2016-05-06 22:26:08.017; org.apache.solr.update.DefaultSolrCoreState; closing IndexWriter with IndexWriterCloser
+INFO  - 2016-05-06 22:26:08.019; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2016-05-06 22:26:08.019; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2016-05-06 22:26:08.020; org.apache.solr.core.CachingDirectoryFactory; looking to close /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data [CachedDir<<refCount=0;path=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data;done=false>>]
+INFO  - 2016-05-06 22:26:08.020; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data
+INFO  - 2016-05-06 22:26:08.020; org.apache.solr.core.CachingDirectoryFactory; looking to close /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index;done=false>>]
+INFO  - 2016-05-06 22:26:08.020; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index
+INFO  - 2016-05-06 22:26:08.021; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr-webapp/webapp/},/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/webapps/solr.war
+INFO  - 2016-05-06 22:26:10.649; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2016-05-06 22:26:10.671; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/contexts at interval 0
+INFO  - 2016-05-06 22:26:10.677; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/contexts/solr-jetty-context.xml
+INFO  - 2016-05-06 22:26:11.594; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2016-05-06 22:26:11.644; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2016-05-06 22:26:11.657; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2016-05-06 22:26:11.657; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2016-05-06 22:26:11.658; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2016-05-06 22:26:11.768; org.apache.solr.core.ConfigSolr; Loading container configuration from /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/solr.xml
+INFO  - 2016-05-06 22:26:11.819; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr
+INFO  - 2016-05-06 22:26:11.825; org.apache.solr.core.CoreContainer; New CoreContainer 1606286799
+INFO  - 2016-05-06 22:26:11.825; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2016-05-06 22:26:11.844; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2016-05-06 22:26:11.844; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2016-05-06 22:26:11.849; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2016-05-06 22:26:11.850; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2016-05-06 22:26:11.854; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2016-05-06 22:26:11.854; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2016-05-06 22:26:11.855; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2016-05-06 22:26:11.855; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2016-05-06 22:26:11.855; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2016-05-06 22:26:12.013; org.apache.solr.update.UpdateShardHandler; Creating UpdateShardHandler HTTP client with params: socketTimeout=0&connTimeout=0&retry=false
+INFO  - 2016-05-06 22:26:12.016; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2016-05-06 22:26:12.017; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2016-05-06 22:26:12.018; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2016-05-06 22:26:12.050; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr
+INFO  - 2016-05-06 22:26:12.058; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/
+INFO  - 2016-05-06 22:26:12.059; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2016-05-06 22:26:12.060; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/'
+INFO  - 2016-05-06 22:26:12.135; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+INFO  - 2016-05-06 22:26:12.137; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/pdfbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 22:26:12.137; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jhighlight-1.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.138; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/apache-mime4j-dom-0.7.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.138; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/vorbis-java-tika-0.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.138; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/rome-0.9.jar' to classloader
+INFO  - 2016-05-06 22:26:12.139; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-xmp-1.5.jar' to classloader
+INFO  - 2016-05-06 22:26:12.139; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/boilerpipe-1.1.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.140; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xmpcore-5.1.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.140; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-3.10.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.140; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/commons-compress-1.7.jar' to classloader
+INFO  - 2016-05-06 22:26:12.140; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/isoparser-1.0-RC-1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.141; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/fontbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 22:26:12.141; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xmlbeans-2.6.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.141; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xercesImpl-2.9.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.142; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-core-1.5.jar' to classloader
+INFO  - 2016-05-06 22:26:12.142; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/bcprov-jdk15-1.45.jar' to classloader
+INFO  - 2016-05-06 22:26:12.142; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-scratchpad-3.10.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.142; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/vorbis-java-core-0.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.143; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/juniversalchardet-1.0.3.jar' to classloader
+INFO  - 2016-05-06 22:26:12.143; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/bcmail-jdk15-1.45.jar' to classloader
+INFO  - 2016-05-06 22:26:12.143; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/xz-1.4.jar' to classloader
+INFO  - 2016-05-06 22:26:12.144; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/dom4j-1.6.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.144; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jdom-1.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.144; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/jempbox-1.8.4.jar' to classloader
+INFO  - 2016-05-06 22:26:12.145; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/icu4j-53.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.145; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-ooxml-3.10.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.145; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tagsoup-1.2.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.146; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/aspectjrt-1.6.11.jar' to classloader
+INFO  - 2016-05-06 22:26:12.146; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/poi-ooxml-schemas-3.10.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.146; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/tika-parsers-1.5.jar' to classloader
+INFO  - 2016-05-06 22:26:12.146; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/apache-mime4j-core-0.7.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.147; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/extraction/lib/metadata-extractor-2.6.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.148; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-cell-4.10.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.149; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/carrot2-mini-3.9.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.149; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/mahout-math-0.6.jar' to classloader
+INFO  - 2016-05-06 22:26:12.149; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/jackson-mapper-asl-1.9.13.jar' to classloader
+INFO  - 2016-05-06 22:26:12.150; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/attributes-binder-1.2.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.150; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/jackson-core-asl-1.9.13.jar' to classloader
+INFO  - 2016-05-06 22:26:12.150; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/mahout-collections-1.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.151; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/hppc-0.5.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.151; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/clustering/lib/simple-xml-2.7.jar' to classloader
+INFO  - 2016-05-06 22:26:12.152; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-clustering-4.10.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.153; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/langid/lib/langdetect-1.1-20120112.jar' to classloader
+INFO  - 2016-05-06 22:26:12.154; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/langid/lib/jsonic-1.2.7.jar' to classloader
+INFO  - 2016-05-06 22:26:12.155; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-langid-4.10.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.155; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/commons-beanutils-1.8.3.jar' to classloader
+INFO  - 2016-05-06 22:26:12.156; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/commons-collections-3.2.1.jar' to classloader
+INFO  - 2016-05-06 22:26:12.156; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/velocity-1.7.jar' to classloader
+INFO  - 2016-05-06 22:26:12.156; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/contrib/velocity/lib/velocity-tools-2.0.jar' to classloader
+INFO  - 2016-05-06 22:26:12.157; org.apache.solr.core.SolrResourceLoader; Adding 'file:/home/joe/.virtualenvs/codo_django2/solr-4.10.2/dist/solr-velocity-4.10.2.jar' to classloader
+INFO  - 2016-05-06 22:26:12.236; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2016-05-06 22:26:12.243; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: 4.10.2
+INFO  - 2016-05-06 22:26:12.339; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2016-05-06 22:26:12.344; org.apache.solr.schema.IndexSchema; Reading Solr Schema from /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf/schema.xml
+INFO  - 2016-05-06 22:26:12.361; org.apache.solr.schema.IndexSchema; [collection1] Schema name=default
+WARN  - 2016-05-06 22:26:12.418; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableIntField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 22:26:12.421; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableLongField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 22:26:12.424; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableFloatField]. Please consult documentation how to replace it accordingly.
+WARN  - 2016-05-06 22:26:12.427; org.apache.solr.core.SolrResourceLoader; Solr loaded a deprecated plugin/analysis class [solr.SortableDoubleField]. Please consult documentation how to replace it accordingly.
+INFO  - 2016-05-06 22:26:12.483; org.apache.solr.schema.IndexSchema; default search field in schema is text
+INFO  - 2016-05-06 22:26:12.484; org.apache.solr.schema.IndexSchema; query parser default operator is AND
+INFO  - 2016-05-06 22:26:12.484; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2016-05-06 22:26:12.542; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using configuration from instancedir /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/
+INFO  - 2016-05-06 22:26:12.557; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2016-05-06 22:26:12.564; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/, dataDir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/
+INFO  - 2016-05-06 22:26:12.566; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2016-05-06 22:26:12.573; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2016-05-06 22:26:12.573; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2016-05-06 22:26:12.590; org.apache.solr.core.CachingDirectoryFactory; return new directory for /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data
+INFO  - 2016-05-06 22:26:12.596; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index/
+INFO  - 2016-05-06 22:26:12.596; org.apache.solr.core.CachingDirectoryFactory; return new directory for /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index
+INFO  - 2016-05-06 22:26:12.618; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2016-05-06 22:26:12.618; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2016-05-06 22:26:12.619; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2016-05-06 22:26:12.622; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2016-05-06 22:26:12.623; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2016-05-06 22:26:12.723; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2016-05-06 22:26:12.727; org.apache.solr.core.RequestHandlers; created /update: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.728; org.apache.solr.core.RequestHandlers; created /update/json: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.728; org.apache.solr.core.RequestHandlers; created /update/csv: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.728; org.apache.solr.core.RequestHandlers; created /update/json/docs: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.731; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.731; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.732; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2016-05-06 22:26:12.732; org.apache.solr.core.RequestHandlers; created /export: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.732; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+WARN  - 2016-05-06 22:26:12.734; org.apache.solr.core.RequestHandlers; Multiple requestHandler registered to the same name: /update ignoring: org.apache.solr.handler.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.734; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2016-05-06 22:26:12.734; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.extraction.ExtractingRequestHandler
+INFO  - 2016-05-06 22:26:12.735; org.apache.solr.core.RequestHandlers; created /update/extract: solr.extraction.ExtractingRequestHandler
+INFO  - 2016-05-06 22:26:12.735; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.FieldAnalysisRequestHandler
+INFO  - 2016-05-06 22:26:12.735; org.apache.solr.core.RequestHandlers; created /analysis/field: solr.FieldAnalysisRequestHandler
+INFO  - 2016-05-06 22:26:12.735; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.DocumentAnalysisRequestHandler
+INFO  - 2016-05-06 22:26:12.735; org.apache.solr.core.RequestHandlers; created /analysis/document: solr.DocumentAnalysisRequestHandler
+INFO  - 2016-05-06 22:26:12.739; org.apache.solr.core.RequestHandlers; created /admin/: solr.admin.AdminHandlers
+INFO  - 2016-05-06 22:26:12.740; org.apache.solr.core.RequestHandlers; created /admin/ping: solr.PingRequestHandler
+INFO  - 2016-05-06 22:26:12.742; org.apache.solr.core.RequestHandlers; created /debug/dump: solr.DumpRequestHandler
+INFO  - 2016-05-06 22:26:12.750; org.apache.solr.core.RequestHandlers; created /replication: solr.ReplicationHandler
+INFO  - 2016-05-06 22:26:12.751; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.751; org.apache.solr.core.RequestHandlers; created /spell: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.752; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.752; org.apache.solr.core.RequestHandlers; created /suggest: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.752; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.752; org.apache.solr.core.RequestHandlers; created /tvrh: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.753; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.753; org.apache.solr.core.RequestHandlers; created /terms: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.753; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.753; org.apache.solr.core.RequestHandlers; created /elevate: solr.SearchHandler
+INFO  - 2016-05-06 22:26:12.765; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 22:26:12.767; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 22:26:12.768; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 22:26:12.768; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 22:26:12.769; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2016-05-06 22:26:12.791; org.apache.solr.update.CommitTracker; Hard AutoCommit: if uncommited for 15000ms; 
+INFO  - 2016-05-06 22:26:12.791; org.apache.solr.update.CommitTracker; Soft AutoCommit: disabled
+INFO  - 2016-05-06 22:26:12.826; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onInit: commits: num=1
+	commit{dir=NRTCachingDirectory(MMapDirectory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_3,generation=3}
+INFO  - 2016-05-06 22:26:12.826; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 3
+INFO  - 2016-05-06 22:26:12.844; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@65cfcdd[collection1] main
+INFO  - 2016-05-06 22:26:12.852; org.apache.solr.rest.ManagedResourceStorage$FileStorageIO; File-based storage initialized to use dir: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 22:26:12.852; org.apache.solr.rest.RestManager; Initializing RestManager with initArgs: {storageDir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf}
+INFO  - 2016-05-06 22:26:12.858; org.apache.solr.rest.ManagedResourceStorage; Reading _rest_managed.json using file:dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 22:26:12.862; org.apache.solr.rest.ManagedResourceStorage; Loaded LinkedHashMap at path _rest_managed.json using file:dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf
+INFO  - 2016-05-06 22:26:12.862; org.apache.solr.rest.ManagedResource; Loaded initArgs {} for /rest/managed
+INFO  - 2016-05-06 22:26:12.862; org.apache.solr.rest.RestManager; Initializing 0 registered ManagedResources
+INFO  - 2016-05-06 22:26:12.862; org.apache.solr.handler.component.SpellCheckComponent; Initializing spell checkers
+INFO  - 2016-05-06 22:26:12.866; org.apache.solr.spelling.DirectSolrSpellChecker; init: {name=default,field=text,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+INFO  - 2016-05-06 22:26:12.870; org.apache.solr.handler.component.SpellCheckComponent; No queryConverter defined, using default converter
+INFO  - 2016-05-06 22:26:12.871; org.apache.solr.handler.component.SuggestComponent; Initializing SuggestComponent
+INFO  - 2016-05-06 22:26:12.872; org.apache.solr.spelling.suggest.SolrSuggester; init: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2016-05-06 22:26:12.885; org.apache.solr.spelling.suggest.SolrSuggester; Dictionary loaded with params: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2016-05-06 22:26:12.886; org.apache.solr.handler.component.QueryElevationComponent; Loading QueryElevation from: /home/joe/.virtualenvs/codo_django2/solr-4.10.2/example/solr/collection1/conf/elevate.xml
+INFO  - 2016-05-06 22:26:12.906; org.apache.solr.handler.ReplicationHandler; Commits will be reserved for  10000
+INFO  - 2016-05-06 22:26:12.906; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@65cfcdd[collection1] main{StandardDirectoryReader(segments_3:7:nrt _1(4.10.2):C3)}
+INFO  - 2016-05-06 22:26:12.907; org.apache.solr.core.CoreContainer; registering core: collection1
+INFO  - 2016-05-06 22:26:12.913; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/home/joe/.virtualenvs/codo_django2/solr-4.10.2/example
+INFO  - 2016-05-06 22:26:12.913; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2016-05-06 22:26:12.934; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2016-05-06 22:26:12.965; org.apache.solr.core.SolrCore; [collection1] webapp=null path=null params={q=static+firstSearcher+warming+in+solrconfig.xml&distrib=false&event=firstSearcher} hits=0 status=0 QTime=55 
+INFO  - 2016-05-06 22:26:12.965; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2016-05-06 22:26:12.965; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: default
+INFO  - 2016-05-06 22:26:12.966; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: wordbreak
+INFO  - 2016-05-06 22:26:12.966; org.apache.solr.handler.component.SuggestComponent$SuggesterListener; Loading suggester index for: mySuggester
+INFO  - 2016-05-06 22:26:12.966; org.apache.solr.spelling.suggest.SolrSuggester; reload()
+INFO  - 2016-05-06 22:26:12.966; org.apache.solr.spelling.suggest.SolrSuggester; build()
+INFO  - 2016-05-06 22:26:12.980; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@65cfcdd[collection1] main{StandardDirectoryReader(segments_3:7:nrt _1(4.10.2):C3)}
+INFO  - 2016-05-06 22:26:16.670; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=12 
+INFO  - 2016-05-06 22:29:26.362; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:29:32.790; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:30:09.795; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:30:37.908; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 22:37:43.282; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 23:09:33.485; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 
+INFO  - 2016-05-06 23:10:55.318; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 
+INFO  - 2016-05-06 23:11:00.544; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 23:11:22.658; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2016-05-06 23:12:41.752; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select/ params={q=(better)&fl=*+score&start=0&fq=django_ct:(campaigns.campaign)&rows=20&wt=json} hits=1 status=0 QTime=0 

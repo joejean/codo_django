@@ -52,7 +52,7 @@ class Organizer(models.Model):
 
 
     def __str__(self):
-        return "<Organizer: {}>".format(self.user.first_name)
+        return self.user.get_full_name()
 
 
 class Campaign(TimeStampedModel): 
@@ -85,9 +85,11 @@ class Campaign(TimeStampedModel):
         num_days = (self.end_date - date.today()).days
         return num_days if num_days>=0 else 0
 
+    def get_absolute_url(self):
+        return reverse('single_campaign', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return "<Campaign: {}>".format(self.title)
+        return self.title
 
 class Reward(models.Model):
     campaign = models.ForeignKey(Campaign)
@@ -98,5 +100,5 @@ class Reward(models.Model):
     description = models.TextField()
     
     def __str__(self):
-        return "<Reward: {}>".format(self.title)
+        return self.title
 

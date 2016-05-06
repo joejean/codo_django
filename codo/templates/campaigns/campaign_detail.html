@@ -17,7 +17,7 @@
           <h3><i class="fa fa-money"></i> $<span id="amt_funded">0</span> <br ><small>Funds Raised</small></h3>
           <hr>
           <p><i class="fa fa-flag-o fa-2x"></i> {{campaign.goal_amount}} Goal</p>
-          <p><i class="fa fa-clock-o fa-2x"></i> {{campaign.get_days_left}} Day{{campaign.get_days_left|pluralize}} To Go</p>
+          <p><i class="fa fa-clock-o fa-2x"></i>  {{campaign.end_date|timeuntil}} Left</p>
           <p><i class="fa fa-users fa-2x"></i><span id="num_funders">0 Funders</span></p>
           <p><i class="fa fa-star-o fa-3x"></i><span id="num_challenges">0 Challenges</span> </p>
           {% if user.is_authenticated %}

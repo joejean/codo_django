@@ -140,7 +140,8 @@ class ProfileUpdate(UpdateView):
 
 
 def index(request):
-    return render(request, "campaigns/index.html") 
+    campaigns = Campaign.objects.filter(status="accepted")
+    return render(request, "campaigns/index.html", {'campaigns':campaigns}) 
 
 def wepay_success(request):
     code = request.GET.get('code', "")
