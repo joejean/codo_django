@@ -22,7 +22,13 @@
           <p><i class="fa fa-star-o fa-3x"></i><span id="num_challenges">0 Challenges</span> </p>
           {% if user.is_authenticated %}
             {% if djangoData.has_donation == 'true' %}
-
+              <div id="thankyou" class="jumbotron">
+                <div class="container">
+                  <div class="boxes">
+                  
+                  </div>
+                </div>
+              </div>
             {% else %}
               <a href="#paymentModal" data-toggle="collapse" class="col-md-12 btn btn-primary">Fund This Project</a>
               <p><a class="pull-left" href=""><i class="fa fa-heart"></i> Mark as favorite</a><a class="pull-right" href=""><i class="fa fa-star"></i> Remind Me</a></p>
@@ -38,7 +44,7 @@
         {% if djangoData.has_donation != 'true' %}
          <!-- New Payment Panel -->
         <div class="row collapse" id="paymentModal">
-        <div class = "panel panel-info">
+          <div class = "panel panel-info">
            <div class = "panel-heading">
               <h3 class="panel-title">Funding Options</h3>
               <span class="pull-right"><a href="#paymentModal" data-toggle="collapse"><i class="fa fa-times fa-2x"></i></a></span>

@@ -23,6 +23,7 @@ def campaign_stats(campaign):
 	return total, num_funders, num_challenges
 
 #This replaces the server class from the old codebase
+#TODO: Misleading name, change name
 def get_user_challenges_info(user,campaign):
 	if user.is_authenticated():
 		hasDon, donCon, donAmt, impact = hasDonation(user, campaign)
@@ -37,6 +38,16 @@ def get_user_challenges_info(user,campaign):
 	# "impact":impact,
 	# "donation_condition":donCon,
 	# })
+
+#Get Challenges for a User
+def checkChallengeString(user):
+	'''Get all standing challenges for a user for all campaigns'''
+	relevant =  Condition.objects.filter(pledge__icontains=" "+user+" ").filter(resolved=0.0)
+	# for row in Membership.objects.filter(member=user.username):
+	# 	group = row.group_name
+	# 	relevant.filter(pledge__icontains(user.username),pledge__icontains(group))
+	#result = {"challenge":[dict(zip(['name', 'pledge'],[row.user.username, row.pledge])) for row in relevant]}
+	return relevant
 
 # return <true/false, donation string, resolved?>
 def hasDonation(user, campaign):

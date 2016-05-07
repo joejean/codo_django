@@ -101,7 +101,7 @@ function prevChallenges(){
             
             // console.log(user);
             if(user){
-                checkForChallenges();
+                //checkForChallenges();
                 getChallengesForAmount(user, 20);
             }
             else{
@@ -118,7 +118,7 @@ function prevChallenges(){
 
 /* Processes a donation_condition in the "explore" or "submit" states */ 
 function processDonation(donationCondition, state, challengees){
-    console.log(donationCondition);
+    //console.log(donationCondition);
     $.ajax({
         url: baseUrl+'/challenges/rippler/',
         method: "POST",
@@ -128,15 +128,15 @@ function processDonation(donationCondition, state, challengees){
         dataType: "JSON",
         success: function(response){
             var donation_amt = donationCondition.split(" ");
-            if(state==="submit"){
-                console.log("Inside processPayment");
+            if(state=="submit"){
+                //console.log("Inside processPayment");
                 processPayment(donation_amt[0]);  
             }
             else{
                 var total_impact = response['impact'];
                 //Update values
                 $('#donation_amt').val(donation_amt[0]);
-                $('#your_donation').html(parseInt(donation_amt[0]) + " AED");
+                $('#your_donation').html(parseInt(donation_amt[0]) + " USD");
 
                 curr_donation = {"name": user, "donation": donation_amt[0], "condition": donationCondition, "challengees": challengees};
 
@@ -144,13 +144,13 @@ function processDonation(donationCondition, state, challengees){
                 //     regularVisualization(donations, curr_donation, response['change']);
 
                 getChallengesForAmount(user, parseInt(donation_amt[0]));
-                if(state == "submit"){
+                /*if(state == "submit"){
                     getProjectInfo();
                     //survey(donation_condition, parseInt(donation_amt[0]));
                     donation_condition = donationCondition;
                     donation_amt = parseInt(donation_amt[0]);
                     // afterSubmit(donationCondition, parseInt(donation_amt[0]));
-                }
+                }*/
             }
         },
         error: function(xhr, status, error){
@@ -392,12 +392,12 @@ function nlCondition(donation_condition){
     if(terms.indexOf('EVERYONE') > -1){
         //milestone
         mile_amt = terms[terms.length - 1];
-        return "<b>" + node + "</b> will donate <b>" + donation_amt + " AED</b> if the total amount hits " + mile_amt + " AED.";
+        return "<b>" + node + "</b> will donate <b>" + donation_amt + " USD</b> if the total amount hits " + mile_amt + " USD.";
     }
     else if(terms.indexOf('PEOPLE') > -1){
         num_people = terms[terms.indexOf('IF') + 1];
         micro_amt = terms[terms.length - 1];
-        return "<b>" + node + "</b> will donate <b>" + donation_amt + " AED</b> if " + num_people + " people donate at least " + micro_amt + " AED.";
+        return "<b>" + node + "</b> will donate <b>" + donation_amt + " USD</b> if " + num_people + " people donate at least " + micro_amt + " USD.";
     }       
     else{
         condition = donation_condition.split("IF")[1];
@@ -408,17 +408,17 @@ function nlCondition(donation_condition){
             if(terms[j] == "HAS"){
                 count++;
                 if(count < 2){
-                    friend_string += "if <b>" + terms[j-1] + "</b> donates at least <b>" + terms[j+2] + " AED</b>" 
+                    friend_string += "if <b>" + terms[j-1] + "</b> donates at least <b>" + terms[j+2] + " USD</b>" 
                     friends.push(terms[j-1]);
 
                 }else{
-                    friend_string += " and if <b>" + terms[j-1] + "</b> donates at least <b>" + terms[j+2] + " AED</b>"
+                    friend_string += " and if <b>" + terms[j-1] + "</b> donates at least <b>" + terms[j+2] + " USD</b>"
                     friends.push(terms[j-1]); 
                 }
 
             }
         }
-        return "<b>" + node + "</b> will donate <b>" + donation_amt + " AED</b> " + friend_string  + ".";
+        return "<b>" + node + "</b> will donate <b>" + donation_amt + " USD</b> " + friend_string  + ".";
   
     }
 }
@@ -702,12 +702,12 @@ function afterSubmit(donation_condition, donation){
     // $('#notifications').replaceWith("<div id='thankyou' class='container'></div>");
 
     $('#thankyou > .container').empty();
-    $('#thankyou > .container').append("<h3>THANK YOU, " + user +"!</h3>" +
-                                        "<p><b>If the campaign resolves, we will contact you with details regarding donation collection.</b></p>");
+    $('#thankyou > .container').append("<h4>Thank You, " + s.capitalize(user) +"!</h4>" +
+                                        "<p><b>If the campaign resolves, you will be charged.</b></p>");
 
     var pledge = nlCondition("I" + " " + donation_condition);
-    $('#thankyou > .container').append("<div class='row boxes'><div class='pledge one-half column' ><h5 class='title'>MY PLEDGE</h5><div class='pledge_box'>" + 
-                                            pledge + " </div><br><p>Sincerely,<br> "+ user +" </p></div></div>");
+    $('#thankyou > .container').append("<h4 class='title'>Your Pledge:</h4><div class='pledge_box'>" + 
+                                            pledge + " </div>");
 
 
     //IF direct donation
@@ -715,14 +715,14 @@ function afterSubmit(donation_condition, donation){
     // console.log(donation_condition.indexOf('IF'));
     if(donation_condition.indexOf('IF') <= -1){
         // console.log("should be here");
-        $('#thankyou > .container').append("<div style='clear: both;'><br><h5 class='title>PLEDGE AMOUNT: " + donation + " AED. </h5></div>");
+        $('#thankyou > .container').append("<div style='clear: both;'><br><h5 class='title>PLEDGE AMOUNT: " + donation + " USD. </h5></div>");
         success = 1;
     }
     else{
 
         if(donation_condition.indexOf('EVERYONE') > -1){
             var challenge_amt = donation_condition.split(" ")[5];
-            var total = $('#amt_funded > .big_num').html();
+            var total = $('#amt_funded').html();
              if(total > challenge_amt){
                 console.log("success");
             }
@@ -738,7 +738,7 @@ function afterSubmit(donation_condition, donation){
                 // console.log("success");
             }
             $('#thankyou > .container > .boxes').append("<div class='progress one-half column'><h6>CHALLENGE PROGRESS</h6><table><tr><td>You challenged " + num_people + " people to donate " + micro_amt +
-             " AED </td></tr><tr><td>Progress: <b>" + met_challenge + " / " + num_people  + "</b> </td></tr></table></div>");
+             " USD </td></tr><tr><td>Progress: <b>" + met_challenge + " / " + num_people  + "</b> </td></tr></table></div>");
 
         }
         else{
@@ -747,7 +747,7 @@ function afterSubmit(donation_condition, donation){
             var terms = donation_condition.split(" ")
              // $('#thankyou > .container').append("<div class='progress'><table>Table created</table></div>");
 
-            var table = "<div class='progress one-half column'><h6>CHALLENGE PROGRESS</h6> <table><tr class='highlight'><td>Friend</td><td>Donation</td></tr>";
+            var table = "<div class='one-half column'><h6>CHALLENGE PROGRESS</h6> <table><tr class='highlight'><td>Friend</td><td>Donation</td></tr>";
             for(var ind = 0; ind < terms.length; ind++){
 
                 if(terms[ind] == "HAS"){
@@ -756,7 +756,7 @@ function afterSubmit(donation_condition, donation){
                     var don = terms[ind+2];
                     var actual_donation = getUserDonation(name);
     
-                    table += "<tr><td>"+ name + "</td><td> " + actual_donation + " AED</td></tr>";
+                    table += "<tr><td>"+ name + "</td><td> " + actual_donation + " USD</td></tr>";
                     if(actual_donation >= don){
                         success = 1;
                     }
@@ -769,7 +769,7 @@ function afterSubmit(donation_condition, donation){
     }
 
     // if((success == 1 && system == "test") || system == "control"){
-    //     $('#thankyou').append("<div class='u-cf'><br><h5 class='title'>PLEDGE AMOUNT: " + donation + " AED</h5></div><div><h5 class='title'>STATUS: COMPLETED</h5></div>");
+    //     $('#thankyou').append("<div class='u-cf'><br><h5 class='title'>PLEDGE AMOUNT: " + donation + " USD</h5></div><div><h5 class='title'>STATUS: COMPLETED</h5></div>");
     // }
     // else if(success == 0 && system=="test"){
     //      $('#thankyou').append("<div class='u-cf'><br><h5 class='title'>STATUS: PENDING</h5></div>");

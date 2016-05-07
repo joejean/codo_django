@@ -6,7 +6,9 @@ from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from .utils import logAmount, logVisit, addMember, makeGroup, addToGroup,\
 					addCondition, addChallengeLinks, param_error, get_user_from_email,\
-					hasDonation, currentTotal,nResolvedConditions, nUnresolvedConditions
+					hasDonation, currentTotal,nResolvedConditions, nUnresolvedConditions,\
+					checkChallengeString
+
 from ipware.ip import get_real_ip
 from copy import deepcopy
 import sys
@@ -153,14 +155,7 @@ def getNetwork(user, campaign):
 	result = [{'challenger':row.challenger, 'challengee':row.challengee, 'condition':row.pledge} for row in lines]
 	return result
 
-def checkChallengeString(user):
-	'''Get all standing challenges for a user for all campaigns'''
-	relevant =  Condition.objects.none()
-	for row in Membership.objects.filter(member=user.username):
-		group = row.group_name
-		relevant.filter(pledge__icontains(user.username),pledge__icontains(group))
-	result = {"challenge":[dict(zip(['name', 'pledge'],[row.name, row.pledge])) for row in relevant]}
-	return result
+
 
 def checkCampaignChallenges(user, campaign):
 	'''Check for user challenges in a particular campaign'''

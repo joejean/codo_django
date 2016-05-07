@@ -46,6 +46,28 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
+              {% if challenges %}
+                <li class="dropdown dropdown-large">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Challenges <span class="badge">{{challenges|length}}</span> <b class="caret"></b></a>
+
+                <ul class="dropdown-menu dropdown-menu-large row">
+                  <li class="col-sm-12">
+                    {% for challenge in challenges %}
+                      <div id="noti" class="alert alert-success">
+                          <strong>{{challenge.user.username}}!</strong>has challenged you:! <br>
+                          <strong>{{challenge.pledge}}</strong><br>
+                          Go donate <a href="{{challenge.campaign.get_absolute_url}}">here</a> 
+                      </div>
+                    {% endfor %}
+                    <ul>
+                      <li>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                </li>
+              {% endif %}
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -152,6 +174,7 @@
     
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'bootstrap/js/ie10-viewport-bug-workaround.js' %}"></script>
+    <script src="{% static 'bootstrap/js/underscore.string.min.js' %}"></script>
     {% endblock %}
     
   </body>

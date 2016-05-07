@@ -14,7 +14,8 @@ from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from payments.forms import DirectDonationForm
 from payments.payment_utils import create_wepay_merchant, create_wepay_account, wepay_checkout
 from payments.models import Merchant, Account
-from challenges.utils import get_user_challenges_info, campaign_stats
+from challenges.utils import get_user_challenges_info, campaign_stats,\
+                             checkChallengeString
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm, UserConditionalsForm, RewardFormSet,\
                     OrganizerInfoForm
@@ -141,6 +142,9 @@ class ProfileUpdate(UpdateView):
 
 
 def index(request):
+    user_challenges = ''
+    if request.user.is_authenticated():
+        user_challenges = checkChallengeString(request.user.username)
     campaigns = Campaign.objects.filter(status="accepted")
     stats = []
     #TODO: Do this in a nicer way
@@ -152,7 +156,7 @@ def index(request):
         stat['num_challenges'] =  result[2]
         stats.append(stat)
     campaigns_and_stats = zip(campaigns, stats)
-    return render(request, "campaigns/index.html", {'campaigns':campaigns_and_stats}) 
+    return render(request, "campaigns/index.html", {'campaigns':campaigns_and_stats, 'challenges':user_challenges}) 
 
 def wepay_success(request):
     code = request.GET.get('code', "")
