@@ -134,7 +134,7 @@ $(document).ready(function(){
 
 
     //Function to get donation conditions users are submitting
-    $('.challenge_button').click(function(){
+    /*$('.challenge_button').click(function(){
         // console.log($(this));
         var id = $(this).attr("id");
         getDonationCondition(id, "submit");
@@ -142,6 +142,24 @@ $(document).ready(function(){
 
     $('#donate').click(function(){
         processDonation($('#donation_amount').val(), "submit", "");
+        
+    })*/
+
+     $('#friendly').submit(function(){
+        // console.log($(this));
+        var id = $(this).attr("id");
+        getDonationCondition("friendly", "submit");
+    });
+
+    $('#micro').submit(function(){
+        // console.log($(this));
+        var id = $(this).attr("id");
+        getDonationCondition("micro", "submit");
+    });
+
+    $('#direct').submit(function(){
+        processDonation($('#donation_amount').val(), "submit", "");
+        
     })
 
 })

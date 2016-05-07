@@ -6,7 +6,7 @@ from .models import AmountLog, Log, Visit, ChallengeLink, Condition,\
 					 Membership,Identifier
 from .utils import logAmount, logVisit, addMember, makeGroup, addToGroup,\
 					addCondition, addChallengeLinks, param_error, get_user_from_email,\
-					hasDonation
+					hasDonation, currentTotal,nResolvedConditions, nUnresolvedConditions
 from ipware.ip import get_real_ip
 from copy import deepcopy
 import sys
@@ -135,13 +135,6 @@ def sanitize(someString):
 	return ''.join([letter for letter in someString if letter in string.letters+string.digits+string.whitespace])
 
 
-#TODO: This should be deleted
-# def getSystem(user):
-	
-#     result = session.query(Login).filter(Login.name==user).first()
-   
-#     return result.system if result else None
-
 #This function does not seem to be used anywhere
 def logBalance():
 	logs = session.query(Login).all()
@@ -201,18 +194,6 @@ def getRipples(user,lowest,highest,stepsize):
 	return activation_points
 
 
-def nResolvedConditions(campaign):
-	result = Condition.objects.exclude(resolved=0).filter(campaign=campaign)
-	return len(result)
-
-def nUnresolvedConditions(campaign):
-	result = Condition.objects.filter(resolved=0, campaign=campaign)
-	return len(result)
-
-def currentTotal(campaign):
-	resolved_conditions = Condition.objects.exclude(resolved=0).filter(campaign=campaign) 
-	result = sum([float(x.resolved) for x in resolved_conditions ])
-	return result
 
 def listUnresolvedConditions(campaign):
 	unresolved = Condition.objects.filter(resolved=0, campaign=campaign)
@@ -335,6 +316,9 @@ def getFullNetwork(campaign):
 		if relevant:
 			relevant_network.append(node)
 	return relevant_network
+
+
+
 
 #TODO: REMOVE
 # def authenticate(user, password):

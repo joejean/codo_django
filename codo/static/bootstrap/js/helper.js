@@ -1,4 +1,5 @@
 /* JS file with helper functions */ 
+var paymentUrl = window.djangoData['payment_url']
 var baseUrl = window.djangoData['baseUrl'];
 var user = window.djangoData['user_email']; //Here user is email of the user
 var campaign = window.djangoData['campaign'];
@@ -74,6 +75,18 @@ function prevDonations(){
     })
 }
 
+/* Returns the last n resolved donations */ 
+function processPayment(amount){
+    var url = baseUrl+paymentUrl;
+    var form = $('<form action="' + url + '" method="post">' +
+    '<input type="text" name="amount" value="' + amount + '" />' +
+    '<input type="text" name="campaign" value="' + campaign + '" />' +
+    '<input type="hidden" name="csrfmiddlewaretoken" value="'+ csrftoken +'" />'+
+    '</form>');
+    $('body').append(form);
+    form.submit();  
+}
+
 /* Returns unresolved donation challenges */
 function prevChallenges(){
     var list = [];
@@ -114,28 +127,30 @@ function processDonation(donationCondition, state, challengees){
         "challengees": challengees, "campaign":campaign},
         dataType: "JSON",
         success: function(response){
-            // console.log(state);
-            // console.log(response);
-            var total_impact = response['impact'];
             var donation_amt = donationCondition.split(" ");
+            if(state==="submit"){
+                console.log("Inside processPayment");
+                processPayment(donation_amt[0]);  
+            }
+            else{
+                var total_impact = response['impact'];
+                //Update values
+                $('#donation_amt').val(donation_amt[0]);
+                $('#your_donation').html(parseInt(donation_amt[0]) + " AED");
 
-            //Update values
-            $('#donation_amt').val(donation_amt[0]);
-            $('#your_donation').html(parseInt(donation_amt[0]) + " AED");
+                curr_donation = {"name": user, "donation": donation_amt[0], "condition": donationCondition, "challengees": challengees};
 
+                // if(donations.length > 0)
+                //     regularVisualization(donations, curr_donation, response['change']);
 
-            curr_donation = {"name": user, "donation": donation_amt[0], "condition": donationCondition, "challengees": challengees};
-
-            // if(donations.length > 0)
-            //     regularVisualization(donations, curr_donation, response['change']);
-
-            getChallengesForAmount(user, parseInt(donation_amt[0]));
-            if(state == "submit"){
-                getProjectInfo();
-                //survey(donation_condition, parseInt(donation_amt[0]));
-                donation_condition = donationCondition;
-                donation_amt = parseInt(donation_amt[0]);
-                // afterSubmit(donationCondition, parseInt(donation_amt[0]));
+                getChallengesForAmount(user, parseInt(donation_amt[0]));
+                if(state == "submit"){
+                    getProjectInfo();
+                    //survey(donation_condition, parseInt(donation_amt[0]));
+                    donation_condition = donationCondition;
+                    donation_amt = parseInt(donation_amt[0]);
+                    // afterSubmit(donationCondition, parseInt(donation_amt[0]));
+                }
             }
         },
         error: function(xhr, status, error){

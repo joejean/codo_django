@@ -9,13 +9,18 @@ def logAmount(ip,port,user,campaign,amount,challenges):
 	amount_log = AmountLog.objects.create(ip=ip, port=port, user=user,campaign_id=campaign,
 		amount=amount, challenges=challenges)
 
-
-
-# def submitSurvey(survey):
-#     session=Session()
-#     session.merge(Survey(*survey))
-#     session.commit()
-#     session.close()
+#Helper functions used in other apps
+#This can be refactored later
+def campaign_stats(campaign):
+	'''Get Statistics about Current Campaign
+	Params: campaigns: campaign id
+	Returns:
+		Amount Funded, Number of Funders, Number of Challenges
+	'''
+	total = currentTotal(campaign)
+	num_funders = nResolvedConditions(campaign)
+	num_challenges = nUnresolvedConditions(campaign)
+	return total, num_funders, num_challenges
 
 #This replaces the server class from the old codebase
 def get_user_challenges_info(user,campaign):
@@ -97,3 +102,17 @@ def param_error(param):
 	   parameter is missing from the POST request data.
 	'''
 	return HttpResponseBadRequest("please provide the {} parameter in a variable called '{}'.".format(param, param))
+
+def currentTotal(campaign):
+	resolved_conditions = Condition.objects.exclude(resolved=0).filter(campaign=campaign) 
+	result = sum([float(x.resolved) for x in resolved_conditions ])
+	return result
+
+def nResolvedConditions(campaign):
+	result = Condition.objects.exclude(resolved=0).filter(campaign=campaign)
+	return len(result)
+
+def nUnresolvedConditions(campaign):
+	result = Condition.objects.filter(resolved=0, campaign=campaign)
+	return len(result)
+

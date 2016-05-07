@@ -12,6 +12,7 @@ from payments.models import Merchant,Account
 from django.core.urlresolvers import reverse
 from annoying.fields import AutoOneToOneField
 
+
 class Organizer(models.Model):
     user = AutoOneToOneField(settings.AUTH_USER_MODEL)
     country = CountryField(blank_label='(select country)')

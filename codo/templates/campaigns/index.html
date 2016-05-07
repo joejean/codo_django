@@ -2,8 +2,8 @@
 
 {% load staticfiles %}
 {% load campaign_tags %}
+{% load mathfilters %}
 {% block content %}
- 
     <!-- Header -->
     <header>
         <div class="container">
@@ -61,7 +61,7 @@
       
         {% for group in campaigns|group_by:4 %}
           <div class="row">
-            {% for campaign in group%}
+            {% for campaign, stats in group%}
               <div class="col-md-3">
                 <a href="{{campaign.get_absolute_url}}">
                   <div class="thumbnail">
@@ -69,15 +69,15 @@
                     <div class="caption">
                       <h3>{{campaign.title|truncatechars:40}}</h3>
                       <p>{{campaign.blurb}}</p>
-                      <p><i class="fa fa-users fa-2x"></i> 15 Funders</p>
-                      <p><i class="fa fa-star fa-2x"></i> 5 Challenges</p>
+                      <p><i class="fa fa-users fa-2x"></i> {{stats.num_funders}} Funder{{stats.num_funders|pluralize}}</p>
+                      <p><i class="fa fa-star fa-2x"></i>{{stats.num_challenges}} Challenge{{stats.num_challenges|pluralize}}</p>
                       <p><i class="fa fa-clock-o fa-2x"></i> {{campaign.end_date|timeuntil}} Left</p>
                       <div class="progress">
-                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                          <span class="sr-only">80% Complete (danger)</span>
+                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{stats.amount_funded}}" aria-valuemin="0" aria-valuemax="{{campaign.goal_amount}}" style="width: {{stats.amount_funded|div:campaign.goal_amount|mul:100}}%">
+                          <span class="sr-only"> {{stats.amount_funded|div:campaign.goal_amount|mul:100}}% Complete (danger)</span>
                         </div>
                       </div>
-                      <p><span class="pull-left"><strong>$223</strong></span><span class="pull-right"><strong>$1223</strong></span></p>
+                      <p><span class="pull-left"><strong>${{stats.amount_funded}}</strong></span><span class="pull-right"><strong>${{campaign.goal_amount}}</strong></span></p>
                       <br >
                       <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
                     </div>

@@ -14,7 +14,7 @@ from formtools.wizard.views import SessionWizardView, NamedUrlSessionWizardView
 from payments.forms import DirectDonationForm
 from payments.payment_utils import create_wepay_merchant, create_wepay_account, wepay_checkout
 from payments.models import Merchant, Account
-from challenges.utils import get_user_challenges_info
+from challenges.utils import get_user_challenges_info, campaign_stats
 from .models import Campaign, Organizer, Reward
 from .forms import CampaignInfoForm, UserConditionalsForm, RewardFormSet,\
                     OrganizerInfoForm
@@ -111,6 +111,7 @@ class CampaignDetail(DetailView):
         djangoData["donation_condition"] = str(donCon)
         djangoData['campaign'] = campaign_id
         djangoData['baseUrl'] = self.request.build_absolute_uri('/')[:-1]
+        djangoData['payment_url'] = str(reverse('payment'))
         context['djangoData'] = djangoData
         return context
 
@@ -141,7 +142,17 @@ class ProfileUpdate(UpdateView):
 
 def index(request):
     campaigns = Campaign.objects.filter(status="accepted")
-    return render(request, "campaigns/index.html", {'campaigns':campaigns}) 
+    stats = []
+    #TODO: Do this in a nicer way
+    for campaign in campaigns:
+        result = campaign_stats(campaign.id)
+        stat = {}
+        stat['amount_funded'] = result[0] 
+        stat['num_funders'] = result[1]
+        stat['num_challenges'] =  result[2]
+        stats.append(stat)
+    campaigns_and_stats = zip(campaigns, stats)
+    return render(request, "campaigns/index.html", {'campaigns':campaigns_and_stats}) 
 
 def wepay_success(request):
     code = request.GET.get('code', "")
@@ -179,6 +190,23 @@ def direct_donation(request):
             response = response.get('hosted_checkout')
             return render(request, 'payments/direct_donation.html',\
             {'checkout_uri':response.get('checkout_uri')} )
+
+def handle_donation(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount', "")
+        campaign_id = request.POST.get('campaign')
+        campaign = get_object_or_404(Campaign, pk=campaign_id)
+        access_token = campaign.organizer.get_wepay_access_token()
+        account_id = campaign.organizer.get_wepay_account_id()
+        response = wepay_checkout(access_token, account_id, amount, campaign.title)
+        if wepay_returns_error(response):
+            return process_wepay_error(request, response)
+        else:
+            response = response.get('hosted_checkout')
+            return render(request, 'payments/direct_donation.html',\
+            {'checkout_uri':response.get('checkout_uri')} )
+
+
 
     
 def error(request):

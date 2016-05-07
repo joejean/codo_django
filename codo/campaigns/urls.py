@@ -20,6 +20,7 @@ patterns('',
          url(r'^campaigns/(?P<pk>[0-9]+)$', views.CampaignDetail.as_view(), name='single_campaign'),
          url(r'^wepay/$', views.wepay_success, name="wepay_redirect"),
          url(r'^direct_donation/$', views.direct_donation, name="direct_donation"),
+         url(r'^payment/$', views.handle_donation, name="payment"),
          url(r'^error/$', views.error, name="campaign_error"),
          url(r'^profile/(?P<pk>[0-9]+)/update/$', login_required(views.ProfileUpdate.as_view()),\
               name="profile_update"),
