@@ -3,7 +3,7 @@ from djmoney.models.fields import MoneyField
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from datetime import date
+import datetime
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from model_utils import Choices 
@@ -22,7 +22,13 @@ class Organizer(models.Model):
     facebook_url = models.URLField(max_length=100)
     twitter_url = models.URLField(max_length=100)
     website_url = models.URLField(max_length=100)
-    dob = models.DateField(default=date.today)
+    dob = models.DateField(default=datetime.date(1960,1,1),blank=True)
+
+    def profile_picture_tag(self):
+        '''This is used to help render the image in the admin field'''
+        return u'<img src="%s" width="400" height="300" />' % self.profile_picture.url
+    profile_picture_tag.short_description = 'Image'
+    profile_picture_tag.allow_tags = True
 
     def get_absolute_url(self):
         return reverse('profile_detail', kwargs={'pk': self.pk})
@@ -51,7 +57,6 @@ class Organizer(models.Model):
             return account[0].account_uri
         return None
 
-
     def __str__(self):
         return self.user.get_full_name()
 
@@ -70,7 +75,8 @@ class Campaign(TimeStampedModel):
     picture = models.ImageField(upload_to='campaign_pics')
     goal_amount = models.DecimalField(max_digits=15, decimal_places=2)
     #MoneyField(max_digits=12, decimal_places=2, default_currency="USD")
-    end_date = models.DateField(default=date.today)
+    end_date = models.DateField(default=datetime.datetime.now()+datetime.timedelta(days=32)
+    ,blank=True)
     rewards_enabled = models.BooleanField(default=False)
     conditionals_enabled = models.BooleanField(default=False)
     friends_participation_cond = models.BooleanField(default=False)
@@ -81,6 +87,12 @@ class Campaign(TimeStampedModel):
     matching_donation_cond = models.BooleanField(default=False)
     STATUS = Choices('unapproved','inreview', 'accepted','rejected')
     status = models.CharField(choices=STATUS, default=STATUS.unapproved, max_length=20)
+
+    def image_tag(self):
+        '''This is used to help render the image in the admin field'''
+        return u'<img src="%s" width="400" height="300"/>' % self.picture.url
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
 
     def get_days_left(self):
         num_days = (self.end_date - date.today()).days

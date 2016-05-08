@@ -75,7 +75,7 @@ function prevDonations(){
     })
 }
 
-/* Returns the last n resolved donations */ 
+/* Redirect to the Payment Page/With Wepay */ 
 function processPayment(amount){
     var url = baseUrl+paymentUrl;
     var form = $('<form action="' + url + '" method="post">' +
@@ -442,7 +442,6 @@ function checkFriend(name){
 /* Retrieves form values and creates valid donation conditions */
 function getDonationCondition(condition_type, state){
     var donation_condition = "";
-
     var friends = "";
     //FRIENDS challenge
     if(condition_type === "friendly"){
@@ -451,8 +450,6 @@ function getDonationCondition(condition_type, state){
         var donation_amt = $('#friendly').find('#t1_donation_amount').val();
         var count = $('#friendly').find(".friendcount").length;
         var friend = $('#friendly').find('#friends').val();
-        
-
         // console.log("why no work?");
         var friend_amt = $('#friendly').find('#friend_amount').val();
         if(friend_amt.toString().indexOf('.') > -1){
@@ -478,7 +475,6 @@ function getDonationCondition(condition_type, state){
                 }
             }
         }   
-
         if(count > 1){
             i = 1;
             while(i < count){
@@ -489,7 +485,6 @@ function getDonationCondition(condition_type, state){
                 if(friend_amt.toString().indexOf('.') > -1){
                     friend_amt = Math.floor(friend_amt);
                 }
-
                 if(friend != "" && sanitizeString(friend)){
                     friend_string += " AND " + friend + " HAS > " + friend_amt;
                     friends += "," + friend;
@@ -512,19 +507,16 @@ function getDonationCondition(condition_type, state){
                 i++;
             }
         }
-
         if(friend_string != ""){
             donation_condition = donation_amt + " IF " + friend_string;
         }
     }
-
     //MILESTONE challenge
     else if(condition_type === "milestone"){
         var donation_amt = $('#milestone').children('#t2_donation_amount').val();
         var total_amt = $('#milestone').children('#total_amount').val();
         donation_condition = donation_amt + " IF EVERYONE HAS > " + total_amt; 
     }
-
     //MICRO challenge
     else if(condition_type === "micro"){
         var donation_amt = $('#micro').find('#t3_donation_amount').val();
@@ -536,169 +528,27 @@ function getDonationCondition(condition_type, state){
         if(micro_amt.toString().indexOf('.') > -1){
             micro_amt = Math.floor(micro_amt);
         }
-
         // console.log(micro_amt);
-
         var micro_progress = microProgress(micro_amt);
-
         $('#current_stats').html("There are currently " + micro_progress + " people who satisfy your challenge!") 
         $('#current_stats').show();
 
         donation_condition = donation_amt + " IF " + num_people + " PEOPLE > " + micro_amt;
   
     }
-
     console.log(donation_condition);
     // console.log(friends); 
-
     if(donation_condition != "")
         processDonation(donation_condition, state, friends);
 }
-/*
-function survey(donation_condition, donation){
-
-    $('#donation').remove();
-    $('#challenge').remove();
-    $('#OR').remove();
-    $('#notifications').remove();
-    var campaign_qs = "<fieldset>" + 
-            "<div>Q: <b>(Required)</b> How much do you care about the health of cats/kittens on campus? <br>" + 
-            "<b>Very little</b>     <input type='radio' name='campaign_effect' id='campaign_effect' value='1' >   1   " +
-            "<input type='radio' name='campaign_effect' id='campaign_effect' value='2' >   2   " +
-            "<input type='radio' name='campaign_effect' id='campaign_effect' value='3' >   3   " +
-            "<input type='radio' name='campaign_effect' id='campaign_effect' value='4' >   4   " +
-            "<input type='radio' name='campaign_effect' id='campaign_effect' value='5' >   5      <b>A lot</b>" +
-        "</div></fieldset>"; 
-
-
-    var control_qs = "<fieldset><div>" + 
-            "Q: <b>(Required)</b> How much would knowing who else donated to the cause affect your donation?<br>" + 
-            "<b>Very little</b>     <input type='radio' name='knowing_effect' id='knowing_effect' value='1' >   1   " + 
-            "<input type='radio' name='knowing_effect' id='knowing_effect' value='2' >   2   " + 
-            "<input type='radio' name='knowing_effect' id='knowing_effect' value='3' >   3   " +  
-            "<input type='radio' name='knowing_effect' id='knowing_effect' value='4' >   4   " + 
-            "<input type='radio' name='knowing_effect' id='knowing_effect' value='5' >   5    <b>A lot</b></div>   " + 
-            "<div> Q: <b>(Required)</b> If you had the ability to challenge other people to donate money to the cause, how likely are you to use it?<br>" + 
-            "<b>Not likely</b>      <input type='radio' name='challenge_effect' id='challenge_effect' value='1' >   1   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='2' >   2   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='3' >   3   " +  
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='4' >   4   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='5' >   5     <b>Very likely</b></div>   " + 
-            "<div>Q: In what ways would you challenge others?<br><textarea id='challenge_preferences_control' name='challenge_preferences_control' width='100'></textarea></div></fieldset>";
-
-
-    var conditional_qs_test = "<fieldset><div>" + 
-            "Q: <b>(Required)</b> How did you like donation challenges? <br>" + 
-            "<b>Not at all</b>      <input type='radio' name='conditional_effect' id='conditional_effect' value='1' >   1   " + 
-            "<input type='radio' name='conditional_effect' id='conditional_effect' value='2' >   2   " + 
-            "<input type='radio' name='conditional_effect' id='conditional_effect' value='3' >   3   " +  
-            "<input type='radio' name='conditional_effect' id='conditional_effect' value='4' >   4   " + 
-            "<input type='radio' name='conditional_effect' id='conditional_effect' value='5' >   5      <b>A lot</b></div>   " + 
-            "<div>Q: <b>(Required)</b> How likely are you to donate if a friend challenges you?<br>" +
-            "<b>Not likely</b>       <input type='radio' name='challenge_effect' id='challenge_effect' value='1' >   1   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='2' >   2   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='3' >   3   " +  
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='4' >   4   " + 
-            "<input type='radio' name='challenge_effect' id='challenge_effect' value='5' >   5           <b>Very likely</b></div>   " + 
-            "<div>Q: How did the challenges influence your donation amount?<br><textarea id='conditional_thoughts' name='conditional_thoughts' width='100'></textarea></div>" + 
-            "<div>Q: What other kinds of conditions on donations would you like to be able to make?<br><textarea id='challenge_preferences' name='challenge_preferences' width='100'></textarea></div></fieldset>";
-
-    var interface_qs = "<fieldset><div>" + 
-            "Q: <b>(Required)</b> How easy was it to use the website to make a donation? <br>" +
-            "<b>Not easy at all </b>     <input type='radio' name='interface_effect' id='interface_effect' value='1' >   1   " +
-            "<input type='radio' name='interface_effect' id='interface_effect' value='2' >   2   " + 
-            "<input type='radio' name='interface_effect' id='interface_effect' value='3' >   3   " + 
-            "<input type='radio' name='interface_effect' id='interface_effect' value='4' >   4   " +
-            "<input type='radio' name='interface_effect' id='interface_effect' value='5' >   5   <b>Very easy</b>" +
-        "</div><div>Q: Please give us any other comments to improve our system.<br><textarea id='interface_thoughts' width='100' name='interface_thoughts'></textarea></div></fieldset>";
-
-
-    if(system == "control"){
-        $('#thankyou > .container').append("<h3>Thank you for donating, " + user+ "!</h3><form id='survey'><div>Please help us by filling out the survey below. You will then be directed to the confirmation screen.<br><br></div> " + campaign_qs + " " + control_qs + " " + interface_qs + " <button id='survey_submit' class='button-primary'>Next</button></form>");
-    }else{
-        $('#thankyou > .container').append("<h3>Thank you for donating, " + user+ "!</h3><form id='survey'><div>Please help us by filling out the survey below. You will then be directed to the confirmation screen.<br><br></div> " + campaign_qs + " " + conditional_qs_test +" " + interface_qs + "<button id='survey_submit' class='button-primary'>Next</button></form>");
-    }
-
-    $('#survey_submit').click(function(e){
-        e.preventDefault();
-
-
-        var campaign_effect = -1;
-        var conditional_effect = -1;
-        var challenge_effect = -1;
-        var knowing_effect = -1;
-        var challenge_preferences_control = "";
-        var conditional_thoughts = "";
-        var challenge_preferences = "";
-        var interface_effect = -1;
-        var interface_thoughts = "";
-
-        campaign_effect = $('input:radio[name=campaign_effect]:checked').val();
-        interface_effect = $('input:radio[name=interface_effect]:checked').val();
-        interface_thoughts = $('#interface_thoughts').val();
-
-        //validate survey responses
-        if(system == "control"){
-            knowing_effect = $('input:radio[name=knowing_effect]:checked').val();
-            challenge_preferences_control = $('#challenge_preferences_control').val();
-            challenge_effect = $('input:radio[name=challenge_effect]:checked').val();
-            if(!campaign_effect || !interface_effect || !knowing_effect || !challenge_effect){
-                $('#survey').prepend("<div id='message' class='dark' style='padding: 2%; color: white;'>Please select responses to required questions.</div>");
-                return false;
-            }
-        }
-
-        else if(system == "test"){
-             conditional_effect = $('input:radio[name=conditional_effect]:checked').val();
-             challenge_effect = $('input:radio[name=challenge_effect]:checked').val();
-             conditional_thoughts = $('#conditional_thoughts').val();
-             challenge_preferences = $('#challenge_preferences').val();
-
-            if( !campaign_effect || !interface_effect || !conditional_effect){
-                $('#survey').prepend("<div id='message' class='dark' style='padding: 2%; color: white;'>Please select responses to required questions.</div>");
-                return false;
-            }
-        }
-
-
-
-        var sendData = {"campaign_effect": campaign_effect, 
-                        "conditional_effect": conditional_effect,
-                        "challenge_effect": challenge_effect,
-                        "knowing_effect":knowing_effect,
-                        "challenge_preferences_control": challenge_preferences_control,
-                        "challenge_preferences": challenge_preferences,
-                        "conditional_thoughts" : conditional_thoughts,  
-                        "interface_effect": interface_effect,   
-                        "interface_thoughts": interface_thoughts}
-        console.log(sendData);
-
-        $.ajax({
-            url: baseUrl+'/challenges/rippler',
-            method: "POST",
-            data: {"user": user, "data": sendData, "system": system},
-            dataType: "JSON",
-            success:function(response){
-        
-                 afterSubmit(donation_condition, donation);
-            },
-            error: function(xhr, status, error){
-                console.log("Error: " + error);
-            }
-        })
-
-
-       
-    })
-}*/
 
 /* Processes screen after a donation is submitted */
 function afterSubmit(donation_condition, donation){
     
     //Hide Donation Slider & Challenge Div
-    $('#donation').remove();
-    $('#challenge').remove();
-    $('#notifications').remove();
+    //$('#donation').remove();
+    //$('#challenge').remove();
+    //$('#notifications').remove();
     // $('#notifications').replaceWith("<div id='thankyou' class='container'></div>");
 
     $('#thankyou > .container').empty();
@@ -708,7 +558,6 @@ function afterSubmit(donation_condition, donation){
     var pledge = nlCondition("I" + " " + donation_condition);
     $('#thankyou > .container').append("<h4 class='title'>Your Pledge:</h4><div class='pledge_box'>" + 
                                             pledge + " </div>");
-
 
     //IF direct donation
     var success = 0;
@@ -742,7 +591,6 @@ function afterSubmit(donation_condition, donation){
 
         }
         else{
-
             var friends = [];
             var terms = donation_condition.split(" ")
              // $('#thankyou > .container').append("<div class='progress'><table>Table created</table></div>");
@@ -760,22 +608,14 @@ function afterSubmit(donation_condition, donation){
                     if(actual_donation >= don){
                         success = 1;
                     }
-
                 }
             }
             table += "</table></div>";
              $('#thankyou > .container > .boxes').append(table);
         }
     }
-
-    // if((success == 1 && system == "test") || system == "control"){
-    //     $('#thankyou').append("<div class='u-cf'><br><h5 class='title'>PLEDGE AMOUNT: " + donation + " USD</h5></div><div><h5 class='title'>STATUS: COMPLETED</h5></div>");
-    // }
-    // else if(success == 0 && system=="test"){
-    //      $('#thankyou').append("<div class='u-cf'><br><h5 class='title'>STATUS: PENDING</h5></div>");
-    // }   
-    // $('#thankyou').append("<div style='clear: both;'>Multiply your impact, share this campaign with your friends. Also, please fill out our survey: link</div><hr>");
 }
+
 
 
 

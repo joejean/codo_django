@@ -21,7 +21,7 @@
                       
                       
                         <div class="col-xs-12 col-sm-8">
-                            <h2>{{organizer.user.first_name}} {{organizer.user.last_name}}</h2>
+                            <h2>{{organizer.user.get_full_name}}</h2>
                             <p><strong>About: </strong>{{organizer.short_bio}}</p>
                             <p><strong>Country: </strong>{{organizer.country.name}}</p>
                             <p><strong>Links</strong></p>

@@ -71,10 +71,10 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a>{{user.first_name}}</a></li>
+                        <li><a>{{user.get_full_name}}</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{% url 'profile_detail' pk=user.organizer.id %}">Profile</a></li>
-                        <li><a href="#">Campaigns</a></li>
+                        <li><a href="{% url 'user_campaigns_list' %}">My Campaigns</a></li>
                         <li><a href="#">Backed Campaigns</a></li>
                         <li><a href="#">Starred Campaigns</a></li>
                         <li role="separator" class="divider"></li>

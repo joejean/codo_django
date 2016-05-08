@@ -30,7 +30,6 @@ $(document).ready(function(){
             return true;
         }
     }
-
     var dfd = $.Deferred();
     dfd.done(getProjectInfo())
     .done(function(){
@@ -46,12 +45,8 @@ $(document).ready(function(){
 
         }
     });  
-
     dfd.resolve();
-
-
     /***** USER INTERACTIONS *****/
-
     //Display the appropriate challenge form
     $('.chal_form').on('click', function(){
         var curr_form = $(this).find($('.form')).attr("id");
@@ -64,13 +59,11 @@ $(document).ready(function(){
         // $('#' + curr_form).parent().find('.msg').removeClass('msg');
         $('#' + curr_form).show();
     })
-
     //Friends Challenge - Add button interaction; WORKING
     $('#addfriend').on('click', function(){
         //Count # of friends added so far
         var count = $(this).parent().find(".friendcount").length;
         
-
         //add another friend
         var formaddendum = '<div class="newfriend"><br> AND if<br><input type="text" id="friends' + count + '" class="friendcount form-control" placeholder="Enter friend\'s email"></input> also donates <br>' + 
         '<input type="number" id="friend_amount'+count+'" class="input_amt form-control" min="10" max="1000" value="20"></input> USD (optional)<br>' +
@@ -83,15 +76,11 @@ $(document).ready(function(){
             return false;
         }
         
-
         //Remove friend
         $('.remove').on('click', function(){
             $(this).parent().remove();
         })
     })
-
-   
-   
 
     //Function to get donation amounts that users are exploring with
     $('.amount').on('input',function(){
@@ -131,36 +120,32 @@ $(document).ready(function(){
         }
        
     })
-
-
     //Function to get donation conditions users are submitting
     /*$('.challenge_button').click(function(){
         // console.log($(this));
         var id = $(this).attr("id");
         getDonationCondition(id, "submit");
     })
-
     $('#donate').click(function(){
         processDonation($('#donation_amount').val(), "submit", "");
         
     })*/
-
-     $('#friendly').submit(function(){
+    $('#friendly').submit(function(event){
+        event.preventDefault();
         // console.log($(this));
         var id = $(this).attr("id");
         getDonationCondition("friendly", "submit");
-    });
-
-    $('#micro').submit(function(){
+    });   
+    $('#micro').submit(function(event){
         // console.log($(this));
+        event.preventDefault();
         var id = $(this).attr("id");
         getDonationCondition("micro", "submit");
     });
-
-    $('#direct').submit(function(){
+    $('#direct').submit(function(event){
+        event.preventDefault();
         processDonation($('#donation_amount').val(), "submit", "");
         
-    })
-
+    });
 })
 

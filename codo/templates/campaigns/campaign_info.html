@@ -3,13 +3,8 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block content %}
-  <div class="jumbotron yellow-jumbotron">
-    <div class="container">
-      <h2 class="center-block">Create Your Campaign</h2>
-      <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. </h4>       
-    </div>
-  </div>
+
+  {% include 'campaigns/partials/campaign_creation_form_header.html'%}
       
   <div class="container">
     <form class="form form-horizontal" method="POST" enctype="multipart/form-data" action="">
@@ -77,7 +72,7 @@
                 </div>
                 <div class="form-group">
                    {{wizard.form.video_url.errors}}
-                  <label for="video_url" class="col-sm-4 control-label">Project Video Url</label>
+                  <label for="video_url" class="col-sm-4 control-label">Project Video URL</label>
                   <div class="col-sm-8">
                     {% render_field wizard.form.video_url class="form-control" placeholder="URL of Project Video"  name="campaign_info-video_url" id="id_campaign_info-video_url" required="required" autofocus="autofocus" %}
                   </div>
@@ -85,7 +80,7 @@
  
                 <div class="form-group">
                  {{wizard.form.goal_amount.errors}}
-                  <label for="goal_amount" class="col-sm-4 control-label">Funding Goal</label>
+                  <label for="goal_amount" class="col-sm-4 control-label">Funding Goal <small>(USD)</small></label>
                   <div class="col-sm-8">
                     <div class="row">
                       <div class="col-sm-8">
@@ -102,7 +97,7 @@
                 </div>
                 <div class="form-group">
                 {{wizard.form.end_date.errors}}
-                  <label for="end_date" class="col-sm-4 control-label">End Date</label>
+                  <label for="end_date" class="col-sm-4 control-label">End Date <small>(default 30 days)</small> </label>
                   <div class="col-sm-8">
                     <div class="row">
                       <div class="col-sm-8">
@@ -146,25 +141,7 @@
     </form>
   </div>
 
-  <div class="jumbotron faq-jumbotron">
-    <div class="container">
-      <h3>Frequently Asked Questions(FAQ)</h3>
-      <div class="row">
-        <div class="col-md-5">
-          <h5><strong>Q:Sunt in culpa qui officia deserunt mollit ani?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="col-md-5">
-          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h5><strong>Q:Dolor sit amet, consectetur adipisicing?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include 'campaigns/partials/faqs.html'%}
 
 {% endblock %}
 

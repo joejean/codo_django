@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load campaign_tags %}
+{% load mathfilters %}
+
+{% block content %}
+	<div class="jumbotron yellow-jumbotron">
+	    <div class="container">
+	      <h2 class="center-block">Your Campaigns</h2>
+	      <h4>This is a list of all of the campaigns you have created so far!</h4>       
+	    </div>
+	</div>
+    <div class="container">
+	    
+      <!--  -->
+      {% if campaigns %}
+        <div class="row">
+          <div class="row">
+          <div class="col-md-8">
+            <h4>Your Campaigns</h4>
+          </div>
+          <div class="col-md-4">
+             <a href="/campaigns/search" class="btn btn-default pull-right text-uppercase">Search All Campaigns</a>
+          </div>
+          </div>
+        </div>
+      
+        {% for group in campaigns|group_by:4 %}
+          <div class="row">
+            {% for campaign, stats in group%}
+              <div class="col-md-3">
+                <a href="{{campaign.get_absolute_url}}">
+                  <div class="thumbnail">
+                    <img src="{{campaign.picture.url}}" style="min-height:200px;height:200px;" class="img-responsive" alt="{{campaign.title}}">
+                    <div class="caption">
+                      <h3>{{campaign.title|truncatechars:40}}</h3>
+                      <p>{{campaign.blurb}}</p>
+                      <p><i class="fa fa-users fa-2x"></i> {{stats.num_funders}} Funder{{stats.num_funders|pluralize}}</p>
+                      <p><i class="fa fa-star fa-2x"></i>{{stats.num_challenges}} Challenge{{stats.num_challenges|pluralize}}</p>
+                      <p><i class="fa fa-clock-o fa-2x"></i> {{campaign.end_date|timeuntil}} Left</p>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="{{stats.amount_funded}}" aria-valuemin="0" aria-valuemax="{{campaign.goal_amount}}" style="width: {{stats.amount_funded|div:campaign.goal_amount|mul:100}}%">
+                          <span class="sr-only"> {{stats.amount_funded|div:campaign.goal_amount|mul:100}}% Complete (danger)</span>
+                        </div>
+                      </div>
+                      <p><span class="pull-left"><strong>${{stats.amount_funded}}</strong></span><span class="pull-right"><strong>${{campaign.goal_amount}}</strong></span></p>
+                      <br >
+                      <p><span class="pull-left">RAISED</span><span class="pull-right">GOAL</span></p>
+                    </div>
+                  </div> <!-- thumbnail -->
+                </a>
+              </div> <!-- col-md-3 -->
+            {% endfor %}
+          </div> <!-- End Row -->
+          <hr>
+          {% empty %}
+             <h2> You Haven't created any campaigns yet. <a href="{% url 'new_campaign' %}"> Click here to create one. </a></h2>
+        {% endfor %}
+      {% endif %}
+      
+    </div> <!-- /container -->
+
+{% endblock %}

@@ -36,6 +36,27 @@ TEMPLATES = {"campaign_info": "campaigns/campaign_info.html",
              "organizer_info": "campaigns/organizer_info.html"}
 
 
+def get_campaigns_stats(campaigns):
+    '''Return a list of stats for a list of campaigns'''
+    stats = []
+    #TODO: Do this in a nicer way
+    for campaign in campaigns:
+        result = campaign_stats(campaign.id)
+        stat = {}
+        stat['amount_funded'] = result[0] 
+        stat['num_funders'] = result[1]
+        stat['num_challenges'] =  result[2]
+        stats.append(stat)
+    return stats
+
+def index(request):
+    user_challenges = ''
+    if request.user.is_authenticated():
+        user_challenges = checkChallengeString(request.user.username)
+    campaigns = Campaign.objects.filter(status="accepted").order_by('-created')
+    stats = get_campaigns_stats(campaigns)
+    campaigns_and_stats = zip(campaigns, stats)
+    return render(request, "campaigns/index.html", {'campaigns':campaigns_and_stats, 'challenges':user_challenges}) 
 
 class CreateCampaign(NamedUrlSessionWizardView):
     condition_dict={
@@ -78,16 +99,35 @@ class CreateCampaign(NamedUrlSessionWizardView):
         return redirect(reverse('single_campaign', kwargs={'pk':campaign.id}))
 
 
+class UserCampaignsList(ListView):
+    #model = Campaign
+    # This is not mandatory as long as the template name follows the
+    # pattern <model_name>_list.html
+    template_name = 'campaigns/user_campaigns_list.html'
+    context_object_name = 'campaigns'
+    def get_queryset(self):
+        return Campaign.objects.filter(organizer__user=self.request.user).order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        #Get context dictionary so we can add more stuff to it
+        context = super(UserCampaignsList, self).get_context_data(**kwargs)
+        campaigns = context.get('campaigns')
+        stats = get_campaigns_stats(campaigns)
+        campaigns_and_stats = zip(campaigns, stats)
+        context['campaigns'] = campaigns_and_stats
+        return context
+
+
 # TODO: See if I can preview the above form before saving it
-class CampaignFormPreview(FormPreview):
+# class CampaignFormPreview(FormPreview):
 
-    def done(self, request, cleaned_data):
-        # Do something with the cleaned_data, then redirect
-        # to a "success" page.
-        return redirect('/')
+#     def done(self, request, cleaned_data):
+#         # Do something with the cleaned_data, then redirect
+#         # to a "success" page.
+#         return redirect('/')
 
 
-class CampaignsList(ListView):
+class AllCampaignsList(ListView):
     model = Campaign
     # This is not mandatory as long as the template name follows the
     # pattern <model_name>_list.html
@@ -140,24 +180,6 @@ class ProfileUpdate(UpdateView):
             request, *args, **kwargs)
 
 
-
-def index(request):
-    user_challenges = ''
-    if request.user.is_authenticated():
-        user_challenges = checkChallengeString(request.user.username)
-    campaigns = Campaign.objects.filter(status="accepted")
-    stats = []
-    #TODO: Do this in a nicer way
-    for campaign in campaigns:
-        result = campaign_stats(campaign.id)
-        stat = {}
-        stat['amount_funded'] = result[0] 
-        stat['num_funders'] = result[1]
-        stat['num_challenges'] =  result[2]
-        stats.append(stat)
-    campaigns_and_stats = zip(campaigns, stats)
-    return render(request, "campaigns/index.html", {'campaigns':campaigns_and_stats, 'challenges':user_challenges}) 
-
 def wepay_success(request):
     code = request.GET.get('code', "")
     response = create_wepay_merchant(code)
@@ -207,8 +229,9 @@ def handle_donation(request):
             return process_wepay_error(request, response)
         else:
             response = response.get('hosted_checkout')
-            return render(request, 'payments/direct_donation.html',\
-            {'checkout_uri':response.get('checkout_uri')} )
+            return render(request, 'payments/payment.html',\
+            {'checkout_uri':response.get('checkout_uri'), 'campaign':campaign, 
+            'amount': amount})
 
 
 

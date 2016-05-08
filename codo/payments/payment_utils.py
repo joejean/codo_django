@@ -23,7 +23,7 @@ def create_wepay_account(access_token):
     # Use access token to create account for a user.
     wepay = WePay(production, access_token)
     response = wepay.call('/account/create', {
-    'name': 'Codo Project Contribution',
+    'name': 'CrowdEmpowered Project Contribution',
     'description': 'Crowdfunding Platform'
     })
     return response
@@ -37,7 +37,7 @@ def wepay_checkout(access_token, account_id, amount, campaign_title):
     parameters = {
     'account_id': account_id,
     'amount': amount,
-    'short_description': 'Contribution to Codo\'s {}'.format(campaign_title),
+    'short_description': 'Contribution to CrowdEmpowered\'s {}'.format(campaign_title),
     'type': 'donation',
     'currency': 'USD',
     'hosted_checkout':  {

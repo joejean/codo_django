@@ -4,13 +4,8 @@
 {% load widget_tweaks %}
 
 {% block content %}
-  <div class="jumbotron yellow-jumbotron">
-    <div class="container">
-      <h2 class="center-block">Create Your Campaign</h2>
-      <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. </h4>       
-    </div>
-  </div>
+  
+  {% include 'campaigns/partials/campaign_creation_form_header.html'%}
       
   <div class="container">
     <form class="form form-horizontal" method="POST" enctype="multipart/form-data" action="">
@@ -41,8 +36,7 @@
             <div class="row">
               <div class="col-md-8 col-md-offset-1">
                 <h5><strong>Tell us more about yourself!</strong></h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Please provide the following information about yourself. Some of it is important because it helps with compliance. And don't worry we will never share neither your date of birth nor your phone number with anyone.</p>
               </div>
             </div>
              <div class="row" >
@@ -123,25 +117,7 @@
     </form>
   </div>
 
-  <div class="jumbotron faq-jumbotron">
-    <div class="container">
-      <h3>Frequently Asked Questions(FAQ)</h3>
-      <div class="row">
-        <div class="col-md-5">
-          <h5><strong>Q:Sunt in culpa qui officia deserunt mollit ani?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="col-md-5">
-          <h5><strong>Q:Duis aute irure dolor in reprehenderit in?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <h5><strong>Q:Dolor sit amet, consectetur adipisicing?</strong></h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include 'campaigns/partials/faqs.html'%}
 
 {% endblock %}
 

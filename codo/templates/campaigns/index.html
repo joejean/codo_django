@@ -43,7 +43,7 @@
         <div class="row">
           <div class="row">
           <div class="col-md-8">
-            <h4>Trending Campaigns</h4>
+            <h4>Latest Campaigns</h4>
           </div>
           <div class="col-md-4">
              <a href="/campaigns/search" class="btn btn-default pull-right text-uppercase">Search All Campaigns</a>
@@ -57,7 +57,7 @@
               <div class="col-md-3">
                 <a href="{{campaign.get_absolute_url}}">
                   <div class="thumbnail">
-                    <img src="{{campaign.picture.url}}" class="img-responsive" alt="{{campaign.title}}">
+                    <img src="{{campaign.picture.url}}" style="min-height:200px;height:200px;" class="img-responsive" alt="{{campaign.title}}">
                     <div class="caption">
                       <h3>{{campaign.title|truncatechars:40}}</h3>
                       <p>{{campaign.blurb}}</p>
