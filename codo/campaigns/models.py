@@ -22,7 +22,7 @@ class Organizer(models.Model):
     facebook_url = models.URLField(max_length=100)
     twitter_url = models.URLField(max_length=100)
     website_url = models.URLField(max_length=100)
-    dob = models.DateField(default=datetime.date(1960,1,1),blank=True)
+    dob = models.DateField(default=datetime.date(1975,1,1),blank=True)
 
     def profile_picture_tag(self):
         '''This is used to help render the image in the admin field'''

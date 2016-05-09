@@ -26,11 +26,6 @@
               <h3><strong>Account Info (step {{ wizard.steps.step1 }} of {{ wizard.steps.count }})</strong></h3>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-8 col-md-offset-1">
-              <h5><strong>Tell us more about yourself!.</strong></h5>
-            </div>
-          </div>
           <div class="row" >
             <div role="tabpanel" class="tab-pane" id="accountinfo">
             <div class="row">
@@ -124,5 +119,5 @@
 {% block javascript %}
 {{block.super}}
 {{wizard.form.media}}
-<script src="{% static 'bootstrap/js/create_campaign.js' %}"></script>
+
 {% endblock %}

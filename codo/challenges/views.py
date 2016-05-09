@@ -80,14 +80,17 @@ def rippler(request):
 			highest = int(request.POST.get("highest"))
 			lowest = int(request.POST.get("lowest"))
 			stepsize = int(request.POST.get("stepsize"))
-			return JsonResponse({"impactPoints":highestImpact(user, lowest, highest, stepsize)})
+			campaign = request.POST.get('campaign')
+			if campaign is None:
+				return param_error("campaign")
+			return JsonResponse({"impactPoints":highestImpact(user, lowest, highest, stepsize, campaign)})
 
 		# Query for hypothetical or process donation
 		if action == "processDonation":
 			user = request.user
 			donation = request.POST.get('donation')
 			campaign = int(request.POST.get('campaign'))
-			before, after, change = changeBetween(beforeAfter(user, donation))
+			before, after, change = changeBetween(beforeAfter(user, donation, campaign))
 			nChallenges = len([k for k in change.keys() if k!='total' and change[k]>0])
 			if all([letter in string.digits+'.' for letter in donation]) and len(donation)>0: logAmount(ip,port,user,campaign,float(donation),nChallenges)
 			impact = change['total']-after[user.username]
@@ -125,10 +128,13 @@ def rippler(request):
 
 		if action == "getRipples":
 			user = request.user
+			campaign = request.POST.get('campaign')
+			if campaign is None:
+				return param_error("campaign")
 			highest = int(request.POST.get("highest"))
 			lowest = int(request.POST.get("lowest"))
 			stepsize = int(request.POST.get("stepsize"))
-			return JsonResponse(getRipples(user,lowest,highest,stepsize))
+			return JsonResponse(getRipples(user,lowest,highest,stepsize,campaign))
 
 		if action == "getFullNetwork":
 			return JsonResponse(getFullNetwork())
@@ -167,8 +173,8 @@ def checkCampaignChallenges(user, campaign):
 	return result
 
 
-def getRipples(user,lowest,highest,stepsize):
-	before = Scenario()
+def getRipples(user,lowest,highest,stepsize, campaign_id):
+	before = Scenario(campaign_id)
 	before.populateFromDB() 
 	after  = deepcopy(before)
 	after.groups[user]=set([user])
@@ -206,7 +212,7 @@ def lastNUnresolved(n, campaign):
 
 #TODO: Special Attention
 def markThoseResolved(campaign):
-	scenario = Scenario()
+	scenario = Scenario(campaign)
 	scenario.populateFromDB()
 	active = filter(lambda x: x[0]!='total',scenario.packAndSolve())
 	for name, amount in active:
@@ -219,7 +225,7 @@ def markThoseResolved(campaign):
 			condition.save()
 	
 def submitDonation(user,campaign,donation):
-	before, after, change = changeBetween(beforeAfter(user, donation))
+	before, after, change = changeBetween(beforeAfter(user, donation, campaign))
 	addCondition(user,donation,campaign)
 	log, created = Log.objects.update_or_create(user=user, campaign_id=campaign,
 	 pledge=donation, total_before=before['total'], total_after=after['total'],
@@ -227,8 +233,8 @@ def submitDonation(user,campaign,donation):
 	markThoseResolved(campaign)
 	return after
 
-def beforeAfter(user, donation):
-	before = Scenario()
+def beforeAfter(user, donation, campaign_id):
+	before = Scenario(campaign_id)
 	before.populateFromDB()
 	after  = deepcopy(before)
 	after.groups[user.username]=set([user.username])
@@ -247,8 +253,8 @@ def changeBetween(beforeAndAfter):
 	return b, a, c
 
 
-def highestImpact(user,lowest,highest,stepsize):
-	before = Scenario()
+def highestImpact(user,lowest,highest,stepsize, campaign_id):
+	before = Scenario(campaign_id)
 	before.populateFromDB() 
 	after  = deepcopy(before)
 	after.groups[user.username]=set([user.username])

@@ -224,7 +224,10 @@ def handle_donation(request):
         campaign = get_object_or_404(Campaign, pk=campaign_id)
         access_token = campaign.organizer.get_wepay_access_token()
         account_id = campaign.organizer.get_wepay_account_id()
-        response = wepay_checkout(access_token, account_id, amount, campaign.title)
+        redirect_uri = request.build_absolute_uri('/')[:-1]+campaign.get_absolute_url()
+        print redirect_uri
+        response = wepay_checkout(access_token, account_id, amount, campaign.title,redirect_uri)
+        print response
         if wepay_returns_error(response):
             return process_wepay_error(request, response)
         else:

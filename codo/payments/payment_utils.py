@@ -29,8 +29,8 @@ def create_wepay_account(access_token):
     return response
 
 
-def wepay_checkout(access_token, account_id, amount, campaign_title):
-    redirect_uri = settings.WEPAY_DONATION_SUCCESS_REDIRECT_URI
+def wepay_checkout(access_token, account_id, amount, campaign_title,redirect_uri=None):
+    # = settings.WEPAY_DONATION_SUCCESS_REDIRECT_URI
     # set production to True for live environments
     production = settings.WEPAY_PRODUCTION
     wepay = WePay(production, access_token)
@@ -44,7 +44,9 @@ def wepay_checkout(access_token, account_id, amount, campaign_title):
         "mode": "iframe"
         },
     }
-    if redirect_uri is not None:
+    # Wepay won't redirect to localhost so we check for that here
+    # in case we are running the project on localhost
+    if redirect_uri is not None and "localhost" not in redirect_uri:
         parameters['callback_uri'] = redirect_uri
     response = wepay.call('/checkout/create', parameters)
     return response

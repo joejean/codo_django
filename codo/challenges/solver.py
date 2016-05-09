@@ -120,13 +120,14 @@ def cleanEquation(eq):
 
 
 class Scenario:
-    def __init__(self):
+    def __init__(self,campaign_id):
         self.filename = 'cplex_'+str(time.time())+str(random.randint(100,999))+'.lp'
         self.groups =       {}
         self.bounds =       set()
         self.constraints =  set()
         self.xyBank =       set()
-        self.zedBank =      set()   
+        self.zedBank =      set() 
+        self.campaign_id = campaign_id  
 
     def includeDonation(self,name,donationString):
         self.observeConditional(name, *parseCondition(name,donationString))
@@ -268,8 +269,7 @@ class Scenario:
         members = Identifier.objects.filter(category="member")
         for member in members:
             self.groups[member.name] = set([member.name])
-        #TODO: Add Campaign support here
-        conditions = Condition.objects.all()
+        conditions = Condition.objects.filter(campaign__id=self.campaign_id)
         for c in conditions:
             self.includeDonation(c.user.username,c.pledge)
         
