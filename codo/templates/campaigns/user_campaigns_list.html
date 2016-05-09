@@ -53,9 +53,9 @@
             {% endfor %}
           </div> <!-- End Row -->
           <hr>
-          {% empty %}
-             <h2> You Haven't created any campaigns yet. <a href="{% url 'new_campaign' %}"> Click here to create one. </a></h2>
         {% endfor %}
+        {% else %}
+             <h3> You haven't created any campaigns yet. <a href="{% url 'new_campaign' %}"> Click here to create one. </a> </h3>
       {% endif %}
       
     </div> <!-- /container -->
